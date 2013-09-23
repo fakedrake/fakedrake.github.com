@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[SudoWork2.0]]></title>
   <link href="http://fakedrake.github.io/atom.xml" rel="self"/>
   <link href="http://fakedrake.github.io/"/>
-  <updated>2013-09-23T16:02:44+03:00</updated>
+  <updated>2013-09-23T17:26:13+03:00</updated>
   <id>http://fakedrake.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
-    
+    <name><![CDATA[Chris Perivolaropoulos]]></name>
+    <email><![CDATA[darksaga2006@gmail.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
