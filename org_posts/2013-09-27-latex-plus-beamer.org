@@ -13,7 +13,6 @@ ago.
 
 
 * Prelude
-** Some preludes
 
    I am making a presentation about plone and I decided Impress is good
    but not enough and that i should go with a non-wysiwyg solution:
