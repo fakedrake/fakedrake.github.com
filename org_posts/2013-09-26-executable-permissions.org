@@ -1,0 +1,27 @@
+#+BEGIN_HTML
+---
+layout: post
+title: "Executable permissions"
+date: 2013-09-26 16:07
+comments: true
+categories: emacs
+---
+#+END_HTML
+
+There are some emacs commands that I call interactively only to use a
+small subset of their functionality which means more keystrokes and
+zoning out for a bit (interuption = check reddit). Prominent examples
+of this are rename-file and chmod. Not anymore though! WIth this
+command you give executable permissions to everyone on the current
+file!
+
+#+NAME: Make current file executable
+#+BEGIN_SRC scm
+(defun chmod+x-this ()
+  "Add executable permissions to the current file."
+  (interactive)
+  (if buffer-file-name
+      (let ((new-mode (logior #o111 (file-modes buffer-file-name))))
+	(set-file-modes buffer-file-name new-mode))
+    (message "No such file to make executable.")))
+#+END_SRC

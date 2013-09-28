@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: beamer | SudoWork2.0]]></title>
+  <link href="http://fakedrake.github.io/blog/categories/beamer/atom.xml" rel="self"/>
+  <link href="http://fakedrake.github.io/"/>
+  <updated>2013-09-28T21:16:08+03:00</updated>
+  <id>http://fakedrake.github.io/</id>
+  <author>
+    <name><![CDATA[Chris Perivolaropoulos]]></name>
+    <email><![CDATA[darksaga2006@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[LaTeX + Beamer]]></title>
+    <link href="http://fakedrake.github.io/blog/2013/09/27/latex-plus-beamer/"/>
+    <updated>2013-09-27T21:24:00+03:00</updated>
+    <id>http://fakedrake.github.io/blog/2013/09/27/latex-plus-beamer</id>
+    <content type="html"><![CDATA[<p>Note: this is a reformatted version of an article I wrote a <a href="http://sudowork.wordpress.com/2011/05/05/latex-beamer/">long time</a>
+ago.</p>
+
+<h1>Prelude</h1>
+
+<h2>Some preludes</h2>
+
+<p>I am making a presentation about plone and I decided Impress is good
+but not enough and that i should go with a non-wysiwyg solution:
+LaTeX + Beamer. This is the first time I had to use Beamer with Latex
+and it was quite a pleasant experience.  So before I get started with
+some bumps I stumbled upon a quick recap of how to use beamer.</p>
+
+<p>Start the document with</p>
+
+<p>``` latex A special document class
+\documentclass[arial, pdftex]{beamer}</p>
+
+<p>```</p>
+
+<p>There are a couple of options available and you are welcome to look
+them up(I wont go into them here) but these worked for my case(and I
+believe fits most cases)</p>
+
+<p>Also you want to include <code>\usepackage{graphicx}</code> if you need graphics in
+your presentation(most cases).  Then add some info about the
+presentation</p>
+
+<p>``` latex Meta-data
+\title{Foo Title}
+\subtitle{Bar Subtitle}
+\author{Chris Perivolaropoulos}
+\institution{university of Patras}</p>
+
+<p>```</p>
+
+<p>Beamer uses this in some cases making your life easier(mostly in the title page).</p>
+
+<p>A quick summary of the slide definition mechanics of beamer: a slide
+can be defined in two ways</p>
+
+<p>``` latex Very simple slide.
+\frame{Sole Contents of the slide}</p>
+
+<p>```</p>
+
+<p>if you want something really quick (or in my case mostly for the draft version) and</p>
+
+<p>``` latex More complex slide.
+\begin{frame}{optionally the slide title}
+Contents
+\end{frame}</p>
+
+<p>```</p>
+
+<p>So next thing you decide when(and if) you want to show a slide with
+the contents highlighted according to the context.</p>
+
+<p>``` latex Slide to introduce each section.
+\AtBeginSection[]{\begin{frame}\frametitle{Table of Contents}\tableofcontents[currentsection]\end{frame}}</p>
+
+<p>```</p>
+
+<p>This would be the case if you want a slide with a table of contents at
+the beginning of each section (i would recommend heavy use of sections
+and subsections, although i am too lazy to do that more than a
+minimum)</p>
+
+<p>It is time to begin the document</p>
+
+<p>``` latex LaTeX
+\begin{document}</p>
+
+<p>```</p>
+
+<p>The first slide is made by beamer based on the information you have
+already provided.</p>
+
+<p>``` latex Generate tile frame from metadata
+\frame{\titlepage}</p>
+
+<p>```</p>
+
+<h1>Flow control for pros</h1>
+
+<p>Within the slides you can use</p>
+
+<p>``` latex Break slide in parts.
+\pause</p>
+
+<p>```</p>
+
+<p>Whenever you want to stop the slide and wait for a pgdn(eg if show
+items in a list one by one, put a <code>\pause</code> after each item).</p>
+
+<p>Another way I found useful to control the flow is to use.</p>
+
+<p>``` latex Show one thing at a time.
+\only{The only thing shown in the slide}</p>
+
+<p>```</p>
+
+<p>Each frame remains active for a number of slides (or rather is
+made of a number of pdf pages if you have ever used office). The
+contents of the argument of <code>\only</code> will be shown only in the
+slides/pages defined by . For example</p>
+
+<p>``` latex Example of \only
+\begin{frame}{In the beginning there was HTML}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{html.pdf} \% vector graphics
+\vspace{1cm}
+\only{\vspace{16pt}}
+\only{<a href="http://foo.com/about.html">http://foo.com/about.html</a>}
+\only{<a href="http://foo.com/folder/item.html">http://foo.com/folder/item.html</a>}
+\end{center}
+\end{frame}</p>
+
+<p>```</p>
+
+<p>A couple other useful things are shown here:</p>
+
+<p>one if you want somewhere to have an empty line and then have
+something appear there <code>\only{\\}</code> will not work. I know it would be
+handy but LaTeX gets confused this way. What you do is put the size
+of the fonts +2 for the space between the lines.</p>
+
+<p>Also it is good to use the center environment which&#x2026;centers
+everything in the slide. Be aware that this also means that if we
+had omitted the <code>\only{\vspace{16pt}}</code> line would screw up the
+&ldquo;effect&rdquo; of the text appearing under the image because the size of
+the content in step 2 is bigger than that of step one, so the
+centering would &ldquo;mess&rdquo; things up. Another way to have the same
+effect is to use a <code>\pause</code> instead of <code>\only{\vspace{16pt}}</code>. I
+dont have a preference.</p>
+
+<h1>Vector graphics</h1>
+
+<p>Notice now the <code>\includegraphics</code> line in the above exaple. I love
+vector graphics and I love inkscape. Inkscape can produce pdf
+files(save as->*.pdf) readable by LaTeX in the way you see
+above. Keep in mid though that you should convert any text in your
+drawing to paths by or it will not be in the pdf(even though
+inkscape&rsquo;s dialog claims to be able to do that for you) and also to
+be careful if you are saving it as a page or as a drawing. If you
+save as a page only the page is rendered when you include the file in
+LaTeX, as a drawing is the way to go in most cases.</p>
+
+<h1>For the boring (or how to show statistics properly)</h1>
+
+<p>In my talk i also have some bar charts. What most documentation and
+forums suggested for that was a package called pgfplots. DONT USE
+THAT. It stole more than 4 hours of my life to produce a mediocre
+result. Use R instead. In case you are not familiar with it R is a
+language focused on dealing with statistics (package is <code>r-base</code> for
+ubuntu and <code>r</code> for arch).</p>
+
+<p>It can produce REALLY easily bar charts that look the way you expect
+them to IF you <strong>don&rsquo;t</strong> use sweave. Sweave is a tool that is supposed
+to provide a friendly bridge between R and LaTeX. It works the way
+you expect it to but (as many latex modules) is poorly documented
+and most importantly the workflow of working with it is very
+inefficient. (Note that it has the advantage that it can be
+automated meaning that if you plan to frequently work with plots and
+graphs in LaTeX you should definitely look into it, if not stay away
+as I would rather have done from the getgo).</p>
+
+<p>Instead i ended up being very happy and productive using the R shell
+and making it export what I wanted in .pdf graphics files. I will not
+go into detail of how to use R. It is really well documented and I am
+not by far qualified to say anything about R except that it saved me
+loads of time.</p>
+
+<h1>You&rsquo;re good to go</h1>
+
+<p>This is the wisdom I have acquired so far from writing my
+presentation. I hope this saves people some time and energy.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: hello-world - SudoWork2.0</title>
+  <title>Executable permissions - SudoWork2.0</title>
   <meta name="author" content="Chris Perivolaropoulos">
 
   
-  <meta name="description" content="Category: hello-world">
+  <meta name="description" content="There are some emacs commands that I call interactively only to use a
+small subset of their functionality which means more keystrokes and
+zoning out &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fakedrake.github.ioblog/categories/hello-world/">
+  <link rel="canonical" href="http://fakedrake.github.io/blog/2013/09/26/executable-permissions/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,36 +81,117 @@
     <div id="main">
       <div id="content">
         <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Hello-world</h1>
+    
+      <h1 class="entry-title">Executable Permissions</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-26T16:07:00+03:00" pubdate data-updated="true">Sep 26<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>There are some emacs commands that I call interactively only to use a
+small subset of their functionality which means more keystrokes and
+zoning out for a bit (interuption = check reddit). Prominent examples
+of this are rename-file and chmod. Not anymore though! WIth this
+command you give executable permissions to everyone on the current
+file!</p>
 
-  
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/2013/09/25/hello-world/">Hello World!</a></h1>
-<time datetime="2013-09-25T06:40:00+03:00" pubdate><span class='month'>Sep</span> <span class='day'>25</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/hello-world/'>hello-world</a></span>
-</footer>
-
-
-</article>
+<figure class='code'><figcaption><span>Make current file executable</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='scm'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">chmod+x-this</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Add executable permissions to the current file.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="nv">buffer-file-name</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">new-mode</span> <span class="p">(</span><span class="nf">logior</span> <span class="o">#</span><span class="nv">o111</span> <span class="p">(</span><span class="nf">file-modes</span> <span class="nv">buffer-file-name</span><span class="p">))))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">set-file-modes</span> <span class="nv">buffer-file-name</span> <span class="nv">new-mode</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;No such file to make executable.&quot;</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Chris Perivolaropoulos</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-26T16:07:00+03:00" pubdate data-updated="true">Sep 26<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/emacs/'>emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fakedrake.github.io/blog/2013/09/26/executable-permissions/" data-via="" data-counturl="http://fakedrake.github.io/blog/2013/09/26/executable-permissions/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/09/25/hello-world/" title="Previous Post: Hello World!">&laquo; Hello World!</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/09/27/latex-plus-beamer/" title="Next Post: LaTeX + Beamer">LaTeX + Beamer &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -192,7 +275,10 @@
       var disqus_shortname = 'sudowork';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fakedrake.github.io/blog/2013/09/26/executable-permissions/';
+        var disqus_url = 'http://fakedrake.github.io/blog/2013/09/26/executable-permissions/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

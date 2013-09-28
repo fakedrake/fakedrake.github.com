@@ -20,17 +20,17 @@ my awesome &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fakedrake.github.io/blog/2013/09/25/hello-world">
+  <link rel="canonical" href="http://fakedrake.github.io/blog/2013/09/25/hello-world/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="SudoWork2.0" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="SudoWork2.0" type="application/atom+xml">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Arvo:400,400italic,700,700italic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Merienda:700" rel="stylesheet" type="text/css">
 
   
   <script type="text/javascript">
@@ -48,16 +48,9 @@ my awesome &hellip;">
 
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">SudoWork2.0</a></h1>
-  
-    <h2>Rambling and cheese (and hacking)</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+<body>
+  <div id="navigation">
+    <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
@@ -75,9 +68,19 @@ my awesome &hellip;">
 </ul>
 
 </nav>
-  <div id="main">
-    <div id="content">
-      <div>
+  </div>
+  <header role="banner"><hgroup>
+  <h1><a href="/">SudoWork2.0</a></h1>
+  
+    <h2>Rambling and cheese (and hacking)</h2>
+  
+</hgroup>
+
+</header>
+  <div id="body"  >
+    <div id="main">
+      <div id="content">
+        <div>
 <article class="hentry" role="article">
   
   <header>
@@ -155,7 +158,7 @@ my awesome new SudoWorkV2 blog.</p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://fakedrake.github.io/blog/2013/09/25/hello-world/" data-via="" data-counturl="http://fakedrake.github.io/blog/2013/09/25/hello-world/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fakedrake.github.io/blog/2013/09/25/hello-world/" data-via="" data-counturl="http://fakedrake.github.io/blog/2013/09/25/hello-world/" >Tweet</a>
   
   
   
@@ -166,6 +169,10 @@ my awesome new SudoWorkV2 blog.</p>
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2013/06/19/emacs-a-faithful-companion-when-configuring-your-system/" title="Previous Post: Emacs: a faithful companion when configuring your system">&laquo; Emacs: a faithful companion when configuring your system</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/09/26/executable-permissions/" title="Next Post: Executable permissions">Executable permissions &raquo;</a>
       
     </p>
   </footer>
@@ -186,7 +193,23 @@ my awesome new SudoWorkV2 blog.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/27/latex-plus-beamer/">LaTeX + Beamer</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/26/executable-permissions/">Executable permissions</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/25/hello-world/">Hello World!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/19/emacs-a-faithful-companion-when-configuring-your-system/">Emacs: a faithful companion when configuring your system</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/15/split-mp3-in-10-minute-segments/">Split mp3 in 10 minute segments</a>
       </li>
     
   </ul>
@@ -201,7 +224,7 @@ my awesome new SudoWorkV2 blog.</p>
   <a href="https://github.com/fakedrake">@fakedrake</a> on GitHub
   
   <script type="text/javascript">
-    $(document).ready(function(){
+    $.domReady(function(){
         if (!window.jXHR){
             var jxhr = document.createElement('script');
             jxhr.type = 'text/javascript';
@@ -229,15 +252,15 @@ my awesome new SudoWorkV2 blog.</p>
 </aside>
 
 
+      </div>
     </div>
-  </div>
-  <footer role="contentinfo"><p>
+    <footer role="contentinfo"><p>
   Copyright &copy; 2013 - Chris Perivolaropoulos -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>. Design by <a href="http://octopressthemes.com">Octopress Themes</a></span>
 </p>
 
 </footer>
-  
+    
 
 <script type="text/javascript">
       var disqus_shortname = 'sudowork';
@@ -261,7 +284,7 @@ my awesome new SudoWorkV2 blog.</p>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
+  js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
@@ -275,7 +298,7 @@ my awesome new SudoWorkV2 blog.</p>
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
@@ -284,5 +307,6 @@ my awesome new SudoWorkV2 blog.</p>
 
 
 
+  </div>
 </body>
 </html>

@@ -1,0 +1,22 @@
+#+BEGIN_HTML
+---
+layout: post
+title: "Split mp3 in 10 minute segments"
+date: 2013-03-15 20:25
+comments: true
+categories: ["bash", "ffmpeg"]
+---
+#+END_HTML
+
+Here is how to divide an mp3 file into 10 minute segments with bash
+and ffmpeg:
+
+#+NAME: Split audio in 10m segments.
+#+BEGIN_SRC bash
+for i in {0..$LENGTH_IN_SECONDS..600}; do
+	ffmpeg -i input_file.mp3 -ss $i -t 600 output.pt$(($i/600)).mp3;
+done
+#+END_SRC
+
+I used this for an audio book that was in a humongous 6 hour file that
+sucks because my mp3 player doesnt support bookmarking.

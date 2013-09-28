@@ -1,0 +1,96 @@
+#+BEGIN_HTML
+---
+layout: post
+title: "Emacs and Octopress"
+date: 2013-09-25 20:58
+comments: true
+published: false
+categories: ["emacs", "octopress"]
+---
+#+END_HTML
+
+* Ramble ramble
+
+  I used to blog in wordpress as you may already know. Wordpress is
+  great. It has many plugins and support and everyone respects it and
+  supports it and documents it. There were beautiful themes and a nice
+  dashboard that showed my traffic and everything. There was however a
+  big problem with wordpress. Like it goes with most CMS' and blogging
+  frameworks it would assume I didn't really have a very rigid workflow
+  carved into my memory so it would assume it to be safe to impose it's
+  own idea of how someone should blog. For the last couple of years
+  however I have grown accustomed to writing texts in emacs org-mode. I
+  have spell-checking that behaves like I expect, auto completion that
+  kind of works like I expect and most importantly the emacs way of
+  doing things that has grown into me like cancer. So productivity was
+  low with wordpress and I decided to try something new, and that turned
+  out to be Octopress.
+
+* Why would anyone care
+
+  For those who live under rocks like me, octopress is a neat way of
+  building static blogs. There are a couple of advantages to this and
+  you can look them up but to me the best part of it is that it
+  cooperates wonderfully with github. You just set up an empty repo
+  with a name in the form of =<github-username>.github.io= and then
+  throw any static html in there. Github will pick up on that and
+  create a website at =<yourusername>.github.io= that will serve your
+  html! Octopress is aware of this configuration and makes it [[http://octopress.org/docs/deploying/github/][easy]] for
+  you to do deploy your octopress blog there.
+
+* The light that is emacs
+
+  All this is quite cool but when emacs comes into play the
+  awesomeness escalates. Now there are more than a few places to look
+  when you want to have emacs manage your octopress blog and while
+  there is some value to most of these blog posts scattered around the
+  internet I didn't manage to tame any of them into working. So i
+  decided to use my own lisp code. At the beginning I thought I would
+  fit the whole thing into a couple of defuns. Well it turns out it is
+  not [[https://github.com/fakedrake/dotemacs/blob/master/fd-octopress.el][as tivial]] as I anticipated. This code grows quickly too so I
+  expect it to become a completely separate package soon.
+
+* Why such a big fuss?
+
+  Well that is a fair question. There are a couple of reasons here too
+  but the main one is that from an emacs user's standpoint the correct
+  and most efficient way to blog is org-mode. For the uninitiated org
+  mode is emacs' version of how notetaking, authoring, time/resource
+  management and some other stuff should be done. The nice part is
+  that the environment is the same for all of those. The way it works
+  is you write in this quite readable markup language(ish) that org
+  mode understands and then it is up to the system to export it into
+  other formats (HTML, markdown, latex etc), organize it into folders
+  etc. As a bonus you can really choose your level of involvement into
+  this process. I will assume you have looked into it a little bit.
+
+  Now as those who use org mode for longer than a couple of months,
+  org mode export and publish codebase underwent some quite drastic
+  changes recently. I speculate that they are to the better as I don't
+  know the internals of the old system and the new one I find really
+  well designed. This however renders unusable most of non-streamline
+  and not-so-well maintained exports (like octopress
+  export/publish).
+
+* What to do
+
+  This is the bad news. The good news is, the markdown support is quite
+  good and the system is well built so for now we could get away with
+  minimal code on that part. We do however need to implement some
+  functionality to manage posts. The workflow is this:
+
+  - We create a post with =rake new_post[Title]= which will put the
+    post in the designated place for posts. We need to tell it to
+    create an org mode file instead of the markdown default.
+  - We will need to move that post to a separate directory where we
+    keep all our org-mode posts.
+  - Then we will use org-mode's publish capabilities to generate and
+    keep in sync the markdown files in the =_posts= directory.
+  - Finally we =rake generate= to create the static site from the
+    markdown files and =rake deploy= to upload.
+
+  Pretty straight forward. Now this is a shit load of work to do by
+  hand every time I want to create a new post. So I did all that
+
+
+  # Topics: helper functions, org publishing code blocks.

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ffmpeg | SudoWork2.0]]></title>
+  <link href="http://fakedrake.github.io/blog/categories/ffmpeg/atom.xml" rel="self"/>
+  <link href="http://fakedrake.github.io/"/>
+  <updated>2013-09-28T21:16:08+03:00</updated>
+  <id>http://fakedrake.github.io/</id>
+  <author>
+    <name><![CDATA[Chris Perivolaropoulos]]></name>
+    <email><![CDATA[darksaga2006@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Split mp3 in 10 minute segments]]></title>
+    <link href="http://fakedrake.github.io/blog/2013/03/15/split-mp3-in-10-minute-segments/"/>
+    <updated>2013-03-15T20:25:00+02:00</updated>
+    <id>http://fakedrake.github.io/blog/2013/03/15/split-mp3-in-10-minute-segments</id>
+    <content type="html"><![CDATA[<p>Here is how to divide an mp3 file into 10 minute segments with bash
+and ffmpeg:</p>
+
+<p>``` bash Split audio in 10m segments.
+for i in {0..$LENGTH_IN_SECONDS..600}; do</p>
+
+<pre><code>ffmpeg -i input_file.mp3 -ss $i -t 600 output.pt$(($i/600)).mp3;
+</code></pre>
+
+<p>done</p>
+
+<p>```</p>
+
+<p>I used this for an audio book that was in a humongous 6 hour file that
+sucks because my mp3 player doesnt support bookmarking.</p>
+]]></content>
+  </entry>
+  
+</feed>

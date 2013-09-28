@@ -9,9 +9,8 @@
   <meta name="author" content="Chris Perivolaropoulos">
 
   
-  <meta name="description" content="Hello interwebnets!! I used to have this on wordpress but I decided
-this is much more practical and hip. So I am greeting you world from
-my awesome &hellip;">
+  <meta name="description" content="Note: this is a reformatted version of an article I wrote a long time
+ago. Prelude Some preludes I am making a presentation about plone and I decided &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,17 +19,17 @@ my awesome &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fakedrake.github.io">
+  <link rel="canonical" href="http://fakedrake.github.io/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="SudoWork2.0" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="SudoWork2.0" type="application/atom+xml">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Arvo:400,400italic,700,700italic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Merienda:700" rel="stylesheet" type="text/css">
 
   
   <script type="text/javascript">
@@ -48,16 +47,9 @@ my awesome &hellip;">
 
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">SudoWork2.0</a></h1>
-  
-    <h2>Rambling and cheese (and hacking)</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+<body>
+  <div id="navigation">
+    <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
@@ -75,10 +67,303 @@ my awesome &hellip;">
 </ul>
 
 </nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
+  </div>
+  <header role="banner"><hgroup>
+  <h1><a href="/">SudoWork2.0</a></h1>
   
+    <h2>Rambling and cheese (and hacking)</h2>
+  
+</hgroup>
+
+</header>
+  <div id="body"  >
+    <div id="main">
+      <div id="content">
+        <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/27/latex-plus-beamer/">LaTeX + Beamer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-27T21:24:00+03:00" pubdate data-updated="true">Sep 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Note: this is a reformatted version of an article I wrote a <a href="http://sudowork.wordpress.com/2011/05/05/latex-beamer/">long time</a>
+ago.</p>
+
+<h1>Prelude</h1>
+
+<h2>Some preludes</h2>
+
+<p>I am making a presentation about plone and I decided Impress is good
+but not enough and that i should go with a non-wysiwyg solution:
+LaTeX + Beamer. This is the first time I had to use Beamer with Latex
+and it was quite a pleasant experience.  So before I get started with
+some bumps I stumbled upon a quick recap of how to use beamer.</p>
+
+<p>Start the document with</p>
+
+<figure class='code'><figcaption><span>A special document class</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\documentclass</span><span class="na">[arial, pdftex]</span><span class="nb">{</span>beamer<span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are a couple of options available and you are welcome to look
+them up(I wont go into them here) but these worked for my case(and I
+believe fits most cases)</p>
+
+<p>Also you want to include <code>\usepackage{graphicx}</code> if you need graphics in
+your presentation(most cases).  Then add some info about the
+presentation</p>
+
+<figure class='code'><figcaption><span>Meta-data</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\title</span><span class="nb">{</span>Foo Title<span class="nb">}</span>
+</span><span class='line'><span class="k">\subtitle</span><span class="nb">{</span>Bar Subtitle<span class="nb">}</span>
+</span><span class='line'><span class="k">\author</span><span class="nb">{</span>Chris Perivolaropoulos<span class="nb">}</span>
+</span><span class='line'><span class="k">\institution</span><span class="nb">{</span>university of Patras<span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Beamer uses this in some cases making your life easier(mostly in the title page).</p>
+
+<p>A quick summary of the slide definition mechanics of beamer: a slide
+can be defined in two ways</p>
+
+<figure class='code'><figcaption><span>Very simple slide.</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\frame</span><span class="nb">{</span>Sole Contents of the slide<span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>if you want something really quick (or in my case mostly for the draft version) and</p>
+
+<figure class='code'><figcaption><span>More complex slide.</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\begin</span><span class="nb">{</span>frame<span class="nb">}{</span>optionally the slide title<span class="nb">}</span>
+</span><span class='line'>Contents
+</span><span class='line'><span class="k">\end</span><span class="nb">{</span>frame<span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So next thing you decide when(and if) you want to show a slide with
+the contents highlighted according to the context.</p>
+
+<figure class='code'><figcaption><span>Slide to introduce each section.</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\AtBeginSection</span><span class="na">[]</span><span class="nb">{</span><span class="k">\begin</span><span class="nb">{</span>frame<span class="nb">}</span><span class="k">\frametitle</span><span class="nb">{</span>Table of Contents<span class="nb">}</span><span class="k">\tableofcontents</span><span class="na">[currentsection]</span><span class="k">\end</span><span class="nb">{</span>frame<span class="nb">}}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This would be the case if you want a slide with a table of contents at
+the beginning of each section (i would recommend heavy use of sections
+and subsections, although i am too lazy to do that more than a
+minimum)</p>
+
+<p>It is time to begin the document</p>
+
+<figure class='code'><figcaption><span>LaTeX</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The first slide is made by beamer based on the information you have
+already provided.</p>
+
+<figure class='code'><figcaption><span>Generate tile frame from metadata</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\frame</span><span class="nb">{</span><span class="k">\titlepage</span><span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Flow control for pros</h1>
+
+<p>Within the slides you can use</p>
+
+<figure class='code'><figcaption><span>Break slide in parts.</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\pause</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Whenever you want to stop the slide and wait for a pgdn(eg if show
+items in a list one by one, put a <code>\pause</code> after each item).</p>
+
+<p>Another way I found useful to control the flow is to use.</p>
+
+<figure class='code'><figcaption><span>Show one thing at a time.</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\only</span><span class="nb">{</span>The only thing shown in the slide<span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each frame remains active for a number of slides (or rather is
+made of a number of pdf pages if you have ever used office). The
+contents of the argument of <code>\only</code> will be shown only in the
+slides/pages defined by . For example</p>
+
+<figure class='code'><figcaption><span>Example of \only</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\begin</span><span class="nb">{</span>frame<span class="nb">}{</span>In the beginning there was HTML<span class="nb">}</span>
+</span><span class='line'><span class="k">\begin</span><span class="nb">{</span>center<span class="nb">}</span>
+</span><span class='line'><span class="k">\includegraphics</span><span class="na">[width=0.5\textwidth]</span><span class="nb">{</span>html.pdf<span class="nb">}</span> <span class="k">\\</span><span class="c">% vector graphics</span>
+</span><span class='line'><span class="k">\vspace</span><span class="nb">{</span>1cm<span class="nb">}</span>
+</span><span class='line'><span class="k">\only</span><span class="nb">{</span><span class="k">\vspace</span><span class="nb">{</span>16pt<span class="nb">}}</span>
+</span><span class='line'><span class="k">\only</span><span class="nb">{</span>http://foo.com/about.html<span class="nb">}</span>
+</span><span class='line'><span class="k">\only</span><span class="nb">{</span>http://foo.com/folder/item.html<span class="nb">}</span>
+</span><span class='line'><span class="k">\end</span><span class="nb">{</span>center<span class="nb">}</span>
+</span><span class='line'><span class="k">\end</span><span class="nb">{</span>frame<span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A couple other useful things are shown here:</p>
+
+<p>one if you want somewhere to have an empty line and then have
+something appear there <code>\only{\\}</code> will not work. I know it would be
+handy but LaTeX gets confused this way. What you do is put the size
+of the fonts +2 for the space between the lines.</p>
+
+<p>Also it is good to use the center environment which&#x2026;centers
+everything in the slide. Be aware that this also means that if we
+had omitted the <code>\only{\vspace{16pt}}</code> line would screw up the
+&ldquo;effect&rdquo; of the text appearing under the image because the size of
+the content in step 2 is bigger than that of step one, so the
+centering would &ldquo;mess&rdquo; things up. Another way to have the same
+effect is to use a <code>\pause</code> instead of <code>\only{\vspace{16pt}}</code>. I
+dont have a preference.</p>
+
+<h1>Vector graphics</h1>
+
+<p>Notice now the <code>\includegraphics</code> line in the above exaple. I love
+vector graphics and I love inkscape. Inkscape can produce pdf
+files(save as->*.pdf) readable by LaTeX in the way you see
+above. Keep in mid though that you should convert any text in your
+drawing to paths by or it will not be in the pdf(even though
+inkscape&rsquo;s dialog claims to be able to do that for you) and also to
+be careful if you are saving it as a page or as a drawing. If you
+save as a page only the page is rendered when you include the file in
+LaTeX, as a drawing is the way to go in most cases.</p>
+
+<h1>For the boring (or how to show statistics properly)</h1>
+
+<p>In my talk i also have some bar charts. What most documentation and
+forums suggested for that was a package called pgfplots. DONT USE
+THAT. It stole more than 4 hours of my life to produce a mediocre
+result. Use R instead. In case you are not familiar with it R is a
+language focused on dealing with statistics (package is <code>r-base</code> for
+ubuntu and <code>r</code> for arch).</p>
+
+<p>It can produce REALLY easily bar charts that look the way you expect
+them to IF you <strong>don&rsquo;t</strong> use sweave. Sweave is a tool that is supposed
+to provide a friendly bridge between R and LaTeX. It works the way
+you expect it to but (as many latex modules) is poorly documented
+and most importantly the workflow of working with it is very
+inefficient. (Note that it has the advantage that it can be
+automated meaning that if you plan to frequently work with plots and
+graphs in LaTeX you should definitely look into it, if not stay away
+as I would rather have done from the getgo).</p>
+
+<p>Instead i ended up being very happy and productive using the R shell
+and making it export what I wanted in .pdf graphics files. I will not
+go into detail of how to use R. It is really well documented and I am
+not by far qualified to say anything about R except that it saved me
+loads of time.</p>
+
+<h1>You&rsquo;re good to go</h1>
+
+<p>This is the wisdom I have acquired so far from writing my
+presentation. I hope this saves people some time and energy.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/26/executable-permissions/">Executable Permissions</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-26T16:07:00+03:00" pubdate data-updated="true">Sep 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There are some emacs commands that I call interactively only to use a
+small subset of their functionality which means more keystrokes and
+zoning out for a bit (interuption = check reddit). Prominent examples
+of this are rename-file and chmod. Not anymore though! WIth this
+command you give executable permissions to everyone on the current
+file!</p>
+
+<figure class='code'><figcaption><span>Make current file executable</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='scm'><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">chmod+x-this</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Add executable permissions to the current file.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="nv">buffer-file-name</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">new-mode</span> <span class="p">(</span><span class="nf">logior</span> <span class="o">#</span><span class="nv">o111</span> <span class="p">(</span><span class="nf">file-modes</span> <span class="nv">buffer-file-name</span><span class="p">))))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">set-file-modes</span> <span class="nv">buffer-file-name</span> <span class="nv">new-mode</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;No such file to make executable.&quot;</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -129,6 +414,191 @@ my awesome new SudoWorkV2 blog.</p>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/19/emacs-a-faithful-companion-when-configuring-your-system/">Emacs: A Faithful Companion When Configuring Your System</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-19T20:31:00+03:00" pubdate data-updated="true">Jun 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Emacs is awesome as we all know and one of the reasons it is awesome
+is tramp. This little extension-plugin-package-whatever is bundled
+with emacs and lets you access files remotely as if they were in your
+filesystem. It can also open files with sudo from the same
+non-priviledged emacs instance. How it works is you prepend ‘/sudo::’
+to the filename and you are good to go! And this is all really cool.</p>
+
+<p>Being the greedy bastard that I am however, this was not enough for
+me. I don’t want to have to find the file again and prepend sudo, this
+will also open a new buffer so I will have to deal with having two
+buffers of the same file and this can be quite annoying after a while.</p>
+
+<p>Thankfully emacs is awesome as we have established and it was
+extremely easy with a couple of lines of elisp to have it login as
+root before writing to disk if I try to save without permissions. Here
+is my code:</p>
+
+<figure class='code'><figcaption><span>Give sudo to current file editing session</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scm'><span class='line'><span class="p">(</span><span class="nf">defadvice</span> <span class="nv">save-buffer</span> <span class="p">(</span><span class="nf">around</span> <span class="nv">save-buffer-as-root-around</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class='line'>  <span class="s">&quot;Use sudo to save the current buffer.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span> <span class="s">&quot;p&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="k">and </span><span class="p">(</span><span class="nf">buffer-file-name</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">file-accessible-directory-p</span> <span class="p">(</span><span class="nf">current-directory</span><span class="p">))</span>
+</span><span class='line'>     <span class="p">(</span><span class="nb">not </span><span class="p">(</span><span class="nf">file-writable-p</span> <span class="p">(</span><span class="nf">buffer-file-name</span><span class="p">))))</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">buffer-file-name</span> <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;/sudo::%s&quot;</span> <span class="nv">buffer-file-name</span><span class="p">)))</span>
+</span><span class='line'>  <span class="nv">ad-do-it</span><span class="p">)</span>
+</span><span class='line'>    <span class="nv">ad-do-it</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/15/split-mp3-in-10-minute-segments/">Split Mp3 in 10 Minute Segments</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-15T20:25:00+02:00" pubdate data-updated="true">Mar 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here is how to divide an mp3 file into 10 minute segments with bash
+and ffmpeg:</p>
+
+<figure class='code'><figcaption><span>Split audio in 10m segments.</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for </span>i in <span class="o">{</span>0..<span class="nv">$LENGTH_IN_SECONDS</span>..600<span class="o">}</span>; <span class="k">do</span>
+</span><span class='line'><span class="k">  </span>ffmpeg -i input_file.mp3 -ss <span class="nv">$i</span> -t 600 output.pt<span class="k">$((</span><span class="nv">$i</span><span class="o">/</span><span class="m">600</span><span class="k">))</span>.mp3;
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I used this for an audio book that was in a humongous 6 hour file that
+sucks because my mp3 player doesnt support bookmarking.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/06/decent-editing-in-firefox/">Decent Editing in Firefox</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-06T20:33:00+03:00" pubdate data-updated="true">Jun 6<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hello everyone!,</p>
+
+<p>I was browsing some addons the other day being bored out of my mind
+and alongside all the useless trash you normally find on the add-ons
+page of firefox i found a diamond.</p>
+
+<p>At last the days where it was either dealing with the clipboard system
+of Xorg or dealing with the extremely basic editing functionality that
+web browsers provide for text input are over. It’s all text is here to
+save the endless cursing that came along with editing html in Joomla!
+or writing anything online that required a TAB or having to watch out
+not to use any of your vim or emacs keybindings. This addon will let
+you edit whatever you are editing in your favorte editor and then pipe
+it back to the input box!</p>
+
+<p>In the Preferences of the add-on you can select your favourite
+editor(if you haven’t defined so in an EDITOR variable) and the
+keybinding to use to get there. When you use it click on the small
+blue button that appears or use the key you defined(only problem this
+doesn’t work with vimperator, i will update if i find a
+solution). When you are done kill the editor(or emacs client in my
+case(using C-x #)) and you will find that whatever change you made is
+now in the input box. :D</p>
+
+<p>EDIT: I swiched to pentadactyl wich is much faster and smarter than
+vimperator so I suggest you do that aswell. I am not sure if
+vimperator has this aswell but C-i in pentadactyl fires up the text
+editor found in pentadactyl’s editor variable(gvim is the default)
+without the need of all is text! Quite nice.</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -142,7 +612,23 @@ my awesome new SudoWorkV2 blog.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/27/latex-plus-beamer/">LaTeX + Beamer</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/26/executable-permissions/">Executable permissions</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/25/hello-world/">Hello World!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/19/emacs-a-faithful-companion-when-configuring-your-system/">Emacs: a faithful companion when configuring your system</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/15/split-mp3-in-10-minute-segments/">Split mp3 in 10 minute segments</a>
       </li>
     
   </ul>
@@ -157,7 +643,7 @@ my awesome new SudoWorkV2 blog.</p>
   <a href="https://github.com/fakedrake">@fakedrake</a> on GitHub
   
   <script type="text/javascript">
-    $(document).ready(function(){
+    $.domReady(function(){
         if (!window.jXHR){
             var jxhr = document.createElement('script');
             jxhr.type = 'text/javascript';
@@ -184,15 +670,15 @@ my awesome new SudoWorkV2 blog.</p>
   
 </aside>
 
+      </div>
     </div>
-  </div>
-  <footer role="contentinfo"><p>
+    <footer role="contentinfo"><p>
   Copyright &copy; 2013 - Chris Perivolaropoulos -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>. Design by <a href="http://octopressthemes.com">Octopress Themes</a></span>
 </p>
 
 </footer>
-  
+    
 
 <script type="text/javascript">
       var disqus_shortname = 'sudowork';
@@ -213,7 +699,7 @@ my awesome new SudoWorkV2 blog.</p>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
+  js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
@@ -227,7 +713,7 @@ my awesome new SudoWorkV2 blog.</p>
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
@@ -236,5 +722,6 @@ my awesome new SudoWorkV2 blog.</p>
 
 
 
+  </div>
 </body>
 </html>
