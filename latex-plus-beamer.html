@@ -102,33 +102,167 @@
               <div class="left col-md-9">
                     <!-- article title -->
   <header>
-          <h1>My super title</h1>
+          <h1>LaTeX plus Beamer</h1>
         <small class="fsize13">
-                                                                                    <a href="/category/yeah.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> yeah</a>
-                              <a href="/my-super-post.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="my-super-post.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+                                                                  <a href="/category/latex.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> LaTeX</a>
+                                                <a href="/latex-plus-beamer.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="latex-plus-beamer.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       <span class="label label-default light">Sun 03 October 2010</span> 
     </small>
   </header>
 
   <article class='content'>
-        
+        <h1>Prelude</h1>
+<p>I am making a presentation about plone and I decided Impress is good
+but not enough and that i should go with a non-wysiwyg solution:
+LaTeX + Beamer. This is the first time I had to use Beamer with Latex
+and it was quite a pleasant experience.  So before I get started with
+some bumps I stumbled upon a quick recap of how to use beamer.</p>
+<p>Start the document with</p>
+<div class="highlight"><pre><span class="k">\documentclass</span><span class="na">[arial, pdftex]</span><span class="nb">{</span>beamer<span class="nb">}</span>
+</pre></div>
+
+
+<p>There are a couple of options available and you are welcome to look
+them up(I wont go into them here) but these worked for my case(and I
+believe fits most cases)</p>
+<p>Also you want to include <code>\usepackage{graphicx}</code> if you need graphics in
+your presentation(most cases).  Then add some info about the
+presentation</p>
+<div class="highlight"><pre><span class="k">\title</span><span class="nb">{</span>Foo Title<span class="nb">}</span>
+<span class="k">\subtitle</span><span class="nb">{</span>Bar Subtitle<span class="nb">}</span>
+<span class="k">\author</span><span class="nb">{</span>Chris Perivolaropoulos<span class="nb">}</span>
+<span class="k">\institution</span><span class="nb">{</span>university of Patras<span class="nb">}</span>
+</pre></div>
+
+
+<p>Beamer uses this in some cases making your life easier(mostly in the title page).</p>
+<p>A quick summary of the slide definition mechanics of beamer: a slide
+can be defined in two ways</p>
+<div class="highlight"><pre><span class="k">\frame</span><span class="nb">{</span>Sole Contents of the slide<span class="nb">}</span>
+</pre></div>
+
+
+<p>if you want something really quick (or in my case mostly for the draft version) and</p>
+<div class="highlight"><pre><span class="k">\begin</span><span class="nb">{</span>frame<span class="nb">}{</span>optionally the slide title<span class="nb">}</span>
+Contents
+<span class="k">\end</span><span class="nb">{</span>frame<span class="nb">}</span>
+</pre></div>
+
+
+<p>So next thing you decide when(and if) you want to show a slide with
+the contents highlighted according to the context.</p>
+<div class="highlight"><pre><span class="k">\AtBeginSection</span><span class="na">[]</span><span class="nb">{</span><span class="k">\begin</span><span class="nb">{</span>frame<span class="nb">}</span><span class="k">\frametitle</span><span class="nb">{</span>Table of Contents<span class="nb">}</span><span class="k">\tableofcontents</span><span class="na">[currentsection]</span><span class="k">\end</span><span class="nb">{</span>frame<span class="nb">}}</span>
+</pre></div>
+
+
+<p>This would be the case if you want a slide with a table of contents at
+the beginning of each section (i would recommend heavy use of sections
+and subsections, although i am too lazy to do that more than a
+minimum)</p>
+<p>It is time to begin the document</p>
+<div class="highlight"><pre><span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>
+</pre></div>
+
+
+<p>The first slide is made by beamer based on the information you have
+already provided.</p>
+<div class="highlight"><pre><span class="k">\frame</span><span class="nb">{</span><span class="k">\titlepage</span><span class="nb">}</span>
+</pre></div>
+
+
+<h1>Flow control for pros</h1>
+<p>Within the slides you can use</p>
+<div class="highlight"><pre><span class="k">\pause</span>
+</pre></div>
+
+
+<p>Whenever you want to stop the slide and wait for a pgdn(eg if show
+items in a list one by one, put a <code>\pause</code> after each item).</p>
+<p>Another way I found useful to control the flow is to use.</p>
+<div class="highlight"><pre><span class="k">\only</span><span class="nb">{</span>The only thing shown in the slide<span class="nb">}</span>
+</pre></div>
+
+
+<p>Each frame remains active for a number of slides (or rather is
+made of a number of pdf pages if you have ever used office). The
+contents of the argument of <code>\only</code> will be shown only in the
+slides/pages defined by . For example</p>
+<div class="highlight"><pre><span class="k">\begin</span><span class="nb">{</span>frame<span class="nb">}{</span>In the beginning there was HTML<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>center<span class="nb">}</span>
+<span class="k">\includegraphics</span><span class="na">[width=0.5\textwidth]</span><span class="nb">{</span>html.pdf<span class="nb">}</span> <span class="k">\\</span><span class="c">% vector graphics</span>
+<span class="k">\vspace</span><span class="nb">{</span>1cm<span class="nb">}</span>
+<span class="k">\only</span><span class="nb">{</span><span class="k">\vspace</span><span class="nb">{</span>16pt<span class="nb">}}</span>
+<span class="k">\only</span><span class="nb">{</span>http://foo.com/about.html<span class="nb">}</span>
+<span class="k">\only</span><span class="nb">{</span>http://foo.com/folder/item.html<span class="nb">}</span>
+<span class="k">\end</span><span class="nb">{</span>center<span class="nb">}</span>
+<span class="k">\end</span><span class="nb">{</span>frame<span class="nb">}</span>
+</pre></div>
+
+
+<p>A couple other useful things are shown here:</p>
+<p>one if you want somewhere to have an empty line and then have
+something appear there <code>\only{\\}</code> will not work. I know it would be
+handy but LaTeX gets confused this way. What you do is put the size
+of the fonts +2 for the space between the lines.</p>
+<p>Also it is good to use the center environment which&#x2026;centers
+everything in the slide. Be aware that this also means that if we
+had omitted the <code>\only{\vspace{16pt}}</code> line would screw up the
+"effect" of the text appearing under the image because the size of
+the content in step 2 is bigger than that of step one, so the
+centering would "mess" things up. Another way to have the same
+effect is to use a <code>\pause</code> instead of <code>\only{\vspace{16pt}}</code>. I
+dont have a preference.</p>
+<h1>Vector graphics</h1>
+<p>Notice now the <code>\includegraphics</code> line in the above exaple. I love
+vector graphics and I love inkscape. Inkscape can produce pdf
+files(save as-&gt;*.pdf) readable by LaTeX in the way you see
+above. Keep in mid though that you should convert any text in your
+drawing to paths by or it will not be in the pdf(even though
+inkscape's dialog claims to be able to do that for you) and also to
+be careful if you are saving it as a page or as a drawing. If you
+save as a page only the page is rendered when you include the file in
+LaTeX, as a drawing is the way to go in most cases.</p>
+<h1>For the boring (or how to show statistics properly)</h1>
+<p>In my talk i also have some bar charts. What most documentation and
+forums suggested for that was a package called pgfplots. DONT USE
+THAT. It stole more than 4 hours of my life to produce a mediocre
+result. Use R instead. In case you are not familiar with it R is a
+language focused on dealing with statistics (package is <code>r-base</code> for
+ubuntu and <code>r</code> for arch).</p>
+<p>It can produce REALLY easily bar charts that look the way you expect
+them to IF you <strong>don't</strong> use sweave. Sweave is a tool that is supposed
+to provide a friendly bridge between R and LaTeX. It works the way
+you expect it to but (as many latex modules) is poorly documented
+and most importantly the workflow of working with it is very
+inefficient. (Note that it has the advantage that it can be
+automated meaning that if you plan to frequently work with plots and
+graphs in LaTeX you should definitely look into it, if not stay away
+as I would rather have done from the getgo).</p>
+<p>Instead i ended up being very happy and productive using the R shell
+and making it export what I wanted in .pdf graphics files. I will not
+go into detail of how to use R. It is really well documented and I am
+not by far qualified to say anything about R except that it saved me
+loads of time.</p>
+<h1>You're good to go</h1>
+<p>This is the wisdom I have acquired so far from writing my
+presentation. I hope this saves people some time and energy.</p>
   </article>
 
     <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
   <p class="socials">
-    <a href="http://www.facebook.com/sharer/sharer.php?u=/my-super-post.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=/my-super-post.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=/my-super-post.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url==/my-super-post.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/my-super-post.html&title=My super title&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+    <a href="http://www.facebook.com/sharer/sharer.php?u=/latex-plus-beamer.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=/latex-plus-beamer.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=/latex-plus-beamer.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==/latex-plus-beamer.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/latex-plus-beamer.html&title=LaTeX plus Beamer&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>  
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-                                                                                                                                                                                                                                                                                                                                                                                      <a href="/tag/awesome.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> awesome</a>
-              <a href="/tag/thats.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> thats</a>
+                                                                                                                                                                                                                                                                                                                                                                                      <a href="/tag/latex.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> latex</a>
+              <a href="/tag/beamer.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> beamer</a>
             </p>
 
   <hr /><!-- divider -->
