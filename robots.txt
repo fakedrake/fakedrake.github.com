@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://fakedrake.github.io/sitemap.xml 
