@@ -1,2 +1,0 @@
-Pelican==3.2
--e git+git://github.com/davisp/ghp-import.git#egg=ghp-import
