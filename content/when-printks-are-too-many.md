@@ -4,7 +4,7 @@ tags: git, kernel, debugging
 category: kernel
 slug: when-printks-are-too-many
 author: Chris Perivolaropoulos
-summary: Clean your code from your extra printks with git.
+summary: Clean kernel source from debugging printks with git
 
 As I am too lazy to be using proper debugging methods (although what
 proper debugging methods can be
