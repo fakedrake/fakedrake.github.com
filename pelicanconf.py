@@ -32,7 +32,7 @@ DEFAULT_PAGINATION = False
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
-THEME = "/home/fakedrake/Projects/Python/blogging/BT3-Flat"
+THEME = "theme/"
 BG_IMG = "https://exposure-2.imgix.net/production/photos/z8ilyalf54su4n291ozw4xvep8s0dx6rgvdi/original.jpg"
 LOGO_IMG = "http://imgur.com/KyLzuoW.png"
 SITESUBTITLE = "Procrastinating and nose picking since 1991"
