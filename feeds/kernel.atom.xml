@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="/" rel="alternate"></link><link href="/feeds/kernel.atom.xml" rel="self"></link><id>/</id><updated>2014-03-28T20:45:00+02:00</updated><entry><title>When printks are too many</title><link href="/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;As I am too lazy to be using proper debugging methods (although what
+proper debugging methods can be
+&lt;a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN"&gt;debateable&lt;/a&gt;)
+I always (over)use printks to debug the kernel. Now the problem with
+printks is that when you find your bug they are all over the kernel
+code and it can be a real pain to remove them one by one.&lt;/p&gt;
+&lt;p&gt;This is not a trivial problem when you spend more than a couple of
+hours on a particular problem. The good news is that due to the nature
+of printk-debugging you usually know which one of your nasty hacks
+fixed the problem you were looking for. Thus you can &lt;code&gt;git diff&lt;/code&gt; those
+to just keep the useful changes (I use emacs' ediff, meld or anything
+interactive should be good enough), then you commit just those.&lt;/p&gt;
+&lt;p&gt;You should learn from my mistakes and not blindly &lt;code&gt;git checkout&lt;/code&gt; at
+the project root. For me there are usually some nasty device tree
+changes that I make to fit Qemu and also my .config is setup for
+debugging. I definitely dont want reverting any of that. Actually all
+I want to revert is the .c files I threw printks in.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;sed&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;modified&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;(.&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;xargs&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Works 99% of the time. To avoid the tragedy of the other 1% make sure
+you take a look at &lt;code&gt;git status&lt;/code&gt; &lt;em&gt;beforehand&lt;/em&gt;.&lt;/p&gt;</summary><category term="git"></category><category term="kernel"></category><category term="debugging"></category></entry></feed>
