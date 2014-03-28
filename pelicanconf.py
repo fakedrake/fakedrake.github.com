@@ -41,17 +41,11 @@ PERSONAL_PHOTO = "http://i60.tinypic.com/2uesocp.jpg"
 PERSONAL_INFO = """A flea lost in the haze of existential insanity. In between
 procrastination sessions I may write some code too.
 """
-DISQUS_SITENAME = "drninjabatman-blog"
-SITEURL_DISQUS = 'http://fakedrake.github.io'
+
 FAVICON = "/theme/img/favicon.png"
 
-GOOGLE_ANALYTICS_TRACKING_ID = 'UA-44345210-1'
-GOOGLE_ANALYTICS_URL = "fakedrake.github.io"
-
 WORK_DESCRIPTION = """On the thin line between hacking and engineering."""
-
 TS_JOB_DESCRIPTION = """At Think-Silicon we build awesome GPUs for mobile devices."""
-
 START_JOB_DESCRIPTION = """START is a system developed by CSAIL's InfoLab that aims to
 accurately answer natural language questions. Working the wikipedia
 backend."""

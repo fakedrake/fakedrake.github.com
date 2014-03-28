@@ -20,5 +20,9 @@ DELETE_OUTPUT_DIRECTORY = True
 
 # Following items are often useful when publishing
 
-#DISQUS_SITENAME = ""
-#GOOGLE_ANALYTICS = ""
+
+GOOGLE_ANALYTICS_TRACKING_ID = 'UA-44345210-1'
+GOOGLE_ANALYTICS_URL = "fakedrake.github.io"
+
+DISQUS_SITENAME = "drninjabatman-blog"
+SITEURL_DISQUS = 'http://fakedrake.github.io'
