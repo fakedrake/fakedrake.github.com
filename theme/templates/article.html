@@ -1,8 +1,7 @@
 {% import "macros.html" as m %}
 {% extends "blog_base.html" %}
 <!-- BLOG -->
-{%block content_area %}
-  <!-- article title -->
+{% block title %}
   <header>
     {% if article.link %}
       <a href="{{ article.link }}" rel="bookmark" title="External Link to {{ article.title|striptags|e }}"><h1>{{ article.title }} <i class="fa fa-external-link"></i></h1></a>
@@ -22,6 +21,10 @@
       <span class="label label-default light">{{ article.locale_date }}</span>
     </small>
   </header>
+  {% endblock %}
+
+{%block content_area %}
+  <!-- article title -->
 
   <article class='content'>
     {% if article.featured %}
