@@ -6,10 +6,10 @@ slug: dealing-with-enormous-ramdisks-and-qemu
 author: Chris Perivolaropoulos
 summary: There are times when you want to have everything on RAM. There are times when everything is more than 500M. And then there are times when you want both. That's when everything goes to hell.
 
-*DISCLAIMER:* This is hacky and BAD. Do not use 500M ramdisks for
- anything crucial. Make them small and mount the rest of the
- filesystem in `rootfs=<fs>` in boot commands and the `-hda` option on
- qemu or use nfs or whatever.
+**WARNING:** This is hacky and BAD. Do not use 500M ramdisks for
+anything crucial. Make them small and mount the rest of the
+filesystem in `rootfs=<fs>` in boot commands and the `-hda` option on
+qemu or use nfs or whatever.
 
 So there are times in Think-Silicon land when permanent storage
 devices may not always be there for you. May that be because your
@@ -127,7 +127,7 @@ relevan excerpt
 	:::bash
 	...
 
-	BOOTCMD="console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=$(du --apparent-size $RAMDISK | awk '{print $1}'),1p'"
+	BOOTCMD="console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=$(du --apparent-size $RAMDISK | awk '{print $1}'),1'"
 	CMD="$QEMU -M xilinx-zynq-a9  -m 1024  -serial null -serial mon:stdio -dtb $DTB -kernel $KERNEL -initrd $RAMDISK -nographic"
 
 	echo -e "Running: $CMD -append $BOOTCMD\nC-a x to kill..."
