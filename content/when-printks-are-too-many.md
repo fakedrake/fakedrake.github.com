@@ -6,9 +6,9 @@ slug: when-printks-are-too-many
 author: Chris Perivolaropoulos
 summary: Clean kernel source from debugging printks with git
 
-As I am too lazy to be using proper debugging methods (although what
-proper debugging methods can be
-[debateable](http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN))
+Being too lazy to use proper debugging methods as I am (although what
+proper debugging methods are is sometimes
+[debateable](http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN)),
 I always (over)use printks to debug the kernel. Now the problem with
 printks is that when you find your bug they are all over the kernel
 code and it can be a real pain to remove them one by one.
