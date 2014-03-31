@@ -1,7 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2014-03-28T20:45:00+02:00</updated><entry><title>When printks are too many</title><link href="/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;As I am too lazy to be using proper debugging methods (although what
-proper debugging methods can be
-&lt;a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN"&gt;debateable&lt;/a&gt;)
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2014-03-31T22:30:00+03:00</updated><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
+anything crucial. Make them small and mount the rest of the
+filesystem in &lt;code&gt;rootfs=&amp;lt;fs&amp;gt;&lt;/code&gt; in boot commands and the &lt;code&gt;-hda&lt;/code&gt; option on
+qemu or use nfs or whatever.&lt;/p&gt;
+&lt;p&gt;So there are times in Think-Silicon land when permanent storage
+devices may not always be there for you. May that be because your
+ethernet device screws up and you are relying on NFS for fsroot, or
+may it be because I just want the kernel to do my bidding and load a
+ramdisk that is as big as half a Gigabyte. The point is shoving such a
+big ramdisk down the kernel's throat will result in it choking into
+something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+
+&lt;span class="nl"&gt;RAMDISK:&lt;/span&gt; &lt;span class="n"&gt;ext2&lt;/span&gt; &lt;span class="n"&gt;filesystem&lt;/span&gt; &lt;span class="n"&gt;found&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;block&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="nl"&gt;RAMDISK:&lt;/span&gt; &lt;span class="n"&gt;image&lt;/span&gt; &lt;span class="n"&gt;too&lt;/span&gt; &lt;span class="n"&gt;big&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;500496&lt;/span&gt;&lt;span class="n"&gt;KiB&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;16384&lt;/span&gt;&lt;span class="n"&gt;KiB&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;xemacps&lt;/span&gt; &lt;span class="n"&gt;e000b000&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;eth&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Set&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="mi"&gt;124999998&lt;/span&gt; &lt;span class="n"&gt;Hz&lt;/span&gt;
+&lt;span class="n"&gt;xemacps&lt;/span&gt; &lt;span class="n"&gt;e000b000&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;eth&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;link&lt;/span&gt; &lt;span class="n"&gt;up&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;FULL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;List&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;all&lt;/span&gt; &lt;span class="n"&gt;partitions&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt;            &lt;span class="mi"&gt;1024&lt;/span&gt; &lt;span class="n"&gt;mtdblock0&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;01&lt;/span&gt;            &lt;span class="mi"&gt;5120&lt;/span&gt; &lt;span class="n"&gt;mtdblock1&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;02&lt;/span&gt;             &lt;span class="mi"&gt;128&lt;/span&gt; &lt;span class="n"&gt;mtdblock2&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;03&lt;/span&gt;            &lt;span class="mi"&gt;6016&lt;/span&gt; &lt;span class="n"&gt;mtdblock3&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;04&lt;/span&gt;            &lt;span class="mi"&gt;4096&lt;/span&gt; &lt;span class="n"&gt;mtdblock4&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;filesystem&lt;/span&gt; &lt;span class="n"&gt;could&lt;/span&gt; &lt;span class="n"&gt;mount&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tried&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;  &lt;span class="n"&gt;ext3&lt;/span&gt; &lt;span class="n"&gt;ext2&lt;/span&gt; &lt;span class="n"&gt;ext4&lt;/span&gt; &lt;span class="n"&gt;vfat&lt;/span&gt; &lt;span class="n"&gt;msdos&lt;/span&gt;
+&lt;span class="n"&gt;Kernel&lt;/span&gt; &lt;span class="n"&gt;panic&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;not&lt;/span&gt; &lt;span class="n"&gt;syncing&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VFS&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Unable&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;mount&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;fs&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;unknown&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;block&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Turns out you can do something about it, may it be hacky and
+horrible. This is the tale of a glorious journey through the mysts of
+the linux kernel to a busybox prompt inside of Qemu.&lt;/p&gt;
+&lt;p&gt;Let's start at the beginning. When the kernel registers a block device
+it then registers a number of disks with the same major number that
+take upon them the actual work. To those disks is mapped the actual
+memory. This paradigm is implemented in &lt;em&gt;block/genhd.c&lt;/em&gt;. This
+description is also neither complete nor 100% accurate but it is
+enough for now.&lt;/p&gt;
+&lt;p&gt;When the kernel boots up, one of the first drivers it loads is one
+called &lt;em&gt;brd&lt;/em&gt; as in &lt;em&gt;block ramdisk device&lt;/em&gt;. That driver creates a block
+device interface to the main memory and lives in
+&lt;em&gt;drivers/block/brd.c&lt;/em&gt;. The block device &lt;em&gt;ramdisk&lt;/em&gt; with major number 1
+is created and gets disks called &lt;em&gt;ram#&lt;/em&gt; as in &lt;em&gt;ram0&lt;/em&gt;, &lt;em&gt;ram1&lt;/em&gt;,
+..., 16 by default. Those disks each represent a space in virtual memory and have the
+same size which by default is 16M. The problem we faced above is
+basically the kernel trying to fit a 500M initrd in a 16M disk. What
+we need to do basically is resize those so that the ramdisk fits
+nicely.&lt;/p&gt;
+&lt;p&gt;As either google or the code in &lt;em&gt;brd.c&lt;/em&gt; will kindly tell you you can
+always tell the kernel in the boot commands
+&lt;em&gt;ramdisk_size=500000&lt;/em&gt;. That will supposedly set thing up so that we
+can just tell qemu &lt;code&gt;-initrd &amp;lt;fucking-huge-ramdisk.img&amp;gt;&lt;/code&gt; right?!?&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Check yo shit" src="http://www.themistermen.co.uk/images/MrWrong.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;WRONG!!&lt;/p&gt;
+&lt;p&gt;The kernel tries to create 16 such 500M disks. Which sucks. We need to
+change the number of disks the driver creates. You can do that via the
+&lt;code&gt;CONFIG_BLK_DEV_RAM_COUNT&lt;/code&gt; option but I hate having to compile the
+entire kernel to change something that can to some extent be changed
+from user space. Did I mention you can create more disks with &lt;code&gt;rdev
+-r&lt;/code&gt; from the shell? That is because I have no idea if it is
+true. &lt;em&gt;Documentation/blockdev/ramdisk.txt&lt;/em&gt; betrayed me once with
+mentioning that I can &lt;code&gt;ramdisk_blocksize=N&lt;/code&gt; which if you grep the
+source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
+&lt;p&gt;Anyway what I ended up doing is editing &lt;code&gt;ramdisk_size()&lt;/code&gt; from this&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
+&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;__init&lt;/span&gt; &lt;span class="nf"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;rd_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;simple_strtol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;to look more like this&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
+&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;__init&lt;/span&gt; &lt;span class="nf"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;get_option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;switch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;:
+            &lt;span class="n"&gt;rd_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;:
+            &lt;span class="n"&gt;rd_nr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you can pass &lt;em&gt;ramdisk_size=500000,1&lt;/em&gt; to tell the driver to make
+just one 500M disk, while having &lt;em&gt;ramdisk_size=500000&lt;/em&gt; behave as
+before. Noice!&lt;/p&gt;
+&lt;p&gt;So now we simply run qemu&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;qemu&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;arm&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;M&lt;/span&gt; &lt;span class="n"&gt;xilinx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zynq&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a9&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;serial&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;serial&lt;/span&gt;
+    &lt;span class="nl"&gt;mon:&lt;/span&gt;&lt;span class="n"&gt;stdio&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dtb&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;devtree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dtb&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;zImage&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;initrd&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;enormous&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ramdisk&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;nographic&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp \&lt;/span&gt;
+&lt;span class="s"&gt;        loglevel=7 ramdisk_size=500496,1p&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And everything boots correctly!!&lt;/p&gt;
+&lt;p&gt;I always run qemu from within a script so for completeness here is the
+relevan excerpt&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;...
+
+&lt;span class="nv"&gt;BOOTCMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=$(du --apparent-size $RAMDISK | awk &amp;#39;{print $1}&amp;#39;),1&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$QEMU -M xilinx-zynq-a9  -m 1024  -serial null -serial mon:stdio -dtb $DTB -kernel $KERNEL -initrd $RAMDISK -nographic&amp;quot;&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Running: $CMD -append $BOOTCMD\nC-a x to kill...&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$CMD&lt;/span&gt; -append &lt;span class="s2"&gt;&amp;quot;$BOOTCMD&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As an extra benefit this will actually measure the ramdisk and make
+the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
+proper debugging methods are is sometimes
+&lt;a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN"&gt;debateable&lt;/a&gt;),
 I always (over)use printks to debug the kernel. Now the problem with
 printks is that when you find your bug they are all over the kernel
 code and it can be a real pain to remove them one by one.&lt;/p&gt;
@@ -157,4 +277,4 @@ not by far qualified to say anything about R except that it saved me
 loads of time.&lt;/p&gt;
 &lt;h1&gt;You're good to go&lt;/h1&gt;
 &lt;p&gt;This is the wisdom I have acquired so far from writing my
-presentation. I hope this saves people some time and energy.&lt;/p&gt;</summary><category term="latex"></category><category term="beamer"></category></entry><entry><title>My super title</title><link href="/my-super-post.html" rel="alternate"></link><updated>2010-10-03T10:20:00+03:00</updated><author><name>Alexis Metaireau</name></author><id>tag:,2010-10-03:my-super-post.html</id><summary type="html"></summary><category term="thats"></category><category term="awesome"></category></entry></feed>
+presentation. I hope this saves people some time and energy.&lt;/p&gt;</summary><category term="latex"></category><category term="beamer"></category></entry></feed>
