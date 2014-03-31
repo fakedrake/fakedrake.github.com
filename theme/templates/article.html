@@ -1,6 +1,10 @@
 {% import "macros.html" as m %}
 {% extends "blog_base.html" %}
-<!-- BLOG -->
+
+{% block bar_title %}
+{{ article.title }} - {{ article.author }}
+{% endblock %}
+
 {% block title %}
   <header>
     {% if article.link %}
@@ -11,7 +15,8 @@
     <small class="fsize13">
       {% if article.category %}
         {% for category, articles in categories %}
-          {% if category.url == article.category.url %}
+          {% if category.url ==
+ article.category.url %}
             {% set article_counter = articles|length() %}
             <a href="{{ SITEURL }}/{{ article.category.url }}" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="{{ article_counter }} article{{ 's' if article_counter > 1 else '' }} in this category"><i class="fa fa-dot-circle-o"></i> {{ article.category }}</a>
           {% endif %}
@@ -19,13 +24,12 @@
       {% endif %}
       <a href="{{ SITEURL }}/{{article.url}}#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="{{article.url}}"><i class="fa fa-comment-o"></i> ?? Comments</a>
       <span class="label label-default light">{{ article.locale_date }}</span>
+      <a href="{{article.author.url}}" class="scrollTo label label-default light">{{ article.author }}</a>
     </small>
   </header>
   {% endblock %}
 
 {%block content_area %}
-  <!-- article title -->
-
   <article class='content'>
     {% if article.featured %}
       {% if article.type|lower =='image' %}
@@ -92,4 +96,4 @@
       <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
     </div>
   {% endif %}
-{%endblock%}
+{% endblock %}
