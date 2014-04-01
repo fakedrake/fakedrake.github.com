@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/kernel.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-03-31T22:30:00+03:00</updated><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
-anything crucial. Make them small and mount the rest of the
-filesystem in &lt;code&gt;rootfs=&amp;lt;fs&amp;gt;&lt;/code&gt; in boot commands and the &lt;code&gt;-hda&lt;/code&gt; option on
-qemu or use nfs or whatever.&lt;/p&gt;
+anything crucial. Make them small and mount the rest of the filesystem
+using the rootfs related boot commands and the &lt;code&gt;-hda&lt;/code&gt; option on qemu
+or use nfs or whatever.&lt;/p&gt;
 &lt;p&gt;So there are times in Think-Silicon land when permanent storage
 devices may not always be there for you. May that be because your
-ethernet device screws up and you are relying on NFS for fsroot, or
+ethernet device screws up and you are relying on NFS for rootfs, or
 may it be because I just want the kernel to do my bidding and load a
-ramdisk that is as big as half a Gigabyte. The point is shoving such a
-big ramdisk down the kernel's throat will result in it choking into
+ramdisk that is as big as half a Gigabyte. The point is, shoving such
+a big ramdisk down the kernel's throat will result in it choking into
 something like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;...&lt;/span&gt;
 
@@ -31,36 +31,37 @@ something like this:&lt;/p&gt;
 horrible. This is the tale of a glorious journey through the mysts of
 the linux kernel to a busybox prompt inside of Qemu.&lt;/p&gt;
 &lt;p&gt;Let's start at the beginning. When the kernel registers a block device
-it then registers a number of disks with the same major number that
-take upon them the actual work. To those disks is mapped the actual
-memory. This paradigm is implemented in &lt;em&gt;block/genhd.c&lt;/em&gt;. This
-description is also neither complete nor 100% accurate but it is
-enough for now.&lt;/p&gt;
+it then registers a number of disks, with the same major number as the
+block device, that take upon them the actual work of the driver. This
+paradigm is implemented in &lt;em&gt;block/genhd.c&lt;/em&gt;. This description is also
+neither complete nor 100% accurate but it is good enough for now.&lt;/p&gt;
 &lt;p&gt;When the kernel boots up, one of the first drivers it loads is one
 called &lt;em&gt;brd&lt;/em&gt; as in &lt;em&gt;block ramdisk device&lt;/em&gt;. That driver creates a block
 device interface to the main memory and lives in
-&lt;em&gt;drivers/block/brd.c&lt;/em&gt;. The block device &lt;em&gt;ramdisk&lt;/em&gt; with major number 1
-is created and gets disks called &lt;em&gt;ram#&lt;/em&gt; as in &lt;em&gt;ram0&lt;/em&gt;, &lt;em&gt;ram1&lt;/em&gt;,
-..., 16 by default. Those disks each represent a space in virtual memory and have the
-same size which by default is 16M. The problem we faced above is
-basically the kernel trying to fit a 500M initrd in a 16M disk. What
-we need to do basically is resize those so that the ramdisk fits
-nicely.&lt;/p&gt;
+&lt;em&gt;drivers/block/brd.c&lt;/em&gt;. The block device is created under the name
+&lt;em&gt;ramdisk&lt;/em&gt; and major number 1 and gets disks called &lt;em&gt;ram#&lt;/em&gt; as in
+&lt;em&gt;ram0&lt;/em&gt;, &lt;em&gt;ram1&lt;/em&gt;, ..., (16 by default). Those disks each represent a
+space in virtual memory and have the same size, which by default is
+16M. The original problem we faced above is basically the kernel
+trying to fit a 500M initrd in one of those 16M disks. What we need to
+do basically is resize them so that the ramdisk fits nicely.&lt;/p&gt;
 &lt;p&gt;As either google or the code in &lt;em&gt;brd.c&lt;/em&gt; will kindly tell you you can
-always tell the kernel in the boot commands
-&lt;em&gt;ramdisk_size=500000&lt;/em&gt;. That will supposedly set thing up so that we
-can just tell qemu &lt;code&gt;-initrd &amp;lt;fucking-huge-ramdisk.img&amp;gt;&lt;/code&gt; right?!?&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Check yo shit" src="http://www.themistermen.co.uk/images/MrWrong.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;WRONG!!&lt;/p&gt;
-&lt;p&gt;The kernel tries to create 16 such 500M disks. Which sucks. We need to
-change the number of disks the driver creates. You can do that via the
-&lt;code&gt;CONFIG_BLK_DEV_RAM_COUNT&lt;/code&gt; option but I hate having to compile the
-entire kernel to change something that can to some extent be changed
-from user space. Did I mention you can create more disks with &lt;code&gt;rdev
--r&lt;/code&gt; from the shell? That is because I have no idea if it is
-true. &lt;em&gt;Documentation/blockdev/ramdisk.txt&lt;/em&gt; betrayed me once with
-mentioning that I can &lt;code&gt;ramdisk_blocksize=N&lt;/code&gt; which if you grep the
-source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
+always tell the kernel in the boot commands &lt;em&gt;ramdisk_size=500000&lt;/em&gt;,
+which will supposedly set things up so that we can just tell qemu
+&lt;code&gt;-initrd &amp;lt;fucking-huge-ramdisk.img&amp;gt;&lt;/code&gt; and the next thing we know we are
+happily writing commands on busybox. Right?&lt;/p&gt;
+&lt;p&gt;&lt;img alt="WRONG" src="http://www.themistermen.co.uk/images/MrWrong.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;The kernel tries to create 16 such 500M disks. Which sucks. They are
+virtual memory so it will actually boot but it is not something you
+want on your virtual machine. We need to change the number of disks
+the driver creates. You can do that via the &lt;code&gt;CONFIG_BLK_DEV_RAM_COUNT&lt;/code&gt;
+option but I hate having to compile the entire kernel to change
+something that can to some extent be changed from user space. Did I
+mention you can create more such disks with &lt;code&gt;rdev -r&lt;/code&gt; from the shell?
+That is because I have no idea if it is
+true. &lt;em&gt;Documentation/blockdev/ramdisk.txt&lt;/em&gt; told me and it betrayed me
+once by mentioning that I can &lt;code&gt;ramdisk_blocksize=N&lt;/code&gt; which if you grep
+the source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
 &lt;p&gt;Anyway what I ended up doing is editing &lt;code&gt;ramdisk_size()&lt;/code&gt; from this&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
 &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;__init&lt;/span&gt; &lt;span class="nf"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
