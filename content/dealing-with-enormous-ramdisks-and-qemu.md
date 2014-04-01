@@ -7,16 +7,16 @@ author: Chris Perivolaropoulos
 summary: There are times when you want to have everything on RAM. There are times when everything is more than 500M. And then there are times when you want both. That's when everything goes to hell.
 
 **WARNING:** This is hacky and BAD. Do not use 500M ramdisks for
-anything crucial. Make them small and mount the rest of the
-filesystem in `rootfs=<fs>` in boot commands and the `-hda` option on
-qemu or use nfs or whatever.
+anything crucial. Make them small and mount the rest of the filesystem
+using the rootfs related boot commands and the `-hda` option on qemu
+or use nfs or whatever.
 
 So there are times in Think-Silicon land when permanent storage
 devices may not always be there for you. May that be because your
-ethernet device screws up and you are relying on NFS for fsroot, or
+ethernet device screws up and you are relying on NFS for rootfs, or
 may it be because I just want the kernel to do my bidding and load a
-ramdisk that is as big as half a Gigabyte. The point is shoving such a
-big ramdisk down the kernel's throat will result in it choking into
+ramdisk that is as big as half a Gigabyte. The point is, shoving such
+a big ramdisk down the kernel's throat will result in it choking into
 something like this:
 
 	...
@@ -39,41 +39,41 @@ horrible. This is the tale of a glorious journey through the mysts of
 the linux kernel to a busybox prompt inside of Qemu.
 
 Let's start at the beginning. When the kernel registers a block device
-it then registers a number of disks with the same major number that
-take upon them the actual work. To those disks is mapped the actual
-memory. This paradigm is implemented in _block/genhd.c_. This
-description is also neither complete nor 100% accurate but it is
-enough for now.
+it then registers a number of disks, with the same major number as the
+block device, that take upon them the actual work of the driver. This
+paradigm is implemented in _block/genhd.c_. This description is also
+neither complete nor 100% accurate but it is good enough for now.
 
 When the kernel boots up, one of the first drivers it loads is one
 called _brd_ as in _block ramdisk device_. That driver creates a block
 device interface to the main memory and lives in
-_drivers/block/brd.c_. The block device _ramdisk_ with major number 1
-is created and gets disks called _ram#_ as in _ram0_, _ram1_,
-..., 16 by default. Those disks each represent a space in virtual memory and have the
-same size which by default is 16M. The problem we faced above is
-basically the kernel trying to fit a 500M initrd in a 16M disk. What
-we need to do basically is resize those so that the ramdisk fits
-nicely.
+_drivers/block/brd.c_. The block device is created under the name
+_ramdisk_ and major number 1 and gets disks called _ram#_ as in
+_ram0_, _ram1_, ..., (16 by default). Those disks each represent a
+space in virtual memory and have the same size, which by default is
+16M. The original problem we faced above is basically the kernel
+trying to fit a 500M initrd in one of those 16M disks. What we need to
+do basically is resize them so that the ramdisk fits nicely.
 
 As either google or the code in _brd.c_ will kindly tell you you can
-always tell the kernel in the boot commands
-_ramdisk\_size=500000_. That will supposedly set thing up so that we
-can just tell qemu `-initrd <fucking-huge-ramdisk.img>` right?!?
+always tell the kernel in the boot commands _ramdisk\_size=500000_,
+which will supposedly set things up so that we can just tell qemu
+`-initrd <fucking-huge-ramdisk.img>` and the next thing we know we are
+happily writing commands on busybox. Right?
 
-![Check yo shit](http://www.themistermen.co.uk/images/MrWrong.jpg)
+![WRONG](http://www.themistermen.co.uk/images/MrWrong.jpg)
 
-WRONG!!
-
-The kernel tries to create 16 such 500M disks. Which sucks. We need to
-change the number of disks the driver creates. You can do that via the
-`CONFIG_BLK_DEV_RAM_COUNT` option but I hate having to compile the
-entire kernel to change something that can to some extent be changed
-from user space. Did I mention you can create more disks with `rdev
--r` from the shell? That is because I have no idea if it is
-true. _Documentation/blockdev/ramdisk.txt_ betrayed me once with
-mentioning that I can `ramdisk_blocksize=N` which if you grep the
-source is hard to believe, and trust is lost easier than earned.
+The kernel tries to create 16 such 500M disks. Which sucks. They are
+virtual memory so it will actually boot but it is not something you
+want on your virtual machine. We need to change the number of disks
+the driver creates. You can do that via the `CONFIG_BLK_DEV_RAM_COUNT`
+option but I hate having to compile the entire kernel to change
+something that can to some extent be changed from user space. Did I
+mention you can create more such disks with `rdev -r` from the shell?
+That is because I have no idea if it is
+true. _Documentation/blockdev/ramdisk.txt_ told me and it betrayed me
+once by mentioning that I can `ramdisk_blocksize=N` which if you grep
+the source is hard to believe, and trust is lost easier than earned.
 
 Anyway what I ended up doing is editing `ramdisk_size()` from this
 
