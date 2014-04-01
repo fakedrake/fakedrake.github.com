@@ -35,7 +35,7 @@ RELATIVE_URLS = True
 THEME = "theme/"
 BG_IMG = "https://exposure-2.imgix.net/production/photos/z8ilyalf54su4n291ozw4xvep8s0dx6rgvdi/original.jpg"
 LOGO_IMG = "http://imgur.com/KyLzuoW.png"
-SITESUBTITLE = "Procrastinating and nose picking since 1991"
+SITESUBTITLE = "Hacking my way out of the existential deadlock"
 EXTRA_COPYRIGHTS = "Photos by <a href=\"https://marianasioti.exposure.so/\">Maria Nasioti</a>"
 PERSONAL_PHOTO = "http://i60.tinypic.com/2uesocp.jpg"
 PERSONAL_INFO = """A flea lost in the haze of existential insanity. In between
