@@ -19,7 +19,7 @@ TRANSLATION_FEED_ATOM = None
 LINKS =  (('Think Silicon Ltd', 'http://think-silicon.com/'),
           ('P-Space', 'http://p-space.gr'),
           ('START', 'http://start.mit.edu'),
-          ('CSAIL MiT', 'www.csail.mit.edu'),
+          ('CSAIL MiT', 'http://www.csail.mit.edu'),
 )
 
 # Social widget
