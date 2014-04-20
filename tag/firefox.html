@@ -5,8 +5,8 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-      When printks are too many - Chris Perivolaropoulos
-    </title>
+            Batman Ph.D - Hacking my way out of the existential deadlock
+          </title>
 
     <meta name="description" content="" />
     <meta name="Author" content="Chris Perivolaropoulos" />
@@ -106,77 +106,13 @@
 
         <div class="row">
           <div class="left col-md-9">
-	      <header>
-          <h1>When printks are too many</h1>
-        <small class="fsize13">
-                                                                                                      <a href="http://fakedrake.github.io/category/kernel.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> kernel</a>
-                              <a href="http://fakedrake.github.io/when-printks-are-too-many.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="when-printks-are-too-many.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Fri 28 March 2014</span>
-      <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
-    </small>
-  </header>
-                <article class='content'>
-        <p>Being too lazy to use proper debugging methods as I am (although what
-proper debugging methods are is sometimes
-<a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN">debateable</a>),
-I always (over)use printks to debug the kernel. Now the problem with
-printks is that when you find your bug they are all over the kernel
-code and it can be a real pain to remove them one by one.</p>
-<p>This is not a trivial problem when you spend more than a couple of
-hours on a particular problem. The good news is that due to the nature
-of printk-debugging you usually know which one of your nasty hacks
-fixed the problem you were looking for. Thus you can <code>git diff</code> those
-to just keep the useful changes (I use emacs' ediff, meld or anything
-interactive should be good enough), then you commit just those.</p>
-<p>You should learn from my mistakes and not blindly <code>git checkout</code> at
-the project root. For me there are usually some nasty device tree
-changes that I make to fit Qemu and also my .config is setup for
-debugging. I definitely dont want reverting any of that. Actually all
-I want to revert is the .c files I threw printks in.</p>
-<div class="highlight"><pre><span class="n">git</span> <span class="n">status</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">n</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="n">modified</span><span class="o">:</span> <span class="o">*</span><span class="err">\</span><span class="p">(.</span><span class="o">*</span><span class="err">\</span><span class="p">.</span><span class="n">c</span><span class="err">\</span><span class="p">)</span><span class="o">/</span><span class="err">\</span><span class="mi">1</span><span class="o">/</span><span class="n">p</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">xargs</span> <span class="n">git</span> <span class="n">checkout</span>
-</pre></div>
-
-
-<p>Works 99% of the time. To avoid the tragedy of the other 1% make sure
-you take a look at <code>git status</code> <em>beforehand</em>.</p>
-  </article>
-
-    <div class="divider"><!-- lines divider --></div>
-
-  <!-- SOCIAL -->
-  <p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/when-printks-are-too-many.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=http://fakedrake.github.io/when-printks-are-too-many.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/when-printks-are-too-many.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/when-printks-are-too-many.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/when-printks-are-too-many.html&title=When printks are too many&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
-</p>
-
-  <!-- TAGS -->
-  <p class="fsize16"> Tags:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <a href="/tag/kernel.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> kernel</a>
-              <a href="/tag/debugging.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> debugging</a>
-              <a href="/tag/git.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> git</a>
-            </p>
-
-  <hr /><!-- divider -->
-
-      <div id="comments" class="comments">
-      <div id="disqus_thread"></div>
-      <script type="text/javascript">
-        var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "when-printks-are-too-many.html";
-        var disqus_title = "When printks are too many";
-        var disqus_url = "http://fakedrake.github.io/when-printks-are-too-many.html";
-        (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
-    </div>
-            </div>
+	                  <div class="item">
+      <div class="item-title">
+        <h2>firefox</h2>
+      </div>
+                        <p><a href="http://fakedrake.github.io/dumping-tab-information-with-vimperator.html"><span class="label label-default light">Sun 20 April 2014</span> Dumping tab information with vimperator</a></p>
+                </div>
+          </div>
 
           <!-- SIDEBAR -->
           <div class="right col-md-3">
@@ -230,10 +166,6 @@ you take a look at <code>git status</code> <em>beforehand</em>.</p>
               <!-- hide this part -->
               <div class="hidden">
                                                 None
-                                None
-                                None
-                                None
-                                None
                               </div>
 
               <ul class="tree">
@@ -244,21 +176,6 @@ you take a look at <code>git status</code> <em>beforehand</em>.</p>
                                             <span><i class="fa fa-minus-square-o"></i>04</span>
                       <ul>
                                                 <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>03</span>
-                      <ul>
-                                                <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
-                                                <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
-                                              </ul>
-                                          </li>
-                  </ul>
-                                    <span><i class="fa fa-minus-square-o"></i>2010</span>
-                  <ul>
-                    <li>
-                                            <span><i class="fa fa-minus-square-o"></i>10</span>
-                      <ul>
-                                                <li><a href=""><small>Sun 03 October 2010</small>Hello World</a></li>
-                                                <li><a href=""><small>Sun 03 October 2010</small>LaTeX plus Beamer</a></li>
                                               </ul>
                                           </li>
                   </ul>

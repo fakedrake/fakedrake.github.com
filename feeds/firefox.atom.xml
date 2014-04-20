@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/firefox.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-04-20T20:18:00+03:00</updated><entry><title>Dumping tab information with vimperator</title><link href="http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" rel="alternate"></link><updated>2014-04-20T20:18:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-04-20:dumping-tab-information-with-vimperator.html</id><summary type="html">&lt;p&gt;To me it is quite usual that I am looking at a list of links to things
+(songs, articls, books etc.) and I want to first select the ones I am
+interested in and then look into them one by one. Most of the time
+this does not go as smoothly as I would want it to. I wildly
+underestimate the length of the list and not only do I get many many
+more interesting results than I expected, but I also spend so much
+time going through the entire list that I need to check them later. I
+could bookmark everything and look at it later but the perfect
+solution would be to dump everything in a text file and
+&lt;a href="http://gist.github.com"&gt;gist&lt;/a&gt; it or then categorize it according to
+artist with Python or something else equally and needlessly nerdy.&lt;/p&gt;
+&lt;p&gt;So anyway, turns out firefox welcomes this kind of thing if you are a
+core developer and have deep knowledge of it's inter-workings or if
+you have vimperator to abstract the interface/service
+inconvenience. And the matter is actually very simple.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;tabdump&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;tabs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;tabdump&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; - &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nx"&gt;n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="nx"&gt;io&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;File&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~/Documents/tabs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;tabdump&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you haven't got any better way of running more than one line of
+code on firefox you can use vimperator's &lt;code&gt;:js&lt;/code&gt; which should go like&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;js&lt;/span&gt; &lt;span class="nx"&gt;tabdump&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;tabs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;tabdump&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; - &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nx"&gt;n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt; &lt;span class="nx"&gt;io&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;File&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~/Documents/tabs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;tabdump&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So in brief what does this code do, it uses vimperator's interface to
+tabs to get a list of all tabs (basically tuples) and then you
+concatenate those tuples together and dump them into a string (line
+2). Then vimperator provides a simple way of file io with &lt;code&gt;io.File&lt;/code&gt; to
+throw everything into a file. And there you have it&lt;/p&gt;
+&lt;p&gt;If for example I were looking up bands going through a list and run
+the above I would come up with something like&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[...]&lt;/span&gt;
+
+&lt;span class="na"&gt;23 - kyuss at DuckDuckGo - https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;kyuss&lt;/span&gt;
+&lt;span class="na"&gt;24 - 311 at DuckDuckGo - https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;311&lt;/span&gt;
+&lt;span class="na"&gt;25 - high on fire at DuckDuckGo - https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;high+on+fire&lt;/span&gt;
+&lt;span class="na"&gt;26 - sleep at DuckDuckGo - https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sleep&lt;/span&gt;
+&lt;span class="na"&gt;27 - cottonmouth kings at DuckDuckGo - https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;cottonmouth+kings&lt;/span&gt;
+
+&lt;span class="k"&gt;[...]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="firefox"></category><category term="vimperator"></category><category term="javascript"></category><category term="tabs"></category></entry></feed>
