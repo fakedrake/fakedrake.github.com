@@ -32,7 +32,7 @@ If you haven't got any better way of running more than one line of
 code on firefox you can use vimperator's `:js` which should go like
 
     :::js
-	:js tabdump = ""; tabs.get().forEach(function (i) { tabdump += i.join(" - ") + \n; }); io.File("~/Documents/tabs").write(tabdump)
+	:js tabdump = ""; tabs.get().forEach(function (i) { tabdump += i.join(" ~~~ ") + \n; }); io.File("~/Documents/tabs").write(tabdump)
 
 
 So in brief what does this code do, it uses vimperator's interface to
@@ -53,3 +53,11 @@ the above I would come up with something like
 	27 - cottonmouth kings at DuckDuckGo - https://duckduckgo.com/?q=cottonmouth+kings
 
 	[...]
+
+_EDIT_: If you want to reopen some of those you can easily do it with
+
+    :::js
+	:js lines = io.File("~/Documents/tabs").read().split("\n")
+	:js lines.map(function (l) {return l.split(" ~~~ ")[2]}).slice(7,23).forEach(function (url) {liberator.open(url, {where: liberator.NEW_TAB})})
+
+Which should open again tabs 7 to 22.
