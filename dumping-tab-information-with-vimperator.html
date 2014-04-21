@@ -132,7 +132,7 @@ core developer and have deep knowledge of it's inter-workings or if
 you have vimperator to abstract the interface/service
 inconvenience. And the matter is actually very simple.</p>
 <div class="highlight"><pre><span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; - &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="err">\</span><span class="nx">n</span><span class="p">;</span> <span class="p">});</span>
+<span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="err">\</span><span class="nx">n</span><span class="p">;</span> <span class="p">});</span>
 <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
 </pre></div>
 
@@ -152,11 +152,11 @@ throw everything into a file. And there you have it</p>
 the above I would come up with something like</p>
 <div class="highlight"><pre><span class="k">[...]</span>
 
-<span class="na">23 - kyuss at DuckDuckGo - https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">kyuss</span>
-<span class="na">24 - 311 at DuckDuckGo - https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">311</span>
-<span class="na">25 - high on fire at DuckDuckGo - https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">high+on+fire</span>
-<span class="na">26 - sleep at DuckDuckGo - https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">sleep</span>
-<span class="na">27 - cottonmouth kings at DuckDuckGo - https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">cottonmouth+kings</span>
+<span class="na">23 ~~~ kyuss at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">kyuss</span>
+<span class="na">24 ~~~ 311 at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">311</span>
+<span class="na">25 ~~~ high on fire at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">high+on+fire</span>
+<span class="na">26 ~~~ sleep at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">sleep</span>
+<span class="na">27 ~~~ cottonmouth kings at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">cottonmouth+kings</span>
 
 <span class="k">[...]</span>
 </pre></div>
