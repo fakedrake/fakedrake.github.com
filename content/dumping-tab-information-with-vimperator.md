@@ -25,7 +25,7 @@ inconvenience. And the matter is actually very simple.
 
     :::js
 	tabdump = "";
-	tabs.get().forEach(function (i) { tabdump += i.join(" - ") + \n; });
+	tabs.get().forEach(function (i) { tabdump += i.join(" ~~~ ") + \n; });
 	io.File("~/Documents/tabs").write(tabdump)
 
 If you haven't got any better way of running more than one line of
@@ -46,11 +46,11 @@ the above I would come up with something like
 
 	[...]
 
-	23 - kyuss at DuckDuckGo - https://duckduckgo.com/?q=kyuss
-	24 - 311 at DuckDuckGo - https://duckduckgo.com/?q=311
-	25 - high on fire at DuckDuckGo - https://duckduckgo.com/?q=high+on+fire
-	26 - sleep at DuckDuckGo - https://duckduckgo.com/?q=sleep
-	27 - cottonmouth kings at DuckDuckGo - https://duckduckgo.com/?q=cottonmouth+kings
+	23 ~~~ kyuss at DuckDuckGo ~~~ https://duckduckgo.com/?q=kyuss
+	24 ~~~ 311 at DuckDuckGo ~~~ https://duckduckgo.com/?q=311
+	25 ~~~ high on fire at DuckDuckGo ~~~ https://duckduckgo.com/?q=high+on+fire
+	26 ~~~ sleep at DuckDuckGo ~~~ https://duckduckgo.com/?q=sleep
+	27 ~~~ cottonmouth kings at DuckDuckGo ~~~ https://duckduckgo.com/?q=cottonmouth+kings
 
 	[...]
 
