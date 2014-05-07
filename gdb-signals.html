@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-      Batman Ph.D - Hacking my way out of the existential deadlock
+Gdb signals - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -106,12 +106,142 @@
 
         <div class="row">
           <div class="left col-md-9">
-  <div class="item">
-      <div class="item-title">
-        <h2>beamer</h2>
-      </div>
-          <p><a href="http://fakedrake.github.io/latex-plus-beamer.html"><span class="label label-default light">Sun 03 October 2010</span> LaTeX plus Beamer</a></p>
-  </div>
+  <header>
+      <h1>Gdb signals</h1>
+    <small class="fsize13">
+            <a href="http://fakedrake.github.io/category/gdb.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> GDB</a>
+      <a href="http://fakedrake.github.io/gdb-signals.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="gdb-signals.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Tue 06 May 2014</span>
+      <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
+    </small>
+  </header>
+  <article class='content'>
+    <p>So unless you are debugging your own program and you know what you are
+doing this is probably not what you expect to happen while a program
+runs under GDB.</p>
+<div class="highlight"><pre><span class="n">Program</span> <span class="n">received</span> <span class="n">signal</span> <span class="n">SIGUSR1</span><span class="p">,</span> <span class="n">User</span> <span class="n">defined</span> <span class="n">signal</span> <span class="mf">1.</span>
+<span class="p">[</span><span class="n">Switching</span> <span class="n">to</span> <span class="n">Thread</span> <span class="mh">0x7fffcff2c700</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">3296</span><span class="p">)]</span>
+<span class="p">...</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span>
+</pre></div>
+
+
+<p>You may hit <code>c</code> to continue but this will come up again sooner or
+later and I like my breakpoints to be tidy.</p>
+<p>First take a look at how gdb handles each signal.</p>
+<div class="highlight"><pre>
+(gdb) info signals
+Signal        Stop  Print   Pass to program Description
+
+SIGHUP        Yes   Yes     Yes     Hangup
+SIGINT        Yes   Yes     No      Interrupt
+SIGQUIT       Yes   Yes     Yes     Quit
+SIGILL        Yes   Yes     Yes     Illegal instruction
+SIGTRAP       Yes   Yes     No      Trace/breakpoint trap
+SIGABRT       Yes   Yes     Yes     Aborted
+SIGEMT        Yes   Yes     Yes     Emulation trap
+
+[...]
+
+SIGWINCH      No    No      Yes     Window size changed
+SIGLOST       Yes   Yes     Yes     Resource lost
+<b>SIGUSR1      Yes Yes     Yes     User defined signal 1</b>
+SIGUSR2       Yes   Yes     Yes     User defined signal 2
+SIGPWR        Yes   Yes     Yes     Power fail/restart
+
+[...]
+
+EXC_EMULATION Yes   Yes     Yes     Emulation instruction
+EXC_SOFTWARE  Yes   Yes     Yes     Software generated exception
+EXC_BREAKPOINT Yes  Yes     Yes     Breakpoint
+
+Use the "handle" command to change these tables.
+</pre></div>
+
+<p>As the command says you want <code>SIGUSR1</code> to not stop and also for it to
+be passed to the program. The other thing we notice here is that
+<code>SIGTRAP</code> is not passed to the program.</p>
+<p>To have <code>SIGUSR1</code> be ignored by GDB</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">handle</span> <span class="n">SIGUSR1</span> <span class="n">nostop</span> <span class="n">noprint</span>
+<span class="n">Signal</span>        <span class="n">Stop</span>  <span class="n">Print</span>   <span class="n">Pass</span> <span class="n">to</span> <span class="n">program</span> <span class="n">Description</span>
+<span class="n">SIGUSR1</span>       <span class="n">No</span>    <span class="n">No</span>  <span class="n">Yes</span>     <span class="n">User</span> <span class="n">defined</span> <span class="n">signal</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p>Now here is another recurring interrupt related issue: Sometimes you
+need to to pass control to gdb while the program is running. The
+default way would be to hit <code>C-c</code>. In a very rare occasion (ie. qemu)
+the process will catch the key and will not stop. Instead of
+despairing you can try sending it a <code>SIGTRAP</code>. That will stop the
+program as if gdb had encountered a breakpoint. From another terminal
+run.</p>
+<div class="highlight"><pre><span class="gp">$</span> pkill -TRAP &lt;process-name&gt;
+</pre></div>
+
+
+<p>If you are using <em>emacs</em> and <em>gud</em> like me you can automate this with:</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">defun</span> <span class="n">my</span><span class="o">:</span><span class="n">gud</span><span class="o">-</span><span class="n">trap</span><span class="o">-</span><span class="n">process</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">optional</span> <span class="n">wrapping</span><span class="o">-</span><span class="n">script</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">interactive</span> <span class="s">&quot;*P&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">let</span> <span class="p">((</span><span class="n">child</span><span class="o">-</span><span class="n">pid</span> <span class="s">&quot;xargs pgrep -P | head -1 |&quot;</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">async</span><span class="o">-</span><span class="n">shell</span><span class="o">-</span><span class="n">command</span>
+     <span class="p">(</span><span class="n">format</span> <span class="s">&quot;echo %d | %s %s xargs echo kill -TRAP&quot;</span>
+         <span class="p">(</span><span class="n">process</span><span class="o">-</span><span class="n">id</span> <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">buffer</span><span class="o">-</span><span class="n">process</span> <span class="s">&quot;*gud*&quot;</span><span class="p">))</span>
+         <span class="n">child</span><span class="o">-</span><span class="n">pid</span> <span class="p">(</span><span class="k">if</span> <span class="n">wrapping</span><span class="o">-</span><span class="n">script</span> <span class="n">child</span><span class="o">-</span><span class="n">pid</span> <span class="s">&quot;&quot;</span><span class="p">)))))</span>
+</pre></div>
+
+
+<p>Putting this in your <em>.emacs</em> will let you do <code>M-x
+my:gud-trap-process</code> to give control to gdb. If you are running gdb
+from within a shell script like I usually do provide a prefix
+argument, ie. <code>C-u M-x my:gud-trap-process</code> to handle child processes
+correctly. I also have it bound to <code>C-x C-a t</code> for brevity:</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">global</span><span class="o">-</span><span class="n">set</span><span class="o">-</span><span class="n">key</span> <span class="p">(</span><span class="n">kbd</span> <span class="s">&quot;C-x C-a t&quot;</span><span class="p">)</span> <span class="err">`</span><span class="n">my</span><span class="o">:</span><span class="n">gud</span><span class="o">-</span><span class="n">trap</span><span class="o">-</span><span class="n">process</span><span class="p">)</span>
+</pre></div>
+
+
+<p>This process will not run exactly the shell command I mentioned
+earlier but rather it will find the pid of gdb and send <code>SIGTRAP</code> to it's
+first child process. So if you want to automate the process in another
+way here is the main idea:</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">pgrep</span> <span class="o">-</span><span class="n">P</span> <span class="o">&lt;</span><span class="n">gdb</span> <span class="n">pid</span><span class="o">&gt;</span> <span class="o">|</span> <span class="n">head</span> <span class="o">-</span><span class="mi">1</span> <span class="o">|</span> <span class="n">xargs</span> <span class="n">kill</span> <span class="o">-</span><span class="n">TRAP</span>
+</pre></div>
+  </article>
+
+  <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+<p class="socials">
+  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/gdb-signals.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=http://fakedrake.github.io/gdb-signals.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/gdb-signals.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/gdb-signals.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/gdb-signals.html&title=Gdb signals&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+        <a href="/tag/signals.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> signals</a>
+        <a href="/tag/cc.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> C/C++</a>
+        <a href="/tag/gdb.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> GDB</a>
+  </p>
+
+  <hr /><!-- divider -->
+
+    <div id="comments" class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'drninjabatman-blog';
+        var disqus_identifier = "gdb-signals.html";
+        var disqus_title = "Gdb signals";
+        var disqus_url = "http://fakedrake.github.io/gdb-signals.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
           </div>
 
           <!-- SIDEBAR -->
@@ -168,15 +298,41 @@
               <!-- hide this part -->
               <div class="hidden">
                 None
+                None
+                None
+                None
+                None
+                None
+                None
               </div>
 
               <ul class="tree">
                 <li>
+                  <span><i class="fa fa-minus-square-o"></i>2014</span>
+                  <ul>
+                    <li>
+                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <ul>
+                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
+                        <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>04</span>
+                      <ul>
+                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                        <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
+                        <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
+                      </ul>
+                    </li>
+                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2010</span>
                   <ul>
                     <li>
                       <span><i class="fa fa-minus-square-o"></i>10</span>
                       <ul>
+                        <li><a href=""><small>Sun 03 October 2010</small>Hello World</a></li>
                         <li><a href=""><small>Sun 03 October 2010</small>LaTeX plus Beamer</a></li>
                       </ul>
                     </li>

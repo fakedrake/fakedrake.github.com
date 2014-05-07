@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/git.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-05-07T15:49:00+03:00</updated><entry><title>Moving git branches across repositories</title><link href="http://fakedrake.github.io/moving-git-branches-across-repositories.html" rel="alternate"></link><updated>2014-05-07T15:49:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-07:moving-git-branches-across-repositories.html</id><summary type="html">&lt;p&gt;In a perfect world there is a one-to-one relationship between projects
+and git trees. As you are happily working on your local repo, and
+decide you want to get some commits from a different source you just
+&lt;code&gt;git remote add&lt;/code&gt; that source and you have full access to it's
+commits. Well sometimes things do not go as smoothly and you may find
+yourself wanting to move your branch to a remote repo that may have a
+largely common codebase but few to no common commits. Well turns out
+git can handle that pretty easily. Here is how in one line:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;git log --reverse --cherry master...&amp;lt;your-branch&amp;gt; --pretty=email --patch-with-stat | (cd /path/to/new/repo &amp;amp;&amp;amp; git checkout -b &amp;lt;your-branch&amp;gt; &amp;amp;&amp;amp; git am)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It is quite simple really: we use &lt;code&gt;git log&lt;/code&gt; to get a comprehensive
+description of each commit in &lt;code&gt;&amp;lt;your-branch&amp;gt;&lt;/code&gt;. Then create a new
+branch at the new repo with the same name and pipe the descriptions of
+the commits to &lt;code&gt;git am&lt;/code&gt; to create them in the new place.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; the commits in the new repo will not have the same SHA as in
+ the old one so we are not really &lt;em&gt;moving&lt;/em&gt; the commits from one repo
+ to another as much as &lt;em&gt;recreating&lt;/em&gt; them.&lt;/p&gt;</summary><category term="git"></category><category term="branch"></category><category term="shell"></category></entry></feed>

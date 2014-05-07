@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-      Batman Ph.D - Hacking my way out of the existential deadlock
+Moving git branches across repositories - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -106,12 +106,72 @@
 
         <div class="row">
           <div class="left col-md-9">
-  <div class="item">
-      <div class="item-title">
-        <h2>beamer</h2>
-      </div>
-          <p><a href="http://fakedrake.github.io/latex-plus-beamer.html"><span class="label label-default light">Sun 03 October 2010</span> LaTeX plus Beamer</a></p>
-  </div>
+  <header>
+      <h1>Moving git branches across repositories</h1>
+    <small class="fsize13">
+            <a href="http://fakedrake.github.io/category/git.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> git</a>
+      <a href="http://fakedrake.github.io/moving-git-branches-across-repositories.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="moving-git-branches-across-repositories.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Wed 07 May 2014</span>
+      <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
+    </small>
+  </header>
+  <article class='content'>
+    <p>In a perfect world there is a one-to-one relationship between projects
+and git trees. As you are happily working on your local repo, and
+decide you want to get some commits from a different source you just
+<code>git remote add</code> that source and you have full access to it's
+commits. Well sometimes things do not go as smoothly and you may find
+yourself wanting to move your branch to a remote repo that may have a
+largely common codebase but few to no common commits. Well turns out
+git can handle that pretty easily. Here is how in one line:</p>
+<div class="highlight"><pre><span class="go">git log --reverse --cherry master...&lt;your-branch&gt; --pretty=email --patch-with-stat | (cd /path/to/new/repo &amp;&amp; git checkout -b &lt;your-branch&gt; &amp;&amp; git am)</span>
+</pre></div>
+
+
+<p>It is quite simple really: we use <code>git log</code> to get a comprehensive
+description of each commit in <code>&lt;your-branch&gt;</code>. Then create a new
+branch at the new repo with the same name and pipe the descriptions of
+the commits to <code>git am</code> to create them in the new place.</p>
+<p><em>Note:</em> the commits in the new repo will not have the same SHA as in
+ the old one so we are not really <em>moving</em> the commits from one repo
+ to another as much as <em>recreating</em> them.</p>
+  </article>
+
+  <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+<p class="socials">
+  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/moving-git-branches-across-repositories.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=http://fakedrake.github.io/moving-git-branches-across-repositories.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/moving-git-branches-across-repositories.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/moving-git-branches-across-repositories.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/moving-git-branches-across-repositories.html&title=Moving git branches across repositories&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+        <a href="/tag/git.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> git</a>
+        <a href="/tag/shell.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> shell</a>
+        <a href="/tag/branch.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> branch</a>
+  </p>
+
+  <hr /><!-- divider -->
+
+    <div id="comments" class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'drninjabatman-blog';
+        var disqus_identifier = "moving-git-branches-across-repositories.html";
+        var disqus_title = "Moving git branches across repositories";
+        var disqus_url = "http://fakedrake.github.io/moving-git-branches-across-repositories.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
           </div>
 
           <!-- SIDEBAR -->
@@ -168,15 +228,41 @@
               <!-- hide this part -->
               <div class="hidden">
                 None
+                None
+                None
+                None
+                None
+                None
+                None
               </div>
 
               <ul class="tree">
                 <li>
+                  <span><i class="fa fa-minus-square-o"></i>2014</span>
+                  <ul>
+                    <li>
+                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <ul>
+                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
+                        <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>04</span>
+                      <ul>
+                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                        <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
+                        <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
+                      </ul>
+                    </li>
+                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2010</span>
                   <ul>
                     <li>
                       <span><i class="fa fa-minus-square-o"></i>10</span>
                       <ul>
+                        <li><a href=""><small>Sun 03 October 2010</small>Hello World</a></li>
                         <li><a href=""><small>Sun 03 October 2010</small>LaTeX plus Beamer</a></li>
                       </ul>
                     </li>
