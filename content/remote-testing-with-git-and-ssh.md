@@ -4,11 +4,7 @@ tags: testin, git, ssh, remote
 category: git
 slug: remote-testing-with-git-and-ssh
 author: Chris Perivolaropoulos
-status: draft
 summary:
-
-_This article is hidden. Remove status: hidden or make it status:
-published to be able to publish_
 
 Running tests is an important part of the development workflow. You
 want to do it often and yo want it to be quick. Sometimes tests are
@@ -226,4 +222,6 @@ command. thus emacs will do:
 	[...]
 
 And compilation-mode sees the paths that it expects so I can jump
-around the source based on the errors.
+around the source based on the errors. If you haven't done already you
+may want to setup password-less login to your server. Not only is it
+easier but it is much safer.
