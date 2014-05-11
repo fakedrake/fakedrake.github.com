@@ -6,9 +6,17 @@ you probably prefer to run them on a powerful server rather than your
 slow, low on memory laptop that you like using by on the beach and
 mostly away from power outlets. "You know what would be awesome?" I
 thought to myself one day while sipping pina collada on the roof
-garden of Think Silicon HQ, "if I could push my changes to a remote
-server with git, run these tests with ssh and get the results with
-just one command!".&lt;/p&gt;
+garden of Think Silicon HQ, "if instead of running my tests locally
+and wait for ages for them to finish, I could push my changes to a
+remote server with git, run these tests with ssh and get the results
+with just one command!". A friend pointed out that what I want is a
+CI, and one might be able to make that work but what I actually want
+is not scheduled testing. Rather I need the shortest, and least
+painful for my laptop, path between a minor change on the codebase and
+a usable format of the test results. Preferably in an emacs
+&lt;a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Compilation-Mode.html"&gt;*compilation* buffer&lt;/a&gt;
+(which is just output of the test command with the paths parsed as
+hyperlinks).&lt;/p&gt;
 &lt;p&gt;So I made a branch I call &lt;code&gt;bench&lt;/code&gt; because I was running some
 benchamrks at the time, commited my failing code and pushed it to
 github. Then I pulled the branch from our awesome server and ran the
