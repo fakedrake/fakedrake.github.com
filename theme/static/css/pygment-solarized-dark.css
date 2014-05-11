@@ -1,4 +1,4 @@
-.codehilite pre, .highlight pre { background-color: #002b36; color: #839496 }
+code, .codehilite pre, .highlight pre { background-color: #002b36; color: #839496 }
 .codehilite .hll, .highlight .hll { background-color: #ffffcc }
 .codehilite .c, .highlight .c { color: #586e75; font-style: italic } /* Comment */
 .codehilite .err, .highlight .err { color: #dc322f } /* Error */

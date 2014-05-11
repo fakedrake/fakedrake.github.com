@@ -59,3 +59,35 @@ WORK_LIST = [("http://i57.tinypic.com/2rnd9g8.png", "",
      "width:70%; height:70%; text-align: center; margin: 0 auto", "CSAIL's START Wikipedia backend", START_JOB_DESCRIPTION,
      "http://start.mit.edu"),
 ]
+
+from pelican.readers import MarkdownReader
+from pelican.utils import pelican_open
+try:
+    import markdown
+except ImportError:
+    Markdown = False
+
+class CustomBacktickPattern(markdown.inlinepatterns.BacktickPattern):
+    def handleMatch(self, m):
+        el = super(CustomBacktickPattern, self).handleMatch(m)
+        ret = markdown.util.etree.Element("div")
+        el.set("class", "hightlight")
+        ret.extend([el])
+
+        return ret
+
+class CustomMarkdownReader(MarkdownReader):
+    file_extensions = ['fdmd']
+
+    def read(self, source_path):
+        """Parse content and metadata of markdown files"""
+
+        self._md = markdown.Markdown(extensions=self.extensions)
+        self._md.inlinePatterns["backtick"] = CustomBacktickPattern(markdown.inlinepatterns.BACKTICK_RE)
+        with pelican_open(source_path) as text:
+            content = self._md.convert(text)
+
+        metadata = self._parse_metadata(self._md.Meta)
+        return content, metadata
+
+# READERS={"fdmd": CustomMarkdownReader}
