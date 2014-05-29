@@ -1,5 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/all.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-05-11T21:37:00+03:00</updated><entry><title>Remote testing with git and ssh</title><link href="http://fakedrake.github.io/remote-testing-with-git-and-ssh.html" rel="alternate"></link><updated>2014-05-11T21:37:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-11:remote-testing-with-git-and-ssh.html</id><summary type="html">&lt;p&gt;Running tests is an important part of the development workflow. You
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/all.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-05-29T23:16:00+03:00</updated><entry><title>Elegant hacking with Emacs Lisp</title><link href="http://fakedrake.github.io/elegant-hacking-with-emacs-lisp.html" rel="alternate"></link><updated>2014-05-29T23:16:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-29:elegant-hacking-with-emacs-lisp.html</id><summary type="html">&lt;p&gt;If you have used anything (editor, web browser, mail client etc) that
+lets run shell commands through it, you have probably found yourself
+in a situation where your command fails because your shell's RC file
+was not loaded before execution. ie the full command was probably
+something along the lines of&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;zsh&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Thus your &lt;code&gt;PATH&lt;/code&gt; is not in place and your aliases and shell functions
+are inaccessible. Then you may either do something like giving&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zshrc&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;useful&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;or if you are weird like me dig in the source and deal with the
+problem once and for all. So this was the case with emacs' &lt;code&gt;compile&lt;/code&gt;
+command and &lt;code&gt;shell-command&lt;/code&gt; and the like. The ideal case would be to
+change emacs' behavior into instead running something like this&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;zsh&lt;/span&gt; &lt;span class="na"&gt;-ic&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nb"&gt;command&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;essentially making the command run in an interactive shell and thus
+running my &lt;code&gt;.zshrc&lt;/code&gt; first.&lt;/p&gt;
+&lt;p&gt;Diging into the sources, much to my dismay, I found this snippet of
+code.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;comint&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;exec&lt;/span&gt;
+ &lt;span class="n"&gt;outbuf&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;downcase&lt;/span&gt; &lt;span class="n"&gt;mode&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+ &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;remote&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+     &lt;span class="s"&gt;&amp;quot;/bin/sh&amp;quot;&lt;/span&gt;
+   &lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+ &lt;span class="n"&gt;nil&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;-c&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;which eventually calls &lt;code&gt;start-process&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I am not really prepared to fork compilation mode, or anything else
+for that matter so editing that is out of the question. What I am
+willing to do however is hack the &amp;amp;*^# out of the system from
+&lt;code&gt;.emacs&lt;/code&gt;. And as it turns out lisp is not praised for it's self
+editing programs for nothing.&lt;/p&gt;
+&lt;p&gt;One way to go about this which (kind of but not exactly) applies for
+any dynamic language is to just override &lt;code&gt;start-process&lt;/code&gt;. Emacs lisp
+however has a more elegant way of going about this kind of
+problem. Thus I wrote two very similar pieces of
+&lt;a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html"&gt;advice&lt;/a&gt;,
+for async shell commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;defadvice&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;before&lt;/span&gt; &lt;span class="n"&gt;interactive&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;program&lt;/span&gt; &lt;span class="n"&gt;infile&lt;/span&gt; &lt;span class="n"&gt;buffer&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="n"&gt;activate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;
+         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;-c&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;car&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/bin/zsh&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ad&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;-ic&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and for sync shell commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;defadvice&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;before&lt;/span&gt; &lt;span class="n"&gt;interactive&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;buffer&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="n"&gt;activate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;
+         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;-c&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;car&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/bin/zsh&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ad&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;-ic&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;What this does is whenever &lt;code&gt;start-process&lt;/code&gt; (or &lt;code&gt;call-process&lt;/code&gt; for sync
+calls) is to be called, before that I check if the program is my
+shell, and if the second argument is &lt;code&gt;-c&lt;/code&gt;, and if so I change that
+argument into &lt;code&gt;-ic&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Thus then besides &lt;code&gt;compile&lt;/code&gt; working nicely and so do sync commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;gl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;fatal: Not a git repository (or any parent up to mount point /home)&lt;/span&gt;
+&lt;span class="n"&gt;Stopping&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;filesystem&lt;/span&gt; &lt;span class="n"&gt;boundary&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;GIT_DISCOVERY_ACROSS_FILESYSTEM&lt;/span&gt; &lt;span class="n"&gt;not&lt;/span&gt; &lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Which is what I expected to see when not in a git repo.&lt;/p&gt;</summary><category term="emacs"></category><category term="lisp"></category><category term="shell"></category></entry><entry><title>Remote testing with git and ssh</title><link href="http://fakedrake.github.io/remote-testing-with-git-and-ssh.html" rel="alternate"></link><updated>2014-05-11T21:37:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-11:remote-testing-with-git-and-ssh.html</id><summary type="html">&lt;p&gt;Running tests is an important part of the development workflow. You
 want to do it often and you want it to be quick. Yet at times tests
 are not quick. Tests can be slow and they can be fat. This means that
 you probably prefer to run them on a powerful server rather than your
@@ -507,7 +590,48 @@ relevan excerpt&lt;/p&gt;
 
 
 &lt;p&gt;As an extra benefit this will actually measure the ramdisk and make
-the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="http://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
+the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>Taming firefox with vimperator</title><link href="http://fakedrake.github.io/taming-firefox-with-vimperator.html" rel="alternate"></link><updated>2014-03-30T14:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-30:taming-firefox-with-vimperator.html</id><summary type="html">&lt;p&gt;I always hated anything that separated me from looking at something
+for the first time to me extending/programming/hacking it. That is the
+main reason why I only recently started actually taking control of
+Firefox. The firey beast always presented itself as extendible and
+hacker friendly but most tutorials for n00bs like myself would spend
+most of the time explaining how I should structure my extension and
+how I should package it etc. It was either that or they would propose
+to break my hard-earned workflow, that involves sophisticated tools
+and rocket science, presenting me with a web based editor. I
+understand this design is a well thougt over by mozilla and it
+probably covers the larger demographic but for me to actually do
+anything things should be as simple as &lt;em&gt;"hey mate, here is a text file
+you didn't notice was in your home directory all this time. Throw some
+code in ther. Look it works!"&lt;/em&gt;. Then vimperator came along.&lt;/p&gt;
+&lt;h1&gt;Vimperator&lt;/h1&gt;
+&lt;p&gt;Actually I had already been using vimperator for years until I
+actually started using it's real power. Originally I thought it was a
+neat little tool so that I would not have to use the mouse as
+often. And in general that worked pretty well. You can scroll with
+vim's favourite &lt;code&gt;h&lt;/code&gt;, &lt;code&gt;j&lt;/code&gt;, &lt;code&gt;k&lt;/code&gt;, and &lt;code&gt;l&lt;/code&gt;, you can navigate links with
+hints by typing &lt;code&gt;f&lt;/code&gt; and then typing the number that appears over the
+link you are after or start typing the text of the link to narrow down
+your options. You can navigate back and forth with &lt;code&gt;&amp;lt;C-o&amp;gt;&lt;/code&gt; (that would
+be Ctrl+o) and &lt;code&gt;C-i&lt;/code&gt; and you can even use an equivalent of the
+AwesomeBar (I think that is the tecnical term for firefox's url bar)
+with &lt;code&gt;o&lt;/code&gt; or &lt;code&gt;t&lt;/code&gt; to open new tab. You can copy the current url by
+typing &lt;code&gt;y&lt;/code&gt;, and you can let vimperator try to navigate you back and
+forth in mailing lists' threads with &lt;code&gt;]]&lt;/code&gt; and
+&lt;code&gt;[[&lt;/code&gt;. And all these are just the tip of the iceberg.&lt;/p&gt;
+&lt;p&gt;Then there is extra options that you can tamper with like the variable
+&lt;code&gt;defsearch&lt;/code&gt; that you can change by typing&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;defsearch&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ddg&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;to get duckduckgo as your default search engine assuming you have it
+installed and named ddg. Then there is the &lt;code&gt;gui&lt;/code&gt; variable that controls
+what xul menus are to be shown (that is usually just the tabs) and the
+&lt;code&gt;editor&lt;/code&gt; command that controls what vimperator should open as an external
+editor when she needs to.&lt;/p&gt;
+&lt;p&gt;All this is awesome and if you dig in you will find many many more built in
+tricks, but that is not what I am interested in.&lt;/p&gt;</summary><category term="vimperator"></category><category term="firefox"></category><category term="javascript"></category></entry><entry><title>When printks are too many</title><link href="http://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
 proper debugging methods are is sometimes
 &lt;a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN"&gt;debateable&lt;/a&gt;),
 I always (over)use printks to debug the kernel. Now the problem with

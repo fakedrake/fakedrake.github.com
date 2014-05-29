@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-      Dumping tab information with vimperator - Chris Perivolaropoulos
+      Elegant hacking with Emacs Lisp - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -107,87 +107,117 @@
         <div class="row">
           <div class="left col-md-9">
 	      <header>
-          <h1>Dumping tab information with vimperator</h1>
+          <h1>Elegant hacking with Emacs Lisp</h1>
         <small class="fsize13">
-                                                                                                                        <a href="http://fakedrake.github.io/category/firefox.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> firefox</a>
-                                                                  <a href="http://fakedrake.github.io/dumping-tab-information-with-vimperator.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dumping-tab-information-with-vimperator.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Sun 20 April 2014</span>
+                                                                                                      <a href="http://fakedrake.github.io/category/emacs.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> emacs</a>
+                                                                                    <a href="http://fakedrake.github.io/elegant-hacking-with-emacs-lisp.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="elegant-hacking-with-emacs-lisp.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Thu 29 May 2014</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
                 <article class='content'>
-        <p>To me it is quite usual that I am looking at a list of links to things
-(songs, articls, books etc.) and I want to first select the ones I am
-interested in and then look into them one by one. Most of the time
-this does not go as smoothly as I would want it to. I wildly
-underestimate the length of the list and not only do I get many many
-more interesting results than I expected, but I also spend so much
-time going through the entire list that I need to check them later. I
-could bookmark everything and look at it later but the perfect
-solution would be to dump everything in a text file and
-<a href="http://gist.github.com">gist</a> it or then categorize it according to
-artist with Python or something else equally and needlessly nerdy.</p>
-<p>So anyway, turns out firefox welcomes this kind of thing if you are a
-core developer and have deep knowledge of it's inter-workings or if
-you have vimperator to abstract the interface/service
-inconvenience. And the matter is actually very simple.</p>
-<div class="highlight"><pre><span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="err">\</span><span class="nx">n</span><span class="p">;</span> <span class="p">});</span>
-<span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
+        <p>If you have used anything (editor, web browser, mail client etc) that
+lets run shell commands through it, you have probably found yourself
+in a situation where your command fails because your shell's RC file
+was not loaded before execution. ie the full command was probably
+something along the lines of</p>
+<div class="highlight"><pre><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">zsh</span> <span class="o">-</span><span class="n">c</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">command</span><span class="o">&gt;</span>
 </pre></div>
 
 
-<p>If you haven't got any better way of running more than one line of
-code on firefox you can use vimperator's <code>:js</code> which should go like</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="err">\</span><span class="nx">n</span><span class="p">;</span> <span class="p">});</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
+<p>Thus your <code>PATH</code> is not in place and your aliases and shell functions
+are inaccessible. Then you may either do something like giving</p>
+<div class="highlight"><pre><span class="p">.</span> <span class="p">.</span><span class="o">/</span><span class="p">.</span><span class="n">zshrc</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="n">useful</span> <span class="n">command</span><span class="o">&gt;</span>
 </pre></div>
 
 
-<p>So in brief what does this code do, it uses vimperator's interface to
-tabs to get a list of all tabs (basically tuples) and then you
-concatenate those tuples together and dump them into a string (line
-2). Then vimperator provides a simple way of file io with <code>io.File</code> to
-throw everything into a file. And there you have it</p>
-<p>If for example I were looking up bands going through a list and run
-the above I would come up with something like</p>
-<div class="highlight"><pre><span class="k">[...]</span>
-
-<span class="na">23 ~~~ kyuss at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">kyuss</span>
-<span class="na">24 ~~~ 311 at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">311</span>
-<span class="na">25 ~~~ high on fire at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">high+on+fire</span>
-<span class="na">26 ~~~ sleep at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">sleep</span>
-<span class="na">27 ~~~ cottonmouth kings at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">cottonmouth+kings</span>
-
-<span class="k">[...]</span>
+<p>or if you are weird like me dig in the source and deal with the
+problem once and for all. So this was the case with emacs' <code>compile</code>
+command and <code>shell-command</code> and the like. The ideal case would be to
+change emacs' behavior into instead running something like this</p>
+<div class="highlight"><pre><span class="p">/</span><span class="nx">bin</span><span class="p">/</span><span class="nx">zsh</span> <span class="na">-ic</span> <span class="o">&lt;</span><span class="nb">command</span><span class="o">&gt;</span>
 </pre></div>
 
 
-<p><em>EDIT</em>: If you want to reopen some of those you can easily do it with</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">read</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">)</span>
-<span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">l</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">l</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]}).</span><span class="nx">slice</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">23</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span><span class="nx">liberator</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span><span class="nx">where</span><span class="o">:</span> <span class="nx">liberator</span><span class="p">.</span><span class="nx">NEW_TAB</span><span class="p">})})</span>
+<p>essentially making the command run in an interactive shell and thus
+running my <code>.zshrc</code> first.</p>
+<p>Diging into the sources, much to my dismay, I found this snippet of
+code.</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">comint</span><span class="o">-</span><span class="n">exec</span>
+ <span class="n">outbuf</span> <span class="p">(</span><span class="n">downcase</span> <span class="n">mode</span><span class="o">-</span><span class="n">name</span><span class="p">)</span>
+ <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="n">file</span><span class="o">-</span><span class="n">remote</span><span class="o">-</span><span class="n">p</span> <span class="k">default</span><span class="o">-</span><span class="n">directory</span><span class="p">)</span>
+     <span class="s">&quot;/bin/sh&quot;</span>
+   <span class="n">shell</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="n">name</span><span class="p">)</span>
+ <span class="n">nil</span> <span class="err">`</span><span class="p">(</span><span class="s">&quot;-c&quot;</span> <span class="p">,</span><span class="n">command</span><span class="p">))</span>
 </pre></div>
 
 
-<p>Which should open again tabs 7 to 22.</p>
+<p>which eventually calls <code>start-process</code>.</p>
+<p>I am not really prepared to fork compilation mode, or anything else
+for that matter so editing that is out of the question. What I am
+willing to do however is hack the &amp;*^# out of the system from
+<code>.emacs</code>. And as it turns out lisp is not praised for it's self
+editing programs for nothing.</p>
+<p>One way to go about this which (kind of but not exactly) applies for
+any dynamic language is to just override <code>start-process</code>. Emacs lisp
+however has a more elegant way of going about this kind of
+problem. Thus I wrote two very similar pieces of
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html">advice</a>,
+for async shell commands:</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">defadvice</span> <span class="n">call</span><span class="o">-</span><span class="n">process</span>
+  <span class="p">(</span><span class="n">before</span> <span class="n">interactive</span><span class="o">-</span><span class="n">call</span><span class="o">-</span><span class="n">process</span>
+      <span class="p">(</span><span class="n">program</span> <span class="n">infile</span> <span class="n">buffer</span> <span class="n">display</span> <span class="o">&amp;</span><span class="n">rest</span> <span class="n">program</span><span class="o">-</span><span class="n">args</span><span class="p">)</span>
+      <span class="n">activate</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">when</span> <span class="p">(</span><span class="n">and</span> <span class="n">program</span><span class="o">-</span><span class="n">args</span>
+         <span class="p">(</span><span class="n">string</span><span class="o">=</span> <span class="s">&quot;-c&quot;</span> <span class="p">(</span><span class="n">car</span> <span class="n">program</span><span class="o">-</span><span class="n">args</span><span class="p">))</span>
+         <span class="p">(</span><span class="n">string</span><span class="o">=</span> <span class="n">program</span> <span class="s">&quot;/bin/zsh&quot;</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">ad</span><span class="o">-</span><span class="n">set</span><span class="o">-</span><span class="n">arg</span> <span class="mi">4</span> <span class="s">&quot;-ic&quot;</span><span class="p">)))</span>
+</pre></div>
+
+
+<p>and for sync shell commands:</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">defadvice</span> <span class="n">start</span><span class="o">-</span><span class="n">process</span>
+  <span class="p">(</span><span class="n">before</span> <span class="n">interactive</span><span class="o">-</span><span class="n">shell</span><span class="o">-</span><span class="n">process</span>
+      <span class="p">(</span><span class="n">name</span> <span class="n">buffer</span> <span class="n">program</span> <span class="o">&amp;</span><span class="n">rest</span> <span class="n">program</span><span class="o">-</span><span class="n">args</span><span class="p">)</span>
+      <span class="n">activate</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">when</span> <span class="p">(</span><span class="n">and</span> <span class="n">program</span><span class="o">-</span><span class="n">args</span>
+         <span class="p">(</span><span class="n">string</span><span class="o">=</span> <span class="s">&quot;-c&quot;</span> <span class="p">(</span><span class="n">car</span> <span class="n">program</span><span class="o">-</span><span class="n">args</span><span class="p">))</span>
+         <span class="p">(</span><span class="n">string</span><span class="o">=</span> <span class="n">program</span> <span class="s">&quot;/bin/zsh&quot;</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">ad</span><span class="o">-</span><span class="n">set</span><span class="o">-</span><span class="n">arg</span> <span class="mi">3</span> <span class="s">&quot;-ic&quot;</span><span class="p">)))</span>
+</pre></div>
+
+
+<p>What this does is whenever <code>start-process</code> (or <code>call-process</code> for sync
+calls) is to be called, before that I check if the program is my
+shell, and if the second argument is <code>-c</code>, and if so I change that
+argument into <code>-ic</code>.</p>
+<p>Thus then besides <code>compile</code> working nicely and so do sync commands:</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">shell</span><span class="o">-</span><span class="n">command</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">string</span> <span class="s">&quot;gl&quot;</span><span class="p">)</span>
+<span class="s">&quot;fatal: Not a git repository (or any parent up to mount point /home)</span>
+<span class="n">Stopping</span> <span class="n">at</span> <span class="n">filesystem</span> <span class="n">boundary</span> <span class="p">(</span><span class="n">GIT_DISCOVERY_ACROSS_FILESYSTEM</span> <span class="n">not</span> <span class="n">set</span><span class="p">).</span>
+<span class="s">&quot;</span>
+</pre></div>
+
+
+<p>Which is what I expected to see when not in a git repo.</p>
   </article>
 
     <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
   <p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html&title=Dumping tab information with vimperator&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/elegant-hacking-with-emacs-lisp.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=http://fakedrake.github.io/elegant-hacking-with-emacs-lisp.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/elegant-hacking-with-emacs-lisp.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/elegant-hacking-with-emacs-lisp.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/elegant-hacking-with-emacs-lisp.html&title=Elegant hacking with Emacs Lisp&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <a href="/tag/firefox.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> firefox</a>
-              <a href="/tag/vimperator.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> vimperator</a>
-              <a href="/tag/javascript.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> javascript</a>
-              <a href="/tag/tabs.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> tabs</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a href="/tag/shell.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> shell</a>
+              <a href="/tag/emacs.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> emacs</a>
+              <a href="/tag/lisp.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> lisp</a>
             </p>
 
   <hr /><!-- divider -->
@@ -196,9 +226,9 @@ the above I would come up with something like</p>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "dumping-tab-information-with-vimperator.html";
-        var disqus_title = "Dumping tab information with vimperator";
-        var disqus_url = "http://fakedrake.github.io/dumping-tab-information-with-vimperator.html";
+        var disqus_identifier = "elegant-hacking-with-emacs-lisp.html";
+        var disqus_title = "Elegant hacking with Emacs Lisp";
+        var disqus_url = "http://fakedrake.github.io/elegant-hacking-with-emacs-lisp.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

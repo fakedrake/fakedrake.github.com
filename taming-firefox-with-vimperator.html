@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-      Dumping tab information with vimperator - Chris Perivolaropoulos
+      Taming firefox with vimperator - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -107,87 +107,75 @@
         <div class="row">
           <div class="left col-md-9">
 	      <header>
-          <h1>Dumping tab information with vimperator</h1>
+          <h1>Taming firefox with vimperator</h1>
         <small class="fsize13">
                                                                                                                         <a href="http://fakedrake.github.io/category/firefox.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> firefox</a>
-                                                                  <a href="http://fakedrake.github.io/dumping-tab-information-with-vimperator.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dumping-tab-information-with-vimperator.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Sun 20 April 2014</span>
+                                                                  <a href="http://fakedrake.github.io/taming-firefox-with-vimperator.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="taming-firefox-with-vimperator.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Sun 30 March 2014</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
                 <article class='content'>
-        <p>To me it is quite usual that I am looking at a list of links to things
-(songs, articls, books etc.) and I want to first select the ones I am
-interested in and then look into them one by one. Most of the time
-this does not go as smoothly as I would want it to. I wildly
-underestimate the length of the list and not only do I get many many
-more interesting results than I expected, but I also spend so much
-time going through the entire list that I need to check them later. I
-could bookmark everything and look at it later but the perfect
-solution would be to dump everything in a text file and
-<a href="http://gist.github.com">gist</a> it or then categorize it according to
-artist with Python or something else equally and needlessly nerdy.</p>
-<p>So anyway, turns out firefox welcomes this kind of thing if you are a
-core developer and have deep knowledge of it's inter-workings or if
-you have vimperator to abstract the interface/service
-inconvenience. And the matter is actually very simple.</p>
-<div class="highlight"><pre><span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="err">\</span><span class="nx">n</span><span class="p">;</span> <span class="p">});</span>
-<span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
+        <p>I always hated anything that separated me from looking at something
+for the first time to me extending/programming/hacking it. That is the
+main reason why I only recently started actually taking control of
+Firefox. The firey beast always presented itself as extendible and
+hacker friendly but most tutorials for n00bs like myself would spend
+most of the time explaining how I should structure my extension and
+how I should package it etc. It was either that or they would propose
+to break my hard-earned workflow, that involves sophisticated tools
+and rocket science, presenting me with a web based editor. I
+understand this design is a well thougt over by mozilla and it
+probably covers the larger demographic but for me to actually do
+anything things should be as simple as <em>"hey mate, here is a text file
+you didn't notice was in your home directory all this time. Throw some
+code in ther. Look it works!"</em>. Then vimperator came along.</p>
+<h1>Vimperator</h1>
+<p>Actually I had already been using vimperator for years until I
+actually started using it's real power. Originally I thought it was a
+neat little tool so that I would not have to use the mouse as
+often. And in general that worked pretty well. You can scroll with
+vim's favourite <code>h</code>, <code>j</code>, <code>k</code>, and <code>l</code>, you can navigate links with
+hints by typing <code>f</code> and then typing the number that appears over the
+link you are after or start typing the text of the link to narrow down
+your options. You can navigate back and forth with <code>&lt;C-o&gt;</code> (that would
+be Ctrl+o) and <code>C-i</code> and you can even use an equivalent of the
+AwesomeBar (I think that is the tecnical term for firefox's url bar)
+with <code>o</code> or <code>t</code> to open new tab. You can copy the current url by
+typing <code>y</code>, and you can let vimperator try to navigate you back and
+forth in mailing lists' threads with <code>]]</code> and
+<code>[[</code>. And all these are just the tip of the iceberg.</p>
+<p>Then there is extra options that you can tamper with like the variable
+<code>defsearch</code> that you can change by typing</p>
+<div class="highlight"><pre><span class="o">:</span><span class="n">set</span> <span class="n">defsearch</span><span class="o">=</span><span class="n">ddg</span>
 </pre></div>
 
 
-<p>If you haven't got any better way of running more than one line of
-code on firefox you can use vimperator's <code>:js</code> which should go like</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="err">\</span><span class="nx">n</span><span class="p">;</span> <span class="p">});</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
-</pre></div>
-
-
-<p>So in brief what does this code do, it uses vimperator's interface to
-tabs to get a list of all tabs (basically tuples) and then you
-concatenate those tuples together and dump them into a string (line
-2). Then vimperator provides a simple way of file io with <code>io.File</code> to
-throw everything into a file. And there you have it</p>
-<p>If for example I were looking up bands going through a list and run
-the above I would come up with something like</p>
-<div class="highlight"><pre><span class="k">[...]</span>
-
-<span class="na">23 ~~~ kyuss at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">kyuss</span>
-<span class="na">24 ~~~ 311 at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">311</span>
-<span class="na">25 ~~~ high on fire at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">high+on+fire</span>
-<span class="na">26 ~~~ sleep at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">sleep</span>
-<span class="na">27 ~~~ cottonmouth kings at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">cottonmouth+kings</span>
-
-<span class="k">[...]</span>
-</pre></div>
-
-
-<p><em>EDIT</em>: If you want to reopen some of those you can easily do it with</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">read</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">)</span>
-<span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">l</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">l</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]}).</span><span class="nx">slice</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">23</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span><span class="nx">liberator</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span><span class="nx">where</span><span class="o">:</span> <span class="nx">liberator</span><span class="p">.</span><span class="nx">NEW_TAB</span><span class="p">})})</span>
-</pre></div>
-
-
-<p>Which should open again tabs 7 to 22.</p>
+<p>to get duckduckgo as your default search engine assuming you have it
+installed and named ddg. Then there is the <code>gui</code> variable that controls
+what xul menus are to be shown (that is usually just the tabs) and the
+<code>editor</code> command that controls what vimperator should open as an external
+editor when she needs to.</p>
+<p>All this is awesome and if you dig in you will find many many more built in
+tricks, but that is not what I am interested in.</p>
   </article>
 
     <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
   <p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html&title=Dumping tab information with vimperator&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/taming-firefox-with-vimperator.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=http://fakedrake.github.io/taming-firefox-with-vimperator.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/taming-firefox-with-vimperator.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/taming-firefox-with-vimperator.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/taming-firefox-with-vimperator.html&title=Taming firefox with vimperator&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <a href="/tag/firefox.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> firefox</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a href="/tag/firefox.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> firefox</a>
               <a href="/tag/vimperator.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> vimperator</a>
               <a href="/tag/javascript.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> javascript</a>
-              <a href="/tag/tabs.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> tabs</a>
             </p>
 
   <hr /><!-- divider -->
@@ -196,9 +184,9 @@ the above I would come up with something like</p>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "dumping-tab-information-with-vimperator.html";
-        var disqus_title = "Dumping tab information with vimperator";
-        var disqus_url = "http://fakedrake.github.io/dumping-tab-information-with-vimperator.html";
+        var disqus_identifier = "taming-firefox-with-vimperator.html";
+        var disqus_title = "Taming firefox with vimperator";
+        var disqus_url = "http://fakedrake.github.io/taming-firefox-with-vimperator.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
