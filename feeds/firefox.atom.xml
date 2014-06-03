@@ -51,45 +51,4 @@ the above I would come up with something like&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Which should open again tabs 7 to 22.&lt;/p&gt;</summary><category term="firefox"></category><category term="vimperator"></category><category term="javascript"></category><category term="tabs"></category></entry><entry><title>Taming firefox with vimperator</title><link href="http://fakedrake.github.io/taming-firefox-with-vimperator.html" rel="alternate"></link><updated>2014-03-30T14:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-30:taming-firefox-with-vimperator.html</id><summary type="html">&lt;p&gt;I always hated anything that separated me from looking at something
-for the first time to me extending/programming/hacking it. That is the
-main reason why I only recently started actually taking control of
-Firefox. The firey beast always presented itself as extendible and
-hacker friendly but most tutorials for n00bs like myself would spend
-most of the time explaining how I should structure my extension and
-how I should package it etc. It was either that or they would propose
-to break my hard-earned workflow, that involves sophisticated tools
-and rocket science, presenting me with a web based editor. I
-understand this design is a well thougt over by mozilla and it
-probably covers the larger demographic but for me to actually do
-anything things should be as simple as &lt;em&gt;"hey mate, here is a text file
-you didn't notice was in your home directory all this time. Throw some
-code in ther. Look it works!"&lt;/em&gt;. Then vimperator came along.&lt;/p&gt;
-&lt;h1&gt;Vimperator&lt;/h1&gt;
-&lt;p&gt;Actually I had already been using vimperator for years until I
-actually started using it's real power. Originally I thought it was a
-neat little tool so that I would not have to use the mouse as
-often. And in general that worked pretty well. You can scroll with
-vim's favourite &lt;code&gt;h&lt;/code&gt;, &lt;code&gt;j&lt;/code&gt;, &lt;code&gt;k&lt;/code&gt;, and &lt;code&gt;l&lt;/code&gt;, you can navigate links with
-hints by typing &lt;code&gt;f&lt;/code&gt; and then typing the number that appears over the
-link you are after or start typing the text of the link to narrow down
-your options. You can navigate back and forth with &lt;code&gt;&amp;lt;C-o&amp;gt;&lt;/code&gt; (that would
-be Ctrl+o) and &lt;code&gt;C-i&lt;/code&gt; and you can even use an equivalent of the
-AwesomeBar (I think that is the tecnical term for firefox's url bar)
-with &lt;code&gt;o&lt;/code&gt; or &lt;code&gt;t&lt;/code&gt; to open new tab. You can copy the current url by
-typing &lt;code&gt;y&lt;/code&gt;, and you can let vimperator try to navigate you back and
-forth in mailing lists' threads with &lt;code&gt;]]&lt;/code&gt; and
-&lt;code&gt;[[&lt;/code&gt;. And all these are just the tip of the iceberg.&lt;/p&gt;
-&lt;p&gt;Then there is extra options that you can tamper with like the variable
-&lt;code&gt;defsearch&lt;/code&gt; that you can change by typing&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;defsearch&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ddg&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;to get duckduckgo as your default search engine assuming you have it
-installed and named ddg. Then there is the &lt;code&gt;gui&lt;/code&gt; variable that controls
-what xul menus are to be shown (that is usually just the tabs) and the
-&lt;code&gt;editor&lt;/code&gt; command that controls what vimperator should open as an external
-editor when she needs to.&lt;/p&gt;
-&lt;p&gt;All this is awesome and if you dig in you will find many many more built in
-tricks, but that is not what I am interested in.&lt;/p&gt;</summary><category term="vimperator"></category><category term="firefox"></category><category term="javascript"></category></entry></feed>
+&lt;p&gt;Which should open again tabs 7 to 22.&lt;/p&gt;</summary><category term="firefox"></category><category term="vimperator"></category><category term="javascript"></category><category term="tabs"></category></entry></feed>
