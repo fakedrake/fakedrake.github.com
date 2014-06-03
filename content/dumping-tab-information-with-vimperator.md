@@ -25,14 +25,14 @@ inconvenience. And the matter is actually very simple.
 
     :::js
 	tabdump = "";
-	tabs.get().forEach(function (i) { tabdump += i.join(" ~~~ ") + \n; });
+	tabs.get().forEach(function (i) { tabdump += i.join(" ~~~ ") + "\n"; });
 	io.File("~/Documents/tabs").write(tabdump)
 
 If you haven't got any better way of running more than one line of
 code on firefox you can use vimperator's `:js` which should go like
 
     :::js
-	:js tabdump = ""; tabs.get().forEach(function (i) { tabdump += i.join(" ~~~ ") + \n; }); io.File("~/Documents/tabs").write(tabdump)
+	:js tabdump = ""; tabs.get().forEach(function (i) { tabdump += i.join(" ~~~ ") + "\n"; }); io.File("~/Documents/tabs").write(tabdump)
 
 
 So in brief what does this code do, it uses vimperator's interface to
