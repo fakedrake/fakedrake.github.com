@@ -82,15 +82,18 @@ Now if you need more direct control over this. An equivalent to the
 above would be:
 
 	:::javascript
-	bss.addEngineWithDetails("Spotify",null, "spot", "Search spotify", "GET", "https://play.spotify.com/search/{searchTerms}")
+	bss.addEngineWithDetails("Spotify",null, "spotify", "Search spotify", "GET", "https://play.spotify.com/search/{searchTerms}")
+
+*Note: this wont work if the aliases of the search engines conflict
+ like they do here.*
 
 This does exactly the same thing as having the data in an XML file and
-loading it with `add Engine()`. If you want to remove an engine you
+loading it with `addEngine()`. If you want to remove an engine you
 can do it with:
 
 	:::javascript
-	bss.removeEngine(bss.getEngineByAlias("spot"))
+	bss.removeEngine(bss.getEngineByAlias("spotify"))
 
-There's more you can do with the browser search service but I thing I
+There's more you can do with the browser search service but I think I
 would just be repeating the documentation from now on, I hope this is
 a good example to get you started.
