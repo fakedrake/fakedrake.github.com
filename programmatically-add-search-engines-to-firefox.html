@@ -188,18 +188,20 @@ right place so it is permanent.</p>
 
 <p>Now if you need more direct control over this. An equivalent to the
 above would be:</p>
-<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngineWithDetails</span><span class="p">(</span><span class="s2">&quot;Spotify&quot;</span><span class="p">,</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;spot&quot;</span><span class="p">,</span> <span class="s2">&quot;Search spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;https://play.spotify.com/search/{searchTerms}&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngineWithDetails</span><span class="p">(</span><span class="s2">&quot;Spotify&quot;</span><span class="p">,</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;Search spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;https://play.spotify.com/search/{searchTerms}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
+<p><em>Note: this wont work if the aliases of the search engines conflict
+ like they do here.</em></p>
 <p>This does exactly the same thing as having the data in an XML file and
-loading it with <code>add Engine()</code>. If you want to remove an engine you
+loading it with <code>addEngine()</code>. If you want to remove an engine you
 can do it with:</p>
-<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">removeEngine</span><span class="p">(</span><span class="nx">bss</span><span class="p">.</span><span class="nx">getEngineByAlias</span><span class="p">(</span><span class="s2">&quot;spot&quot;</span><span class="p">))</span>
+<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">removeEngine</span><span class="p">(</span><span class="nx">bss</span><span class="p">.</span><span class="nx">getEngineByAlias</span><span class="p">(</span><span class="s2">&quot;spotify&quot;</span><span class="p">))</span>
 </pre></div>
 
 
-<p>There's more you can do with the browser search service but I thing I
+<p>There's more you can do with the browser search service but I think I
 would just be repeating the documentation from now on, I hope this is
 a good example to get you started.</p>
   </article>
