@@ -4,13 +4,12 @@ tags: firefox, javascript
 category: firefox
 slug: programmatically-add-search-engines-to-firefox
 author: Chris Perivolaropoulos
-status: draft
-summary:
+summary:What we are doing here is adding a search engine to firefox like real men ie programmatically. This is nice because you can then write scripts to do interesting stuff with them.
 
-_This article is hidden. Remove status: hidden or make it status:
-published to be able to publish_
-
-First of all let;s see what we can find out without looking at code.
+What we are doing here is adding a search engine to firefox like real
+men ie programmatically. This is nice because you can then write
+scripts to do interesting stuff with them. First of all let's see what
+we can find out without looking at code.
 
 	:::console
 	(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ find -name "*search*"
@@ -91,3 +90,7 @@ can do it with:
 
 	:::javascript
 	bss.removeEngine(bss.getEngineByAlias("spot"))
+
+There's more you can do with the browser search service but I thing I
+would just be repeating the documentation from now on, I hope this is
+a good example to get you started.
