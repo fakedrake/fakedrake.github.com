@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-      Dumping tab information with vimperator - Chris Perivolaropoulos
+      Programmatically add search engines to firefox - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -108,87 +108,117 @@
         <div class="row">
           <div class="left col-md-9">
 	      <header>
-          <h1>Dumping tab information with vimperator</h1>
+          <h1>Programmatically add search engines to firefox</h1>
         <small class="fsize13">
                                                                   <a href="http://fakedrake.github.io/category/firefox.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> firefox</a>
-                                                                  <a href="http://fakedrake.github.io/dumping-tab-information-with-vimperator.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dumping-tab-information-with-vimperator.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Sun 20 April 2014</span>
+                                                                  <a href="http://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="programmatically-add-search-engines-to-firefox.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Sat 07 June 2014</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
                 <article class='content'>
-        <p>To me it is quite usual that I am looking at a list of links to things
-(songs, articls, books etc.) and I want to first select the ones I am
-interested in and then look into them one by one. Most of the time
-this does not go as smoothly as I would want it to. I wildly
-underestimate the length of the list and not only do I get many many
-more interesting results than I expected, but I also spend so much
-time going through the entire list that I need to check them later. I
-could bookmark everything and look at it later but the perfect
-solution would be to dump everything in a text file and
-<a href="http://gist.github.com">gist</a> it or then categorize it according to
-artist with Python or something else equally and needlessly nerdy.</p>
-<p>So anyway, turns out firefox welcomes this kind of thing if you are a
-core developer and have deep knowledge of it's inter-workings or if
-you have vimperator to abstract the interface/service
-inconvenience. And the matter is actually very simple.</p>
-<div class="highlight"><pre><span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span> <span class="p">});</span>
-<span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
+        <p>What we are doing here is adding a search engine to firefox like real
+men ie programmatically. This is nice because you can then write
+scripts to do interesting stuff with them. First of all let's see what
+we can find out without looking at code.</p>
+<div class="highlight"><pre><span class="go">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ find -name &quot;*search*&quot;</span>
+<span class="go">./search-metadata.json</span>
+<span class="go">./search.json</span>
+<span class="go">./searchplugins</span>
 </pre></div>
 
 
-<p>If you haven't got any better way of running more than one line of
-code on firefox you can use vimperator's <code>:js</code> which should go like</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span> <span class="p">});</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
+<p><em>search.json</em> has some general info about the engines and seems to be
+ pointing firefox to <em>searchplugins/</em> for more details.</p>
+<div class="highlight"><pre><span class="go">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ ls searchplugins</span>
+<span class="go">duckduckgo.xml  imdb.xml  spotify1.xml  youtube.xml</span>
 </pre></div>
 
 
-<p>So in brief what does this code do, it uses vimperator's interface to
-tabs to get a list of all tabs (basically tuples) and then you
-concatenate those tuples together and dump them into a string (line
-2). Then vimperator provides a simple way of file io with <code>io.File</code> to
-throw everything into a file. And there you have it</p>
-<p>If for example I were looking up bands going through a list and run
-the above I would come up with something like</p>
-<div class="highlight"><pre><span class="k">[...]</span>
-
-<span class="na">23 ~~~ kyuss at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">kyuss</span>
-<span class="na">24 ~~~ 311 at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">311</span>
-<span class="na">25 ~~~ high on fire at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">high+on+fire</span>
-<span class="na">26 ~~~ sleep at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">sleep</span>
-<span class="na">27 ~~~ cottonmouth kings at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">cottonmouth+kings</span>
-
-<span class="k">[...]</span>
+<p>Right what I was looking for. Let's take a look inside one of them</p>
+<div class="highlight"><pre><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;os:ShortName&gt;</span>DuckDuckGo<span class="nt">&lt;/os:ShortName&gt;</span>
+<span class="nt">&lt;os:Description&gt;</span>Search DuckDuckGo<span class="nt">&lt;/os:Description&gt;</span>
+<span class="nt">&lt;os:InputEncoding&gt;</span>UTF-8<span class="nt">&lt;/os:InputEncoding&gt;</span>
+<span class="nt">&lt;os:Image</span> <span class="na">width=</span><span class="s">&quot;16&quot;</span> <span class="na">height=</span><span class="s">&quot;16&quot;</span><span class="nt">&gt;</span>data:image/x-icon;base64,AAABAAMAEBAAAA[...]<span class="nt">&lt;/os:Image&gt;</span>
+<span class="nt">&lt;os:Url</span> <span class="na">type=</span><span class="s">&quot;text/html&quot;</span> <span class="na">method=</span><span class="s">&quot;GET&quot;</span> <span class="na">template=</span><span class="s">&quot;https://duckduckgo.com/&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;os:Param</span> <span class="na">name=</span><span class="s">&quot;q&quot;</span> <span class="na">value=</span><span class="s">&quot;{searchTerms}&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/os:Url&gt;&lt;os:Url</span> <span class="na">type=</span><span class="s">&quot;application/x-suggestions+json&quot;</span> <span class="na">method=</span><span class="s">&quot;GET&quot;</span> <span class="na">template=</span><span class="s">&quot;https://duckduckgo.com/ac/&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;os:Param</span> <span class="na">name=</span><span class="s">&quot;q&quot;</span> <span class="na">value=</span><span class="s">&quot;{searchTerms}&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;os:Param</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span> <span class="na">value=</span><span class="s">&quot;list&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/os:Url&gt;</span>
+<span class="nt">&lt;/SearchPlugin&gt;</span>
 </pre></div>
 
 
-<p><em>EDIT</em>: If you want to reopen some of those you can easily do it with</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">read</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">)</span>
-<span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">l</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">l</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]}).</span><span class="nx">slice</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">23</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span><span class="nx">liberator</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span><span class="nx">where</span><span class="o">:</span> <span class="nx">liberator</span><span class="p">.</span><span class="nx">NEW_TAB</span><span class="p">})})</span>
+<p>Awesome, now lets see what interfaces we can get to loading this
+code. We will need access to the
+<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIBrowserSearchService">search service</a>, so</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">bss</span> <span class="o">=</span> <span class="nx">Cc</span><span class="p">[</span><span class="s2">&quot;@mozilla.org/browser/search-service;1&quot;</span><span class="p">].</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIBrowserSearchService</span><span class="p">)</span>
 </pre></div>
 
 
-<p>Which should open again tabs 7 to 22.</p>
+<p>Now to me at least the documentation was not extremely obvious so I
+had to check out the
+<a href="https://github.com/mozilla/gecko-dev/blob/master/toolkit/components/search/nsSearchService.js">implementation</a>
+which I encourage you to take a look at but it wont be really
+necessary. After snooping around a bit I came up with.</p>
+<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngine</span><span class="p">(</span><span class="s2">&quot;file:///home/fakedrake/Projects/Javascript/spotify.xml&quot;</span><span class="p">,</span> <span class="nx">Ci</span><span class="p">.</span><span class="nx">nsISearchEngine</span><span class="p">.</span><span class="nx">DATA_XML</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Where the contents of <em>spotify.xml</em> are</p>
+<div class="highlight"><pre><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;os:ShortName&gt;</span>Spotify<span class="nt">&lt;/os:ShortName&gt;</span>
+<span class="nt">&lt;os:Description&gt;</span>Search Spotify<span class="nt">&lt;/os:Description&gt;</span>
+<span class="nt">&lt;os:InputEncoding&gt;</span>UTF-8<span class="nt">&lt;/os:InputEncoding&gt;</span>
+<span class="nt">&lt;os:Url</span> <span class="na">type=</span><span class="s">&quot;text/html&quot;</span> <span class="na">method=</span><span class="s">&quot;GET&quot;</span> <span class="na">template=</span><span class="s">&quot;https://play.spotify.com/search/{searchTerms}&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/SearchPlugin&gt;</span>
+</pre></div>
+
+
+<p>And to my delight vimperator recognizes my custom spotify search engine!</p>
+<p><img alt="Spoify search engine" src="http://i.imgur.com/yukAwWr.png" /></p>
+<p>And not only that, but firefox was kind enough to add my xml to the
+right place so it is permanent.</p>
+<div class="highlight"><pre><span class="go">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default/searchplugins $ ls</span>
+<span class="go">duckduckgo.xml  imdb.xml  spotify.xml  youtube.xml</span>
+</pre></div>
+
+
+<p>Now if you need more direct control over this. An equivalent to the
+above would be:</p>
+<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngineWithDetails</span><span class="p">(</span><span class="s2">&quot;Spotify&quot;</span><span class="p">,</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;spot&quot;</span><span class="p">,</span> <span class="s2">&quot;Search spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;https://play.spotify.com/search/{searchTerms}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>This does exactly the same thing as having the data in an XML file and
+loading it with <code>add Engine()</code>. If you want to remove an engine you
+can do it with:</p>
+<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">removeEngine</span><span class="p">(</span><span class="nx">bss</span><span class="p">.</span><span class="nx">getEngineByAlias</span><span class="p">(</span><span class="s2">&quot;spot&quot;</span><span class="p">))</span>
+</pre></div>
+
+
+<p>There's more you can do with the browser search service but I thing I
+would just be repeating the documentation from now on, I hope this is
+a good example to get you started.</p>
   </article>
 
     <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
   <p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/dumping-tab-information-with-vimperator.html&title=Dumping tab information with vimperator&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=http://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html&title=Programmatically add search engines to firefox&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <a href="/tag/javascript.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> javascript</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <a href="/tag/javascript.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> javascript</a>
               <a href="/tag/firefox.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> firefox</a>
-              <a href="/tag/tabs.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> tabs</a>
-              <a href="/tag/vimperator.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> vimperator</a>
             </p>
 
   <hr /><!-- divider -->
@@ -197,9 +227,9 @@ the above I would come up with something like</p>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "dumping-tab-information-with-vimperator.html";
-        var disqus_title = "Dumping tab information with vimperator";
-        var disqus_url = "http://fakedrake.github.io/dumping-tab-information-with-vimperator.html";
+        var disqus_identifier = "programmatically-add-search-engines-to-firefox.html";
+        var disqus_title = "Programmatically add search engines to firefox";
+        var disqus_url = "http://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

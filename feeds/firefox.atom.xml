@@ -1,5 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/firefox.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-04-20T20:18:00+03:00</updated><entry><title>Dumping tab information with vimperator</title><link href="http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" rel="alternate"></link><updated>2014-04-20T20:18:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-04-20:dumping-tab-information-with-vimperator.html</id><summary type="html">&lt;p&gt;To me it is quite usual that I am looking at a list of links to things
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/firefox.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-06-07T15:21:00+03:00</updated><entry><title>Programmatically add search engines to firefox</title><link href="http://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html" rel="alternate"></link><updated>2014-06-07T15:21:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-06-07:programmatically-add-search-engines-to-firefox.html</id><summary type="html">&lt;p&gt;What we are doing here is adding a search engine to firefox like real
+men ie programmatically. This is nice because you can then write
+scripts to do interesting stuff with them. First of all let's see what
+we can find out without looking at code.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ find -name &amp;quot;*search*&amp;quot;&lt;/span&gt;
+&lt;span class="go"&gt;./search-metadata.json&lt;/span&gt;
+&lt;span class="go"&gt;./search.json&lt;/span&gt;
+&lt;span class="go"&gt;./searchplugins&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;em&gt;search.json&lt;/em&gt; has some general info about the engines and seems to be
+ pointing firefox to &lt;em&gt;searchplugins/&lt;/em&gt; for more details.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ ls searchplugins&lt;/span&gt;
+&lt;span class="go"&gt;duckduckgo.xml  imdb.xml  spotify1.xml  youtube.xml&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Right what I was looking for. Let's take a look inside one of them&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;SearchPlugin&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.mozilla.org/2006/browser/search/&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;xmlns:os=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://a9.com/-/spec/opensearch/1.1/&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;os:ShortName&amp;gt;&lt;/span&gt;DuckDuckGo&lt;span class="nt"&gt;&amp;lt;/os:ShortName&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;os:Description&amp;gt;&lt;/span&gt;Search DuckDuckGo&lt;span class="nt"&gt;&amp;lt;/os:Description&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;os:InputEncoding&amp;gt;&lt;/span&gt;UTF-8&lt;span class="nt"&gt;&amp;lt;/os:InputEncoding&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;os:Image&lt;/span&gt; &lt;span class="na"&gt;width=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;16&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;height=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;16&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;data:image/x-icon;base64,AAABAAMAEBAAAA[...]&lt;span class="nt"&gt;&amp;lt;/os:Image&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;os:Url&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text/html&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;method=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;GET&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;template=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://duckduckgo.com/&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;os:Param&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;q&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;value=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{searchTerms}&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/os:Url&amp;gt;&amp;lt;os:Url&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;application/x-suggestions+json&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;method=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;GET&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;template=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://duckduckgo.com/ac/&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;os:Param&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;q&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;value=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{searchTerms}&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;os:Param&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;type&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;value=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;list&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/os:Url&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/SearchPlugin&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Awesome, now lets see what interfaces we can get to loading this
+code. We will need access to the
+&lt;a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIBrowserSearchService"&gt;search service&lt;/a&gt;, so&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;bss&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Cc&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;@mozilla.org/browser/search-service;1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getService&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Ci&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;nsIBrowserSearchService&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now to me at least the documentation was not extremely obvious so I
+had to check out the
+&lt;a href="https://github.com/mozilla/gecko-dev/blob/master/toolkit/components/search/nsSearchService.js"&gt;implementation&lt;/a&gt;
+which I encourage you to take a look at but it wont be really
+necessary. After snooping around a bit I came up with.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;file:///home/fakedrake/Projects/Javascript/spotify.xml&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;Ci&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;nsISearchEngine&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;DATA_XML&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Where the contents of &lt;em&gt;spotify.xml&lt;/em&gt; are&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;SearchPlugin&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.mozilla.org/2006/browser/search/&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;xmlns:os=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://a9.com/-/spec/opensearch/1.1/&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;os:ShortName&amp;gt;&lt;/span&gt;Spotify&lt;span class="nt"&gt;&amp;lt;/os:ShortName&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;os:Description&amp;gt;&lt;/span&gt;Search Spotify&lt;span class="nt"&gt;&amp;lt;/os:Description&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;os:InputEncoding&amp;gt;&lt;/span&gt;UTF-8&lt;span class="nt"&gt;&amp;lt;/os:InputEncoding&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;os:Url&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text/html&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;method=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;GET&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;template=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://play.spotify.com/search/{searchTerms}&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/SearchPlugin&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And to my delight vimperator recognizes my custom spotify search engine!&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Spoify search engine" src="http://i.imgur.com/yukAwWr.png" /&gt;&lt;/p&gt;
+&lt;p&gt;And not only that, but firefox was kind enough to add my xml to the
+right place so it is permanent.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default/searchplugins $ ls&lt;/span&gt;
+&lt;span class="go"&gt;duckduckgo.xml  imdb.xml  spotify.xml  youtube.xml&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now if you need more direct control over this. An equivalent to the
+above would be:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEngineWithDetails&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spot&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Search spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;GET&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;https://play.spotify.com/search/{searchTerms}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This does exactly the same thing as having the data in an XML file and
+loading it with &lt;code&gt;add Engine()&lt;/code&gt;. If you want to remove an engine you
+can do it with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;removeEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getEngineByAlias&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;spot&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;There's more you can do with the browser search service but I thing I
+would just be repeating the documentation from now on, I hope this is
+a good example to get you started.&lt;/p&gt;</summary><category term="firefox"></category><category term="javascript"></category></entry><entry><title>Dumping tab information with vimperator</title><link href="http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" rel="alternate"></link><updated>2014-04-20T20:18:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-04-20:dumping-tab-information-with-vimperator.html</id><summary type="html">&lt;p&gt;To me it is quite usual that I am looking at a list of links to things
 (songs, articls, books etc.) and I want to first select the ones I am
 interested in and then look into them one by one. Most of the time
 this does not go as smoothly as I would want it to. I wildly
