@@ -5,8 +5,8 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-            Batman Ph.D - Hacking my way out of the existential deadlock
-          </title>
+      Shell pipes and in place insanity - Chris Perivolaropoulos
+    </title>
 
     <meta name="description" content="" />
     <meta name="Author" content="Chris Perivolaropoulos" />
@@ -107,13 +107,125 @@
 
         <div class="row">
           <div class="left col-md-9">
-	                  <div class="item">
-      <div class="item-title">
-        <h2>tabs</h2>
-      </div>
-                        <p><a href="http://fakedrake.github.io/dumping-tab-information-with-vimperator.html"><span class="label label-default light">Sun 20 April 2014</span> Dumping tab information with vimperator</a></p>
-                </div>
-          </div>
+	      <header>
+          <h1>Shell pipes and in place insanity</h1>
+        <small class="fsize13">
+                                                                                                                        <a href="http://fakedrake.github.io/category/shell.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> shell</a>
+                              <a href="http://fakedrake.github.io/shell-pipes-and-in-place-insanity.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="shell-pipes-and-in-place-insanity.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Sat 28 June 2014</span>
+      <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
+    </small>
+  </header>
+                <article class='content'>
+        <p>Here is a cute little gem that I came across the other day:</p>
+<div class="highlight"><pre><span class="gp">$</span> <span class="nb">echo</span> <span class="s2">&quot;1\n2\n3\n4\n&quot;</span> &gt; numbers <span class="o">&amp;&amp;</span> cat numbers | cat &gt; numbers <span class="o">&amp;&amp;</span> cat numbers
+</pre></div>
+
+
+<p>And nothing is returned. Now why does this happen? <code>strace</code> to the rescue</p>
+<div class="highlight"><pre><span class="gp">$</span> <span class="nb">echo</span> <span class="s2">&quot;1\n2\n3\n4\n&quot;</span> &gt; numbers
+<span class="gp">$</span> strace -ff -ttt -o /tmp/trace/bash bash -c <span class="s2">&quot;cat numbers | cat &gt; numbers&quot;</span>
+</pre></div>
+
+
+<p><code>-ff</code> will save the trace of each child in a separate file
+<em>/tmp/trace/bash.PID</em>:</p>
+<div class="highlight"><pre><span class="go">ls -l /tmp/trace</span>
+<span class="go">total 32</span>
+<span class="go">-rw-r--r-- 1 fakedrake users 14116 Jun 28 21:49 bash.7122</span>
+<span class="go">-rw-r--r-- 1 fakedrake users  6751 Jun 28 21:49 bash.7123</span>
+<span class="go">-rw-r--r-- 1 fakedrake users  6832 Jun 28 21:49 bash.7124</span>
+</pre></div>
+
+
+<p>You will notice that <em>7122</em> is bash (obviously, it's the first one
+fired up) and then it fires up the first cat as <em>7123</em> and the second
+cat as <em>7124</em>.</p>
+<p>Let's take a look at <em>bash.7124</em> first.</p>
+<p>Near the middle we see</p>
+<div class="highlight"><pre><span class="mf">1403981343.212731</span> <span class="n">open</span><span class="p">(</span><span class="s">&quot;numbers&quot;</span><span class="p">,</span> <span class="n">O_WRONLY</span><span class="o">|</span><span class="n">O_CREAT</span><span class="o">|</span><span class="n">O_TRUNC</span><span class="p">,</span> <span class="mo">0666</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+
+
+<p>Which is called before</p>
+<div class="highlight"><pre><span class="mf">1403981343.212883</span> <span class="n">execve</span><span class="p">(</span><span class="s">&quot;/usr/sbin/cat&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;cat&quot;</span><span class="p">],</span> <span class="p">[</span><span class="cm">/* 84 vars */</span><span class="p">])</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+
+
+<p>Interesting. Also in <em>bash.7123</em> (which is the trace of <code>cat numbers</code>)
+we see</p>
+<div class="highlight"><pre><span class="mf">1403981343.214523</span> <span class="n">open</span><span class="p">(</span><span class="s">&quot;numbers&quot;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">[..]</span>
+<span class="mf">1403981343.214633</span> <span class="n">read</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">65536</span><span class="p">)</span>    <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+
+
+<p>So the series of events is:</p>
+<ul>
+<li>First bash opens <em>numbers</em> for writing and is truncated.</li>
+<li>Then the second <code>cat</code> is called.</li>
+<li>A while after that <em>nubers</em> is opened for reading.</li>
+<li>Finally data is read from <em>numbers</em>.</li>
+</ul>
+<p>Oops. The first opening of <em>numbers</em> deletes all content from inside
+it and therefore <code>cat numbers</code> encounters an empty file!</p>
+<p>So there are a couple solutions to that, one straightforward one is to
+use a fifo to block until the first cat (or any other lengthy command
+may be in it's place)</p>
+<div class="highlight"><pre><span class="gp">$</span> <span class="nb">echo</span> <span class="s2">&quot;1\n2\n3\n4\n&quot;</span> &gt; numbers <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="go">    mkfifo /tmp/fifo &amp;&amp; \</span>
+<span class="go">    (sleep 3 &amp;&amp; cat numbers &amp;&amp; echo 1 &gt; /tmp/fifo ) \</span>
+<span class="go">        | (cat fifo &gt; /dev/null &amp;&amp; (cat &gt; numbers)) \</span>
+<span class="go">    &amp;&amp; cat numbers &amp;&amp; rm /tmp/fifo</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">3</span>
+<span class="go">4</span>
+</pre></div>
+
+
+<p>We write '1' in fifo when <code>cat numbers</code> finishes and we wait to read
+from it before we read from numbers. For demonstration purposes I
+delay <code>cat numbers</code>. And there you have it! Reliable in place piping!</p>
+  </article>
+
+    <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+  <p class="socials">
+  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/shell-pipes-and-in-place-insanity.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=http://fakedrake.github.io/shell-pipes-and-in-place-insanity.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/shell-pipes-and-in-place-insanity.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/shell-pipes-and-in-place-insanity.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/shell-pipes-and-in-place-insanity.html&title=Shell pipes and in place insanity&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <a href="/tag/shell.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> shell</a>
+              <a href="/tag/pipes.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> pipes</a>
+              <a href="/tag/unix.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> unix</a>
+              <a href="/tag/bash.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> bash</a>
+            </p>
+
+  <hr /><!-- divider -->
+
+      <div id="comments" class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'drninjabatman-blog';
+        var disqus_identifier = "shell-pipes-and-in-place-insanity.html";
+        var disqus_title = "Shell pipes and in place insanity";
+        var disqus_url = "http://fakedrake.github.io/shell-pipes-and-in-place-insanity.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+            </div>
 
           <!-- SIDEBAR -->
           <div class="right col-md-3">
@@ -168,6 +280,13 @@
               <!-- hide this part -->
               <div class="hidden">
                                                 None
+                                None
+                                None
+                                None
+                                None
+                                None
+                                None
+                                None
                               </div>
 
               <ul class="tree">
@@ -175,9 +294,25 @@
                                     <span><i class="fa fa-minus-square-o"></i>2014</span>
                   <ul>
                     <li>
+                                            <span><i class="fa fa-minus-square-o"></i>06</span>
+                      <ul>
+                                                <li><a href=""><small>Sat 28 June 2014</small>Shell pipes and in place insanity</a></li>
+                                                <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
+                                              </ul>
+                                            <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <ul>
+                                                <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
+                                                <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
+                                                <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
+                                              </ul>
                                             <span><i class="fa fa-minus-square-o"></i>04</span>
                       <ul>
                                                 <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
+                                              </ul>
+                                            <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                                                <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
+                                                <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
                                               </ul>
                                           </li>
                   </ul>

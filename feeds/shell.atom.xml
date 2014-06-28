@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/shell.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-06-28T20:37:00+03:00</updated><entry><title>Shell pipes and in place insanity</title><link href="http://fakedrake.github.io/shell-pipes-and-in-place-insanity.html" rel="alternate"></link><updated>2014-06-28T20:37:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-06-28:shell-pipes-and-in-place-insanity.html</id><summary type="html">&lt;p&gt;Here is a cute little gem that I came across the other day:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1\n2\n3\n4\n&amp;quot;&lt;/span&gt; &amp;gt; numbers &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; cat numbers | cat &amp;gt; numbers &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; cat numbers
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And nothing is returned. Now why does this happen? &lt;code&gt;strace&lt;/code&gt; to the rescue&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1\n2\n3\n4\n&amp;quot;&lt;/span&gt; &amp;gt; numbers
+&lt;span class="gp"&gt;$&lt;/span&gt; strace -ff -ttt -o /tmp/trace/bash bash -c &lt;span class="s2"&gt;&amp;quot;cat numbers | cat &amp;gt; numbers&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;-ff&lt;/code&gt; will save the trace of each child in a separate file
+&lt;em&gt;/tmp/trace/bash.PID&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;ls -l /tmp/trace&lt;/span&gt;
+&lt;span class="go"&gt;total 32&lt;/span&gt;
+&lt;span class="go"&gt;-rw-r--r-- 1 fakedrake users 14116 Jun 28 21:49 bash.7122&lt;/span&gt;
+&lt;span class="go"&gt;-rw-r--r-- 1 fakedrake users  6751 Jun 28 21:49 bash.7123&lt;/span&gt;
+&lt;span class="go"&gt;-rw-r--r-- 1 fakedrake users  6832 Jun 28 21:49 bash.7124&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You will notice that &lt;em&gt;7122&lt;/em&gt; is bash (obviously, it's the first one
+fired up) and then it fires up the first cat as &lt;em&gt;7123&lt;/em&gt; and the second
+cat as &lt;em&gt;7124&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Let's take a look at &lt;em&gt;bash.7124&lt;/em&gt; first.&lt;/p&gt;
+&lt;p&gt;Near the middle we see&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mf"&gt;1403981343.212731&lt;/span&gt; &lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;numbers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;O_WRONLY&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;O_CREAT&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;O_TRUNC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mo"&gt;0666&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Which is called before&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mf"&gt;1403981343.212883&lt;/span&gt; &lt;span class="n"&gt;execve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/usr/sbin/cat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="cm"&gt;/* 84 vars */&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Interesting. Also in &lt;em&gt;bash.7123&lt;/em&gt; (which is the trace of &lt;code&gt;cat numbers&lt;/code&gt;)
+we see&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mf"&gt;1403981343.214523&lt;/span&gt; &lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;numbers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;O_RDONLY&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="p"&gt;[..]&lt;/span&gt;
+&lt;span class="mf"&gt;1403981343.214633&lt;/span&gt; &lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;65536&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So the series of events is:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;First bash opens &lt;em&gt;numbers&lt;/em&gt; for writing and is truncated.&lt;/li&gt;
+&lt;li&gt;Then the second &lt;code&gt;cat&lt;/code&gt; is called.&lt;/li&gt;
+&lt;li&gt;A while after that &lt;em&gt;nubers&lt;/em&gt; is opened for reading.&lt;/li&gt;
+&lt;li&gt;Finally data is read from &lt;em&gt;numbers&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Oops. The first opening of &lt;em&gt;numbers&lt;/em&gt; deletes all content from inside
+it and therefore &lt;code&gt;cat numbers&lt;/code&gt; encounters an empty file!&lt;/p&gt;
+&lt;p&gt;So there are a couple solutions to that, one straightforward one is to
+use a fifo to block until the first cat (or any other lengthy command
+may be in it's place)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1\n2\n3\n4\n&amp;quot;&lt;/span&gt; &amp;gt; numbers &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="go"&gt;    mkfifo /tmp/fifo &amp;amp;&amp;amp; \&lt;/span&gt;
+&lt;span class="go"&gt;    (sleep 3 &amp;amp;&amp;amp; cat numbers &amp;amp;&amp;amp; echo 1 &amp;gt; /tmp/fifo ) \&lt;/span&gt;
+&lt;span class="go"&gt;        | (cat fifo &amp;gt; /dev/null &amp;amp;&amp;amp; (cat &amp;gt; numbers)) \&lt;/span&gt;
+&lt;span class="go"&gt;    &amp;amp;&amp;amp; cat numbers &amp;amp;&amp;amp; rm /tmp/fifo&lt;/span&gt;
+&lt;span class="go"&gt;1&lt;/span&gt;
+&lt;span class="go"&gt;2&lt;/span&gt;
+&lt;span class="go"&gt;3&lt;/span&gt;
+&lt;span class="go"&gt;4&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We write '1' in fifo when &lt;code&gt;cat numbers&lt;/code&gt; finishes and we wait to read
+from it before we read from numbers. For demonstration purposes I
+delay &lt;code&gt;cat numbers&lt;/code&gt;. And there you have it! Reliable in place piping!&lt;/p&gt;</summary><category term="bash"></category><category term="pipes"></category><category term="unix"></category><category term="shell"></category></entry></feed>
