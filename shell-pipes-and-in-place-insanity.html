@@ -169,6 +169,9 @@ we see</p>
 </ul>
 <p>Oops. The first opening of <em>numbers</em> deletes all content from inside
 it and therefore <code>cat numbers</code> encounters an empty file!</p>
+<p><em>EDIT:</em> @mtdewcmu pointed out that this is the result of a race
+ condition. Every once in a while this may work correctly but I found
+ that in practice this is very rarely the case.</p>
 <p>So there are a couple solutions to that, one straightforward one is to
 use a fifo to block until the first cat (or any other lengthy command
 may be in it's place)</p>

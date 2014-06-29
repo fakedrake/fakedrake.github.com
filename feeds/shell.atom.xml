@@ -51,6 +51,9 @@ we see&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;Oops. The first opening of &lt;em&gt;numbers&lt;/em&gt; deletes all content from inside
 it and therefore &lt;code&gt;cat numbers&lt;/code&gt; encounters an empty file!&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;EDIT:&lt;/em&gt; @mtdewcmu pointed out that this is the result of a race
+ condition. Every once in a while this may work correctly but I found
+ that in practice this is very rarely the case.&lt;/p&gt;
 &lt;p&gt;So there are a couple solutions to that, one straightforward one is to
 use a fifo to block until the first cat (or any other lengthy command
 may be in it's place)&lt;/p&gt;
