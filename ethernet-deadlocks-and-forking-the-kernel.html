@@ -5,8 +5,8 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-            Batman Ph.D - Hacking my way out of the existential deadlock
-          </title>
+      Ethernet deadlocks and forking the kernel - Chris Perivolaropoulos
+    </title>
 
     <meta name="description" content="" />
     <meta name="Author" content="Chris Perivolaropoulos" />
@@ -107,14 +107,122 @@
 
         <div class="row">
           <div class="left col-md-9">
-	                  <div class="item">
-      <div class="item-title">
-        <h2>shell</h2>
-      </div>
-                        <p><a href="http://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html"><span class="label label-default light">Wed 16 July 2014</span> Enabling python virtualenvs dumb and fast</a></p>
-                                <p><a href="http://fakedrake.github.io/moving-git-branches-across-repositories.html"><span class="label label-default light">Wed 07 May 2014</span> Moving git branches across repositories</a></p>
-                </div>
-          </div>
+	      <header>
+          <h1>Ethernet deadlocks and forking the kernel</h1>
+        <small class="fsize13">
+                                                                                                      <a href="http://fakedrake.github.io/category/kernel.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles in this category"><i class="fa fa-dot-circle-o"></i> kernel</a>
+                                                <a href="http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="ethernet-deadlocks-and-forking-the-kernel.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Wed 16 July 2014</span>
+      <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
+    </small>
+  </header>
+                <article class='content'>
+        <p>This is a bit specific but it is something I encountered more than
+once and spent a couple of hours trying to fix. So here is the
+problem. I have a xilinx zynq zc702 board and I load a slightly
+customized 3.8 linux kernel on it. I boot it and it freezes at</p>
+<div class="highlight"><pre><span class="n">loop</span><span class="o">:</span> <span class="n">module</span> <span class="n">loaded</span>
+<span class="n">xqspips</span> <span class="n">e000d000</span><span class="o">.</span><span class="na">spi</span><span class="o">:</span> <span class="n">master</span> <span class="k">is</span> <span class="n">unqueued</span><span class="o">,</span> <span class="k">this</span> <span class="k">is</span> <span class="n">deprecated</span>
+</pre></div>
+
+
+<p>Now now you probably want to know what boot arguments I was using and
+what kind of modifications I have made to the kernel and the exact
+release but it doesn't really matter. The problem was the xqspips
+driver and not the fact that something is deprecated -who knows what
+this message means exactly-.</p>
+<p>Let me walk you through around the problem what happens in
+<a href="https://github.com/fakedrake/linux-thinksilicon/blob/qemu/drivers/spi/spi-xilinx-qps.c">drivers/spi/spi-xilinx-qps.c</a>
+when a spi transfer commences.</p>
+<ul>
+<li><code>xqspips_start_transfer</code> runs</li>
+<li>at some poiunt it writes to <code>XQSPIPS_IEN_OFFSET</code> register to raise
+  an interrupt that will call asynchronously <code>xqspips_irq</code></li>
+<li><code>xqspips_start_transfer</code> inits some other stuff and then waits for
+  <code>xqspips_irq</code> to set a completion structure.</li>
+</ul>
+<p>Now <code>xqspips_irq</code> is passed a <code>xqspips</code> structure that contains
+information about how much data we want to transmit and how much data
+we expect to receive.</p>
+<ul>
+<li>First it checks with the status register to see if there is some
+  space in the transfer buffer or that there is something useful in
+  the receive buffer.</li>
+<li>While the receive buffer is not empty try to read data from it
+  decrementing <code>struct xqspips-&gt;bytes_to_receive</code> correctly.</li>
+<li>If there is stuff to transfer, transfer it</li>
+<li>If <code>struct xqspips-&gt;bytes_to_receive</code> is not yet zero reissue an
+  interrupt in a slightly different way than before and finalize.</li>
+<li>If <code>struct xqspips-&gt;bytes_to_receive</code> is zero complete the
+  completion struct that <code>xqspips_start_transfer</code> is waiting for and
+  finalize.</li>
+</ul>
+<p>The above is a rough descriuption of the situation. Now I don't know
+if it is a hardware problem or a driver bug but there are two problems
+here. One is that <code>xqspi-&gt;bytes_to_receive</code> is 1 while the status
+register claims there is no data in the buffer. And also setting the
+<code>IEN</code> register doesn't raise an interrupt. Thus irq callback fails to
+read the data isntructed by <code>xqspi-&gt;bytes_to_receive</code> and proceeds
+finish confident that an interrupt was raised to take care of the
+situation.</p>
+<p>The hard part of this was finding all the above out. Then it was
+trivial to just tell <code>xqspips_irq</code> to not only check the status
+register to decide whether it should read or not, but also check with
+the xqspi struct. Essentially changing</p>
+<div class="highlight"><pre><span class="cm">/* Read out the data from the RX FIFO */</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">xqspips_read</span><span class="p">(</span><span class="n">xqspi</span><span class="o">-&gt;</span><span class="n">regs</span> <span class="o">+</span> <span class="n">XQSPIPS_STATUS_OFFSET</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="n">XQSPIPS_IXR_RXNEMTY_MASK</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>
+
+
+<p>into</p>
+<div class="highlight"><pre><span class="cm">/* Read out the data from the RX FIFO */</span>
+<span class="k">while</span> <span class="p">((</span><span class="n">xqspips_read</span><span class="p">(</span><span class="n">xqspi</span><span class="o">-&gt;</span><span class="n">regs</span> <span class="o">+</span> <span class="n">XQSPIPS_STATUS_OFFSET</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="n">XQSPIPS_IXR_RXNEMTY_MASK</span><span class="p">)</span> <span class="o">||</span>
+    <span class="n">xqspi</span><span class="o">-&gt;</span><span class="n">bytes_to_receive</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>
+
+
+<p>did the trick.</p>
+  </article>
+
+    <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+  <p class="socials">
+  <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html&title=Ethernet deadlocks and forking the kernel&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <a href="/tag/kernel.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> kernel</a>
+              <a href="/tag/irq.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> irq</a>
+              <a href="/tag/drivers.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> drivers</a>
+              <a href="/tag/linux.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> linux</a>
+            </p>
+
+  <hr /><!-- divider -->
+
+      <div id="comments" class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'drninjabatman-blog';
+        var disqus_identifier = "ethernet-deadlocks-and-forking-the-kernel.html";
+        var disqus_title = "Ethernet deadlocks and forking the kernel";
+        var disqus_url = "http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+            </div>
 
           <!-- SIDEBAR -->
           <div class="right col-md-3">
@@ -170,6 +278,13 @@
               <div class="hidden">
                                                 None
                                 None
+                                None
+                                None
+                                None
+                                None
+                                None
+                                None
+                                None
                               </div>
 
               <ul class="tree">
@@ -180,10 +295,26 @@
                                             <span><i class="fa fa-minus-square-o"></i>07</span>
                       <ul>
                                                 <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
+                                                <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
+                                              </ul>
+                                            <span><i class="fa fa-minus-square-o"></i>06</span>
+                      <ul>
+                                                <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
                                               </ul>
                                             <span><i class="fa fa-minus-square-o"></i>05</span>
                       <ul>
+                                                <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
                                                 <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
+                                                <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
+                                              </ul>
+                                            <span><i class="fa fa-minus-square-o"></i>04</span>
+                      <ul>
+                                                <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
+                                              </ul>
+                                            <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                                                <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
+                                                <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
                                               </ul>
                                           </li>
                   </ul>

@@ -1,5 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/kernel.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-03-31T22:30:00+03:00</updated><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/kernel.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-07-16T18:25:00+03:00</updated><entry><title>Ethernet deadlocks and forking the kernel</title><link href="http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" rel="alternate"></link><updated>2014-07-16T18:25:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:ethernet-deadlocks-and-forking-the-kernel.html</id><summary type="html">&lt;p&gt;This is a bit specific but it is something I encountered more than
+once and spent a couple of hours trying to fix. So here is the
+problem. I have a xilinx zynq zc702 board and I load a slightly
+customized 3.8 linux kernel on it. I boot it and it freezes at&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;loaded&lt;/span&gt;
+&lt;span class="n"&gt;xqspips&lt;/span&gt; &lt;span class="n"&gt;e000d000&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;spi&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;unqueued&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;deprecated&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now now you probably want to know what boot arguments I was using and
+what kind of modifications I have made to the kernel and the exact
+release but it doesn't really matter. The problem was the xqspips
+driver and not the fact that something is deprecated -who knows what
+this message means exactly-.&lt;/p&gt;
+&lt;p&gt;Let me walk you through around the problem what happens in
+&lt;a href="https://github.com/fakedrake/linux-thinksilicon/blob/qemu/drivers/spi/spi-xilinx-qps.c"&gt;drivers/spi/spi-xilinx-qps.c&lt;/a&gt;
+when a spi transfer commences.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;xqspips_start_transfer&lt;/code&gt; runs&lt;/li&gt;
+&lt;li&gt;at some poiunt it writes to &lt;code&gt;XQSPIPS_IEN_OFFSET&lt;/code&gt; register to raise
+  an interrupt that will call asynchronously &lt;code&gt;xqspips_irq&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xqspips_start_transfer&lt;/code&gt; inits some other stuff and then waits for
+  &lt;code&gt;xqspips_irq&lt;/code&gt; to set a completion structure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now &lt;code&gt;xqspips_irq&lt;/code&gt; is passed a &lt;code&gt;xqspips&lt;/code&gt; structure that contains
+information about how much data we want to transmit and how much data
+we expect to receive.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;First it checks with the status register to see if there is some
+  space in the transfer buffer or that there is something useful in
+  the receive buffer.&lt;/li&gt;
+&lt;li&gt;While the receive buffer is not empty try to read data from it
+  decrementing &lt;code&gt;struct xqspips-&amp;gt;bytes_to_receive&lt;/code&gt; correctly.&lt;/li&gt;
+&lt;li&gt;If there is stuff to transfer, transfer it&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;struct xqspips-&amp;gt;bytes_to_receive&lt;/code&gt; is not yet zero reissue an
+  interrupt in a slightly different way than before and finalize.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;struct xqspips-&amp;gt;bytes_to_receive&lt;/code&gt; is zero complete the
+  completion struct that &lt;code&gt;xqspips_start_transfer&lt;/code&gt; is waiting for and
+  finalize.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The above is a rough descriuption of the situation. Now I don't know
+if it is a hardware problem or a driver bug but there are two problems
+here. One is that &lt;code&gt;xqspi-&amp;gt;bytes_to_receive&lt;/code&gt; is 1 while the status
+register claims there is no data in the buffer. And also setting the
+&lt;code&gt;IEN&lt;/code&gt; register doesn't raise an interrupt. Thus irq callback fails to
+read the data isntructed by &lt;code&gt;xqspi-&amp;gt;bytes_to_receive&lt;/code&gt; and proceeds
+finish confident that an interrupt was raised to take care of the
+situation.&lt;/p&gt;
+&lt;p&gt;The hard part of this was finding all the above out. Then it was
+trivial to just tell &lt;code&gt;xqspips_irq&lt;/code&gt; to not only check the status
+register to decide whether it should read or not, but also check with
+the xqspi struct. Essentially changing&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xqspips_read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xqspi&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;regs&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;XQSPIPS_STATUS_OFFSET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
+    &lt;span class="n"&gt;XQSPIPS_IXR_RXNEMTY_MASK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;into&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;xqspips_read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xqspi&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;regs&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;XQSPIPS_STATUS_OFFSET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
+    &lt;span class="n"&gt;XQSPIPS_IXR_RXNEMTY_MASK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
+    &lt;span class="n"&gt;xqspi&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;bytes_to_receive&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;did the trick.&lt;/p&gt;</summary><category term="drivers"></category><category term="irq"></category><category term="linux"></category><category term="kernel"></category></entry><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
 anything crucial. Make them small and mount the rest of the filesystem
 using the rootfs related boot commands and the &lt;code&gt;-hda&lt;/code&gt; option on qemu
 or use nfs or whatever.&lt;/p&gt;

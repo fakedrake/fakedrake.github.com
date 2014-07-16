@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/python.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-07-16T19:27:00+03:00</updated><entry><title>Enabling python virtualenvs dumb and fast</title><link href="http://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" rel="alternate"></link><updated>2014-07-16T19:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:enabling-python-virtualenvs-dumb-and-fast.html</id><summary type="html">&lt;p&gt;Unless you are using
+&lt;a href="https://bitbucket.org/dhellmann/virtualenvwrapper/"&gt;virtualenvwrapper&lt;/a&gt;
+or something else fancy that the cool kids like these days a common
+series of commands to run python tests is. I also annotated my
+thinking process for dramatic purposes.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; Let&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;s work on awesome-project a bit
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;python/project/path/awesome-project
+&lt;span class="gp"&gt;#&lt;/span&gt; That went well, good job, you deserve eternal love and
+&lt;span class="gp"&gt;#&lt;/span&gt; admiration, running some tes- crap, I need the virtualenv...
+&lt;span class="gp"&gt;$&lt;/span&gt; ls ..
+&lt;span class="gp"&gt;#&lt;/span&gt; Pff ok which one of those looks like a virtualenv...
+&lt;span class="gp"&gt;$&lt;/span&gt; . ../py/bin/activate
+&lt;span class="gp"&gt;#&lt;/span&gt; Bingo! Where was I?
+&lt;span class="gp"&gt;$&lt;/span&gt; python setup.py &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now besides being lazy I am also inconsistent, dumb and have a very
+hard time context switching like that. Thankfully shell scripting can
+help out with this. I recently added this stupid little function in my
+&lt;em&gt;.zshrc&lt;/em&gt; and my life has been a wonderful journey in unicorn rainbow
+land ever since&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# find the first venv backwards and activate it.&lt;/span&gt;
+&lt;span class="n"&gt;pv&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;*/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;activate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mf"&gt;1.&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pwd&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;wc&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;)};&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;bash&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ls $A&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
+        &lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ls $A | head -1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;fi&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;done&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now it's all like&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; Work on awesome-project
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;python/project/path/awesome-project
+&lt;span class="gp"&gt;#&lt;/span&gt; Women and glory are just around the corner, Oh, virtualenv
+&lt;span class="gp"&gt;$&lt;/span&gt; pv
+&lt;span class="gp"&gt;#&lt;/span&gt; Set!
+&lt;span class="gp"&gt;$&lt;/span&gt; python setup.py &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;span class="go"&gt;[...]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category><category term="virtualenv"></category><category term="shell"></category></entry></feed>
