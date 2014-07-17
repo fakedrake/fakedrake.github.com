@@ -18,7 +18,7 @@ this message means exactly-.&lt;/p&gt;
 when a spi transfer commences.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;xqspips_start_transfer&lt;/code&gt; runs&lt;/li&gt;
-&lt;li&gt;at some poiunt it writes to &lt;code&gt;XQSPIPS_IEN_OFFSET&lt;/code&gt; register to raise
+&lt;li&gt;At some poiunt it writes to &lt;code&gt;XQSPIPS_IEN_OFFSET&lt;/code&gt; register to raise
   an interrupt that will call asynchronously &lt;code&gt;xqspips_irq&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;xqspips_start_transfer&lt;/code&gt; inits some other stuff and then waits for
   &lt;code&gt;xqspips_irq&lt;/code&gt; to set a completion structure.&lt;/li&gt;

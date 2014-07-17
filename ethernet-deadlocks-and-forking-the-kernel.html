@@ -136,7 +136,7 @@ this message means exactly-.</p>
 when a spi transfer commences.</p>
 <ul>
 <li><code>xqspips_start_transfer</code> runs</li>
-<li>at some poiunt it writes to <code>XQSPIPS_IEN_OFFSET</code> register to raise
+<li>At some poiunt it writes to <code>XQSPIPS_IEN_OFFSET</code> register to raise
   an interrupt that will call asynchronously <code>xqspips_irq</code></li>
 <li><code>xqspips_start_transfer</code> inits some other stuff and then waits for
   <code>xqspips_irq</code> to set a completion structure.</li>
