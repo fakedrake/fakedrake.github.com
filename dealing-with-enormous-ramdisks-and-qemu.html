@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-      Dealing with enormous ramdisks and Qemu - Chris Perivolaropoulos
+Dealing with enormous ramdisks and Qemu - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -43,8 +43,8 @@
        <link href="http://fakedrake.github.io/theme/css/pygment-solarized-dark.css" rel="stylesheet" type="text/css" />
 
        <!-- ICONS -->
-              <link rel="shortcut icon" href="/theme/img/favicon.png" type="image/x-icon" />
-                     
+       <link rel="shortcut icon" href="/theme/img/favicon.png" type="image/x-icon" />
+
        <!-- mobile settings -->
        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
 
@@ -52,12 +52,12 @@
        <script type="text/javascript" src="http://fakedrake.github.io/theme/js/modernizr.min.js"></script>
 
        <!-- google authorship -->
-                                                 
+
   </head>
 
   <body>
 
-    <!-- Main Nav -->
+<!-- Main Nav -->
 <header id="header" style="margin-top:0">
 
   <nav class="navbar navbar-inverse" role="navigation">
@@ -86,16 +86,17 @@
           <li><a href="http://fakedrake.github.io/index.html#work">Work</a></li>
 	  <li><a href="http://fakedrake.github.io/index.html#quick-blog">News</a></li>
 	  <li><a href="http://fakedrake.github.io/archives.html">Archive</a></li>
-                      <li class="dropdown">
+            <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Links <b class="caret"></b></a>
               <ul class="dropdown-menu" style="background-color:#000">
-                              <li style="background-color:#000"><a href="http://think-silicon.com/" target="_blank">Think Silicon Ltd</a></li>
-                              <li style="background-color:#000"><a href="http://p-space.gr" target="_blank">P-Space</a></li>
-                              <li style="background-color:#000"><a href="http://start.mit.edu" target="_blank">START</a></li>
-                              <li style="background-color:#000"><a href="http://www.csail.mit.edu" target="_blank">CSAIL MiT</a></li>
-                            </ul>
+                <li style="background-color:#000"><a href="http://codebender.cc/" target="_blank">codebender.cc</a></li>
+                <li style="background-color:#000"><a href="http://think-silicon.com/" target="_blank">Think Silicon Ltd</a></li>
+                <li style="background-color:#000"><a href="http://p-space.gr" target="_blank">P-Space</a></li>
+                <li style="background-color:#000"><a href="http://start.mit.edu" target="_blank">START</a></li>
+                <li style="background-color:#000"><a href="http://www.csail.mit.edu" target="_blank">CSAIL MiT</a></li>
+              </ul>
             </li>
-                  </ul>
+        </ul>
       </div>
       <!-- /.navbar-collapse -->
 
@@ -107,17 +108,17 @@
 
         <div class="row">
           <div class="left col-md-9">
-	      <header>
-          <h1>Dealing with enormous ramdisks and Qemu</h1>
-        <small class="fsize13">
-                                                                                                      <a href="http://fakedrake.github.io/category/kernel.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles in this category"><i class="fa fa-dot-circle-o"></i> kernel</a>
-                                                <a href="http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dealing-with-enormous-ramdisks-and-qemu.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+  <header>
+      <h1>Dealing with enormous ramdisks and Qemu</h1>
+    <small class="fsize13">
+            <a href="http://fakedrake.github.io/category/kernel.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles in this category"><i class="fa fa-dot-circle-o"></i> kernel</a>
+      <a href="http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dealing-with-enormous-ramdisks-and-qemu.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       <span class="label label-default light">Mon 31 March 2014</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
-                <article class='content'>
-        <p><strong>WARNING:</strong> This is hacky and BAD. Do not use 500M ramdisks for
+  <article class='content'>
+    <p><strong>WARNING:</strong> This is hacky and BAD. Do not use 500M ramdisks for
 anything crucial. Make them small and mount the rest of the filesystem
 using the rootfs related boot commands and the <code>-hda</code> option on qemu
 or use nfs or whatever.</p>
@@ -128,20 +129,20 @@ may it be because I just want the kernel to do my bidding and load a
 ramdisk that is as big as half a Gigabyte. The point is, shoving such
 a big ramdisk down the kernel's throat will result in it choking into
 something like this:</p>
-<div class="highlight"><pre><span class="p">...</span>
+<div class="highlight"><pre>...
 
-<span class="nl">RAMDISK:</span> <span class="n">ext2</span> <span class="n">filesystem</span> <span class="n">found</span> <span class="n">at</span> <span class="n">block</span> <span class="mi">0</span>
-<span class="nl">RAMDISK:</span> <span class="n">image</span> <span class="n">too</span> <span class="n">big</span><span class="o">!</span> <span class="p">(</span><span class="mi">500496</span><span class="n">KiB</span><span class="o">/</span><span class="mi">16384</span><span class="n">KiB</span><span class="p">)</span>
-<span class="n">xemacps</span> <span class="n">e000b000</span><span class="p">.</span><span class="n">eth</span><span class="o">:</span> <span class="n">Set</span> <span class="n">clk</span> <span class="n">to</span> <span class="mi">124999998</span> <span class="n">Hz</span>
-<span class="n">xemacps</span> <span class="n">e000b000</span><span class="p">.</span><span class="n">eth</span><span class="o">:</span> <span class="n">link</span> <span class="n">up</span> <span class="p">(</span><span class="mi">1000</span><span class="o">/</span><span class="n">FULL</span><span class="p">)</span>
-<span class="n">List</span> <span class="n">of</span> <span class="n">all</span> <span class="n">partitions</span><span class="o">:</span>
-<span class="mf">1f</span><span class="mo">00</span>            <span class="mi">1024</span> <span class="n">mtdblock0</span>  <span class="p">(</span><span class="n">driver</span><span class="o">?</span><span class="p">)</span>
-<span class="mf">1f</span><span class="mo">01</span>            <span class="mi">5120</span> <span class="n">mtdblock1</span>  <span class="p">(</span><span class="n">driver</span><span class="o">?</span><span class="p">)</span>
-<span class="mf">1f</span><span class="mo">02</span>             <span class="mi">128</span> <span class="n">mtdblock2</span>  <span class="p">(</span><span class="n">driver</span><span class="o">?</span><span class="p">)</span>
-<span class="mf">1f</span><span class="mo">03</span>            <span class="mi">6016</span> <span class="n">mtdblock3</span>  <span class="p">(</span><span class="n">driver</span><span class="o">?</span><span class="p">)</span>
-<span class="mf">1f</span><span class="mo">04</span>            <span class="mi">4096</span> <span class="n">mtdblock4</span>  <span class="p">(</span><span class="n">driver</span><span class="o">?</span><span class="p">)</span>
-<span class="n">No</span> <span class="n">filesystem</span> <span class="n">could</span> <span class="n">mount</span> <span class="n">root</span><span class="p">,</span> <span class="n">tried</span><span class="o">:</span>  <span class="n">ext3</span> <span class="n">ext2</span> <span class="n">ext4</span> <span class="n">vfat</span> <span class="n">msdos</span>
-<span class="n">Kernel</span> <span class="n">panic</span> <span class="o">-</span> <span class="n">not</span> <span class="n">syncing</span><span class="o">:</span> <span class="n">VFS</span><span class="o">:</span> <span class="n">Unable</span> <span class="n">to</span> <span class="n">mount</span> <span class="n">root</span> <span class="n">fs</span> <span class="n">on</span> <span class="n">unknown</span><span class="o">-</span><span class="n">block</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+RAMDISK: ext2 filesystem found at block 0
+RAMDISK: image too big! (500496KiB/16384KiB)
+xemacps e000b000.eth: Set clk to 124999998 Hz
+xemacps e000b000.eth: link up (1000/FULL)
+List of all partitions:
+1f00            1024 mtdblock0  (driver?)
+1f01            5120 mtdblock1  (driver?)
+1f02             128 mtdblock2  (driver?)
+1f03            6016 mtdblock3  (driver?)
+1f04            4096 mtdblock4  (driver?)
+No filesystem could mount root, tried:  ext3 ext2 ext4 vfat msdos
+Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(1,0)
 </pre></div>
 
 
@@ -198,10 +199,10 @@ the source is hard to believe, and trust is lost easier than earned.</p>
 
     <span class="k">while</span> <span class="p">(</span><span class="n">get_option</span><span class="p">(</span><span class="o">&amp;</span><span class="n">str</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tmp</span><span class="p">))</span> <span class="p">{</span>
         <span class="k">switch</span> <span class="p">(</span><span class="n">index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="mi">0</span>:
+        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
             <span class="n">rd_size</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
             <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="mi">1</span>:
+        <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
             <span class="n">rd_nr</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
             <span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>
@@ -216,11 +217,11 @@ the source is hard to believe, and trust is lost easier than earned.</p>
 just one 500M disk, while having <em>ramdisk_size=500000</em> behave as
 before. Noice!</p>
 <p>So now we simply run qemu</p>
-<div class="highlight"><pre><span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">arm</span> <span class="o">-</span><span class="n">M</span> <span class="n">xilinx</span><span class="o">-</span><span class="n">zynq</span><span class="o">-</span><span class="n">a9</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1024</span> <span class="o">-</span><span class="n">serial</span> <span class="n">null</span> <span class="o">-</span><span class="n">serial</span>
-    <span class="nl">mon:</span><span class="n">stdio</span> <span class="o">-</span><span class="n">dtb</span> <span class="p">.</span><span class="o">/</span><span class="n">devtree</span><span class="p">.</span><span class="n">dtb</span> <span class="o">-</span><span class="n">kernel</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">zImage</span>
-    <span class="o">-</span><span class="n">initrd</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">enormous</span><span class="o">-</span><span class="n">ramdisk</span><span class="p">.</span><span class="n">img</span> <span class="o">-</span><span class="n">nographic</span>
-    <span class="o">-</span><span class="n">append</span> <span class="s">&quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp \</span>
-<span class="s">        loglevel=7 ramdisk_size=500496,1p&quot;</span>
+<div class="highlight"><pre>qemu-system-arm -M xilinx-zynq-a9 -m 1024 -serial null -serial
+    mon:stdio -dtb ./devtree.dtb -kernel path/to/zImage
+    -initrd path/to/enormous-ramdisk.img -nographic
+    -append &quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp \
+        loglevel=7 ramdisk_size=500496,1p&quot;
 </pre></div>
 
 
@@ -229,11 +230,11 @@ before. Noice!</p>
 relevan excerpt</p>
 <div class="highlight"><pre>...
 
-<span class="nv">BOOTCMD</span><span class="o">=</span><span class="s2">&quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=$(du --apparent-size $RAMDISK | awk &#39;{print $1}&#39;),1&#39;&quot;</span>
-<span class="nv">CMD</span><span class="o">=</span><span class="s2">&quot;$QEMU -M xilinx-zynq-a9  -m 1024  -serial null -serial mon:stdio -dtb $DTB -kernel $KERNEL -initrd $RAMDISK -nographic&quot;</span>
+<span class="nv">BOOTCMD</span><span class="o">=</span><span class="s2">&quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=</span><span class="k">$(</span>du --apparent-size <span class="nv">$RAMDISK</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span><span class="s2">,1&#39;&quot;</span>
+<span class="nv">CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$QEMU</span><span class="s2"> -M xilinx-zynq-a9  -m 1024  -serial null -serial mon:stdio -dtb </span><span class="nv">$DTB</span><span class="s2"> -kernel </span><span class="nv">$KERNEL</span><span class="s2"> -initrd </span><span class="nv">$RAMDISK</span><span class="s2"> -nographic&quot;</span>
 
-<span class="nb">echo</span> -e <span class="s2">&quot;Running: $CMD -append $BOOTCMD\nC-a x to kill...&quot;</span>
-<span class="nv">$CMD</span> -append <span class="s2">&quot;$BOOTCMD&quot;</span>
+<span class="nb">echo</span> -e <span class="s2">&quot;Running: </span><span class="nv">$CMD</span><span class="s2"> -append </span><span class="nv">$BOOTCMD</span><span class="s2">\nC-a x to kill...&quot;</span>
+<span class="nv">$CMD</span> -append <span class="s2">&quot;</span><span class="nv">$BOOTCMD</span><span class="s2">&quot;</span>
 </pre></div>
 
 
@@ -241,10 +242,10 @@ relevan excerpt</p>
 the disk size only as big as it needs to be.</p>
   </article>
 
-    <div class="divider"><!-- lines divider --></div>
+  <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
-  <p class="socials">
+<p class="socials">
   <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
     <a href="http://twitter.com/home?status=http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
     <a href="https://plus.google.com/share?url=http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
@@ -254,13 +255,13 @@ the disk size only as big as it needs to be.</p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <a href="/tag/kernel.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> kernel</a>
-              <a href="/tag/qemu.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> qemu</a>
-            </p>
+        <a href="/tag/kernel.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> kernel</a>
+        <a href="/tag/qemu.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> qemu</a>
+  </p>
 
   <hr /><!-- divider -->
 
-      <div id="comments" class="comments">
+    <div id="comments" class="comments">
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
@@ -275,11 +276,11 @@ the disk size only as big as it needs to be.</p>
       </script>
       <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
     </div>
-            </div>
+          </div>
 
           <!-- SIDEBAR -->
           <div class="right col-md-3">
-                        <!-- recent work -->
+            <!-- recent work -->
             <!-- <div class="widget">
 
               <h3>Recent Work</h3>
@@ -313,12 +314,12 @@ the disk size only as big as it needs to be.</p>
               <h3>Categories</h3>
 
               <ul>
-                                                <li><a href="http://fakedrake.github.io/category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
-                                <li><a href="http://fakedrake.github.io/category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
-                                <li><a href="http://fakedrake.github.io/category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
-                                <li><a href="http://fakedrake.github.io/category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
-                                <li><a href="http://fakedrake.github.io/category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
-                              </ul>
+                <li><a href="http://fakedrake.github.io/category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
+                <li><a href="http://fakedrake.github.io/category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
+                <li><a href="http://fakedrake.github.io/category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
+                <li><a href="http://fakedrake.github.io/category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
+                <li><a href="http://fakedrake.github.io/category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
+              </ul>
 
             </div>
 
@@ -329,49 +330,49 @@ the disk size only as big as it needs to be.</p>
 
               <!-- hide this part -->
               <div class="hidden">
-                                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                              </div>
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+              </div>
 
               <ul class="tree">
                 <li>
-                                    <span><i class="fa fa-minus-square-o"></i>2014</span>
+                  <span><i class="fa fa-minus-square-o"></i>2014</span>
                   <ul>
                     <li>
-                                            <span><i class="fa fa-minus-square-o"></i>07</span>
+                      <span><i class="fa fa-minus-square-o"></i>07</span>
                       <ul>
-                                                <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
-                                                <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>06</span>
+                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
+                        <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>06</span>
                       <ul>
-                                                <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>05</span>
+                        <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>05</span>
                       <ul>
-                                                <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
-                                                <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
-                                                <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>04</span>
+                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
+                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
+                        <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>04</span>
                       <ul>
-                                                <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>03</span>
+                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
                       <ul>
-                                                <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
-                                                <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
-                                              </ul>
-                                          </li>
+                        <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
+                        <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
+                      </ul>
+                    </li>
                   </ul>
-                                  </li>
+                </li>
               </ul>
 
             </div>
@@ -385,7 +386,7 @@ the disk size only as big as it needs to be.</p>
     </section>
     <!-- /BLOG -->
 
-    <!-- FOOTER -->
+<!-- FOOTER -->
 <footer>
 
   <!-- SCROOL TO TOP -->
@@ -402,10 +403,10 @@ the disk size only as big as it needs to be.</p>
         </div>
 
         <div class="col-md-6 text-right">
-                          <a href="https://twitter.com/drNinjaBatman" class="social fa fa-twitter"></a>
-                          <a href="https://github.com/fakedrake" class="social fa fa-github"></a>
-                          <a href="https://www.facebook.com/chris.perivolaropoulos" class="social fa fa-facebook"></a>
-                    </div>
+              <a href="https://twitter.com/drNinjaBatman" class="social fa fa-twitter"></a>
+              <a href="https://github.com/fakedrake" class="social fa fa-github"></a>
+              <a href="https://www.facebook.com/chris.perivolaropoulos" class="social fa fa-facebook"></a>
+        </div>
 
     </div>
 

@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-      Remote testing with git and ssh - Chris Perivolaropoulos
+Remote testing with git and ssh - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -43,8 +43,8 @@
        <link href="http://fakedrake.github.io/theme/css/pygment-solarized-dark.css" rel="stylesheet" type="text/css" />
 
        <!-- ICONS -->
-              <link rel="shortcut icon" href="/theme/img/favicon.png" type="image/x-icon" />
-                     
+       <link rel="shortcut icon" href="/theme/img/favicon.png" type="image/x-icon" />
+
        <!-- mobile settings -->
        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
 
@@ -52,12 +52,12 @@
        <script type="text/javascript" src="http://fakedrake.github.io/theme/js/modernizr.min.js"></script>
 
        <!-- google authorship -->
-                                                 
+
   </head>
 
   <body>
 
-    <!-- Main Nav -->
+<!-- Main Nav -->
 <header id="header" style="margin-top:0">
 
   <nav class="navbar navbar-inverse" role="navigation">
@@ -86,16 +86,17 @@
           <li><a href="http://fakedrake.github.io/index.html#work">Work</a></li>
 	  <li><a href="http://fakedrake.github.io/index.html#quick-blog">News</a></li>
 	  <li><a href="http://fakedrake.github.io/archives.html">Archive</a></li>
-                      <li class="dropdown">
+            <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Links <b class="caret"></b></a>
               <ul class="dropdown-menu" style="background-color:#000">
-                              <li style="background-color:#000"><a href="http://think-silicon.com/" target="_blank">Think Silicon Ltd</a></li>
-                              <li style="background-color:#000"><a href="http://p-space.gr" target="_blank">P-Space</a></li>
-                              <li style="background-color:#000"><a href="http://start.mit.edu" target="_blank">START</a></li>
-                              <li style="background-color:#000"><a href="http://www.csail.mit.edu" target="_blank">CSAIL MiT</a></li>
-                            </ul>
+                <li style="background-color:#000"><a href="http://codebender.cc/" target="_blank">codebender.cc</a></li>
+                <li style="background-color:#000"><a href="http://think-silicon.com/" target="_blank">Think Silicon Ltd</a></li>
+                <li style="background-color:#000"><a href="http://p-space.gr" target="_blank">P-Space</a></li>
+                <li style="background-color:#000"><a href="http://start.mit.edu" target="_blank">START</a></li>
+                <li style="background-color:#000"><a href="http://www.csail.mit.edu" target="_blank">CSAIL MiT</a></li>
+              </ul>
             </li>
-                  </ul>
+        </ul>
       </div>
       <!-- /.navbar-collapse -->
 
@@ -107,17 +108,17 @@
 
         <div class="row">
           <div class="left col-md-9">
-	      <header>
-          <h1>Remote testing with git and ssh</h1>
-        <small class="fsize13">
-                                                                                    <a href="http://fakedrake.github.io/category/git.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> git</a>
-                                                                  <a href="http://fakedrake.github.io/remote-testing-with-git-and-ssh.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="remote-testing-with-git-and-ssh.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+  <header>
+      <h1>Remote testing with git and ssh</h1>
+    <small class="fsize13">
+            <a href="http://fakedrake.github.io/category/git.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> git</a>
+      <a href="http://fakedrake.github.io/remote-testing-with-git-and-ssh.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="remote-testing-with-git-and-ssh.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       <span class="label label-default light">Sun 11 May 2014</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
-                <article class='content'>
-        <p>Running tests is an important part of the development workflow. You
+  <article class='content'>
+    <p>Running tests is an important part of the development workflow. You
 want to do it often and you want it to be quick. Yet at times tests
 are not quick. Tests can be slow and they can be fat. This means that
 you probably prefer to run them on a powerful server rather than your
@@ -157,24 +158,24 @@ compilation-mode would be able to deal with. I came up with
 <span class="nv">REMOTE_SRV</span><span class="o">=</span>localhost <span class="c"># for testing</span>
 <span class="nv">REMOTE_USER</span><span class="o">=</span><span class="sb">`</span>whoami<span class="sb">`</span>
 
-<span class="nv">SED_REMOTE_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$REMOTE_ROOT</span> | sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
-<span class="nv">SED_LOCAL_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$LOCAL_ROOT</span> | sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
+<span class="nv">SED_REMOTE_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$REMOTE_ROOT</span> <span class="p">|</span> sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
+<span class="nv">SED_LOCAL_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$LOCAL_ROOT</span> <span class="p">|</span> sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
 
-<span class="k">function </span>local_paths <span class="o">{</span>
-    sed <span class="s2">&quot;s/$SED_REMOTE_ROOT/$SED_LOCAL_ROOT/g&quot;</span>
+<span class="k">function</span> local_paths <span class="o">{</span>
+    sed <span class="s2">&quot;s/</span><span class="nv">$SED_REMOTE_ROOT</span><span class="s2">/</span><span class="nv">$SED_LOCAL_ROOT</span><span class="s2">/g&quot;</span>
 <span class="o">}</span>
 
-<span class="k">function </span>remote_paths <span class="o">{</span>
-    sed <span class="s2">&quot;s/$SED_LOCAL_ROOT/$SED_REMOTE_ROOT/g&quot;</span>
+<span class="k">function</span> remote_paths <span class="o">{</span>
+    sed <span class="s2">&quot;s/</span><span class="nv">$SED_LOCAL_ROOT</span><span class="s2">/</span><span class="nv">$SED_REMOTE_ROOT</span><span class="s2">/g&quot;</span>
 <span class="o">}</span>
 
-<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;$@&quot;</span>
-<span class="nv">REMOTE_CMD</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ARGS</span> | remote_paths <span class="k">)</span>
-<span class="nv">REMOTE_PWD</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span> | remote_paths <span class="k">)</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="nv">REMOTE_CMD</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ARGS</span> <span class="p">|</span> remote_paths <span class="k">)</span>
+<span class="nv">REMOTE_PWD</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span> <span class="p">|</span> remote_paths <span class="k">)</span>
 
 <span class="nb">echo </span>Running: <span class="nv">$REMOTE_CMD</span>
 
-ssh <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span> <span class="s2">&quot;cd $REMOTE_PWD &amp;&amp; $REMOTE_CMD&quot;</span> |&amp; local_paths
+ssh <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span> <span class="s2">&quot;cd </span><span class="nv">$REMOTE_PWD</span><span class="s2"> &amp;&amp; </span><span class="nv">$REMOTE_CMD</span><span class="s2">&quot;</span> <span class="p">|&amp;</span> local_paths
 </pre></div>
 
 
@@ -231,16 +232,16 @@ else).</p>
 
 <p>Then have <em>test_remote.sh</em> push there before doing anything else by
 throwing in there something like this:</p>
-<div class="highlight"><pre><span class="nv">BRANCH</span><span class="o">=</span><span class="k">$(</span>git branch | awk <span class="s1">&#39;/\*/{print $2}&#39;</span><span class="k">)</span>
+<div class="highlight"><pre><span class="nv">BRANCH</span><span class="o">=</span><span class="k">$(</span>git branch <span class="p">|</span> awk <span class="s1">&#39;/\*/{print $2}&#39;</span><span class="k">)</span>
 <span class="nv">GIT_REMOTE</span><span class="o">=</span>&lt;server&gt;
 
-<span class="k">function </span>git_draft_sync <span class="o">{</span>
-    <span class="nv">COMMIT_MSG</span><span class="o">=</span><span class="s2">&quot;[$(date +%s)] Draft commit&quot;</span>
+<span class="k">function</span> git_draft_sync <span class="o">{</span>
+    <span class="nv">COMMIT_MSG</span><span class="o">=</span><span class="s2">&quot;[</span><span class="k">$(</span>date +%s<span class="k">)</span><span class="s2">] Draft commit&quot;</span>
 
     <span class="nb">echo</span> <span class="s2">&quot;Will now commit a dumb commit to current branch.&quot;</span>
 
     <span class="nb">echo </span>Commiting: <span class="nv">$COMMIT_MSG</span>
-    git commit -a -m <span class="s2">&quot;$COMMIT_MSG&quot;</span>
+    git commit -a -m <span class="s2">&quot;</span><span class="nv">$COMMIT_MSG</span><span class="s2">&quot;</span>
 
     <span class="nb">echo </span>Pushing branch: <span class="nv">$BRANCH</span>
     git push <span class="nv">$GIT_REMOTE</span> <span class="nv">$BRANCH</span>
@@ -249,7 +250,7 @@ throwing in there something like this:</p>
 
 
 <p>And have the server pill the updates on the branch before testing:</p>
-<div class="highlight"><pre><span class="nv">REMOTE_CMD</span><span class="o">=</span><span class="s2">&quot;(git pull testing $BRANCH &amp;&amp; $(echo $ARGS | remote_paths))&quot;</span>
+<div class="highlight"><pre><span class="nv">REMOTE_CMD</span><span class="o">=</span><span class="s2">&quot;(git pull testing </span><span class="nv">$BRANCH</span><span class="s2"> &amp;&amp; </span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ARGS</span> <span class="p">|</span> remote_paths<span class="k">)</span><span class="s2">)&quot;</span>
 </pre></div>
 
 
@@ -265,36 +266,36 @@ a remote server at CSAIL looks much like this:</p>
 <span class="nv">REMOTE_USER</span><span class="o">=</span>&lt;username&gt;
 
 
-<span class="nv">BRANCH</span><span class="o">=</span><span class="k">$(</span>git branch | awk <span class="s1">&#39;/\*/{print $2}&#39;</span><span class="k">)</span>
+<span class="nv">BRANCH</span><span class="o">=</span><span class="k">$(</span>git branch <span class="p">|</span> awk <span class="s1">&#39;/\*/{print $2}&#39;</span><span class="k">)</span>
 <span class="nv">GIT_REMOTE</span><span class="o">=</span><span class="nb">local</span>
 
-<span class="k">function </span>git_draft_sync <span class="o">{</span>
-    <span class="nv">COMMIT_MSG</span><span class="o">=</span><span class="s2">&quot;[$(date +%s)] Draft commit&quot;</span>
+<span class="k">function</span> git_draft_sync <span class="o">{</span>
+    <span class="nv">COMMIT_MSG</span><span class="o">=</span><span class="s2">&quot;[</span><span class="k">$(</span>date +%s<span class="k">)</span><span class="s2">] Draft commit&quot;</span>
 
     <span class="nb">echo</span> <span class="s2">&quot;Will now commit a dumb commit to current branch.&quot;</span>
 
     <span class="nb">echo </span>Commiting: <span class="nv">$COMMIT_MSG</span>
-    git commit -a -m <span class="s2">&quot;$COMMIT_MSG&quot;</span>
+    git commit -a -m <span class="s2">&quot;</span><span class="nv">$COMMIT_MSG</span><span class="s2">&quot;</span>
 
     <span class="nb">echo </span>Pushing branch: <span class="nv">$BRANCH</span>
     git push <span class="nv">$GIT_REMOTE</span> <span class="nv">$BRANCH</span>
 <span class="o">}</span>
 
 <span class="c">## -- No need to edit from here on --</span>
-<span class="nv">SED_REMOTE_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$REMOTE_ROOT</span> | sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
-<span class="nv">SED_LOCAL_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$LOCAL_ROOT</span> | sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
+<span class="nv">SED_REMOTE_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$REMOTE_ROOT</span> <span class="p">|</span> sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
+<span class="nv">SED_LOCAL_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$LOCAL_ROOT</span> <span class="p">|</span> sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
 
-<span class="k">function </span>local_paths <span class="o">{</span>
-    sed <span class="s2">&quot;s/$SED_REMOTE_ROOT/$SED_LOCAL_ROOT/g&quot;</span>
+<span class="k">function</span> local_paths <span class="o">{</span>
+    sed <span class="s2">&quot;s/</span><span class="nv">$SED_REMOTE_ROOT</span><span class="s2">/</span><span class="nv">$SED_LOCAL_ROOT</span><span class="s2">/g&quot;</span>
 <span class="o">}</span>
 
-<span class="k">function </span>remote_paths <span class="o">{</span>
-    sed <span class="s2">&quot;s/$SED_LOCAL_ROOT/$SED_REMOTE_ROOT/g&quot;</span>
+<span class="k">function</span> remote_paths <span class="o">{</span>
+    sed <span class="s2">&quot;s/</span><span class="nv">$SED_LOCAL_ROOT</span><span class="s2">/</span><span class="nv">$SED_REMOTE_ROOT</span><span class="s2">/g&quot;</span>
 <span class="o">}</span>
 
-<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;$@&quot;</span>
-<span class="nv">REMOTE_CMD</span><span class="o">=</span><span class="s2">&quot;(git pull testing $BRANCH &amp;&amp; $(echo $ARGS | remote_paths ))&quot;</span>
-<span class="nv">REMOTE_PWD</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span> | remote_paths <span class="k">)</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="nv">REMOTE_CMD</span><span class="o">=</span><span class="s2">&quot;(git pull testing </span><span class="nv">$BRANCH</span><span class="s2"> &amp;&amp; </span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ARGS</span> <span class="p">|</span> remote_paths <span class="k">)</span><span class="s2">)&quot;</span>
+<span class="nv">REMOTE_PWD</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span> <span class="p">|</span> remote_paths <span class="k">)</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;Running perliminaries:&quot;</span>
 
@@ -304,7 +305,7 @@ a remote server at CSAIL looks much like this:</p>
 <span class="nb">echo </span>At: <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span>
 
 git_draft_sync
-ssh <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span> <span class="s2">&quot;cd $REMOTE_PWD &amp;&amp; $REMOTE_CMD&quot;</span> |&amp; local_paths
+ssh <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span> <span class="s2">&quot;cd </span><span class="nv">$REMOTE_PWD</span><span class="s2"> &amp;&amp; </span><span class="nv">$REMOTE_CMD</span><span class="s2">&quot;</span> <span class="p">|&amp;</span> local_paths
 </pre></div>
 
 
@@ -312,34 +313,34 @@ ssh <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span> <sp
 the top of the script to something that makes sense for you. Then tell
 your editor to prepend <code>./remote_test.sh</code> before the test
 command. Thus my emacs setup for example would do:</p>
-<div class="highlight"><pre><span class="o">-*-</span> <span class="n">mode</span><span class="o">:</span> <span class="n">compilation</span><span class="p">;</span> <span class="k">default</span><span class="o">-</span><span class="n">directory</span><span class="o">:</span> <span class="s">&quot;~/Projects/CSAIL/Python/WikipediaBase/&quot;</span> <span class="o">-*-</span>
-<span class="n">Comint</span> <span class="n">started</span> <span class="n">at</span> <span class="n">Sun</span> <span class="n">May</span> <span class="mi">11</span> <span class="mi">23</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mi">22</span>
+<div class="highlight"><pre><span class="nt">-</span><span class="o">*</span><span class="nt">-</span> <span class="nt">mode</span><span class="o">:</span> <span class="nt">compilation</span><span class="o">;</span> <span class="nt">default-directory</span><span class="o">:</span> <span class="s2">&quot;~/Projects/CSAIL/Python/WikipediaBase/&quot;</span> <span class="nt">-</span><span class="o">*</span><span class="nt">-</span>
+<span class="nt">Comint</span> <span class="nt">started</span> <span class="nt">at</span> <span class="nt">Sun</span> <span class="nt">May</span> <span class="nt">11</span> <span class="nt">23</span><span class="nd">:17:22</span>
 
-<span class="p">.</span><span class="o">/</span><span class="n">remote_test</span><span class="p">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">fakedrake</span><span class="o">/</span><span class="n">Projects</span><span class="o">/</span><span class="n">CSAIL</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">py</span><span class="c1">//bin/python  setup.py test</span>
-<span class="n">Running</span> <span class="n">perliminaries</span><span class="o">:</span>
-<span class="nl">ARGS:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">fakedrake</span><span class="o">/</span><span class="n">Projects</span><span class="o">/</span><span class="n">CSAIL</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">py</span><span class="c1">//bin/python setup.py test</span>
-<span class="nl">Running:</span> <span class="p">(</span><span class="n">git</span> <span class="n">pull</span> <span class="n">testing</span> <span class="n">bench</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">remote</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">Projects</span><span class="o">/</span><span class="n">py</span><span class="c1">//bin/python setup.py test)</span>
-<span class="nl">Directory:</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">remote</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">Projects</span><span class="o">/</span><span class="n">WikipediaBase</span>
-<span class="nl">At:</span> <span class="o">&lt;</span><span class="n">user</span> <span class="n">name</span><span class="o">&gt;</span><span class="err">@</span><span class="o">&lt;</span><span class="n">remote</span><span class="o">-</span><span class="n">server</span><span class="o">&gt;</span>
-<span class="n">Will</span> <span class="n">now</span> <span class="n">commit</span> <span class="n">a</span> <span class="n">dumb</span> <span class="n">commit</span> <span class="n">to</span> <span class="n">current</span> <span class="n">branch</span><span class="p">.</span>
-<span class="nl">Commiting:</span> <span class="p">[</span><span class="mi">1399839442</span><span class="p">]</span> <span class="n">Draft</span> <span class="n">commit</span>
-<span class="n">On</span> <span class="n">branch</span> <span class="n">bench</span>
-<span class="n">Untracked</span> <span class="n">files</span><span class="o">:</span>
-    <span class="n">TAGS</span>
-    <span class="p">[...]</span>
+<span class="o">./</span><span class="nt">remote_test</span><span class="nc">.sh</span> <span class="o">/</span><span class="nt">home</span><span class="o">/</span><span class="nt">fakedrake</span><span class="o">/</span><span class="nt">Projects</span><span class="o">/</span><span class="nt">CSAIL</span><span class="o">/</span><span class="nt">Python</span><span class="o">/</span><span class="nt">py</span><span class="o">//</span><span class="nt">bin</span><span class="o">/</span><span class="nt">python</span>  <span class="nt">setup</span><span class="nc">.py</span> <span class="nt">test</span>
+<span class="nt">Running</span> <span class="nt">perliminaries</span><span class="o">:</span>
+<span class="nt">ARGS</span><span class="o">:</span> <span class="o">/</span><span class="nt">home</span><span class="o">/</span><span class="nt">fakedrake</span><span class="o">/</span><span class="nt">Projects</span><span class="o">/</span><span class="nt">CSAIL</span><span class="o">/</span><span class="nt">Python</span><span class="o">/</span><span class="nt">py</span><span class="o">//</span><span class="nt">bin</span><span class="o">/</span><span class="nt">python</span> <span class="nt">setup</span><span class="nc">.py</span> <span class="nt">test</span>
+<span class="nt">Running</span><span class="o">:</span> <span class="o">(</span><span class="nt">git</span> <span class="nt">pull</span> <span class="nt">testing</span> <span class="nt">bench</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="nt">path</span><span class="o">/</span><span class="nt">to</span><span class="o">/</span><span class="nt">remote</span><span class="o">/</span><span class="nt">home</span><span class="o">/</span><span class="nt">Projects</span><span class="o">/</span><span class="nt">py</span><span class="o">//</span><span class="nt">bin</span><span class="o">/</span><span class="nt">python</span> <span class="nt">setup</span><span class="nc">.py</span> <span class="nt">test</span><span class="o">)</span>
+<span class="nt">Directory</span><span class="o">:</span> <span class="o">/</span><span class="nt">path</span><span class="o">/</span><span class="nt">to</span><span class="o">/</span><span class="nt">remote</span><span class="o">/</span><span class="nt">home</span><span class="o">/</span><span class="nt">Projects</span><span class="o">/</span><span class="nt">WikipediaBase</span>
+<span class="nt">At</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">user</span> <span class="nt">name</span><span class="o">&gt;@&lt;</span><span class="nt">remote-server</span><span class="o">&gt;</span>
+<span class="nt">Will</span> <span class="nt">now</span> <span class="nt">commit</span> <span class="nt">a</span> <span class="nt">dumb</span> <span class="nt">commit</span> <span class="nt">to</span> <span class="nt">current</span> <span class="nt">branch</span><span class="o">.</span>
+<span class="nt">Commiting</span><span class="o">:</span> <span class="cp">[</span><span class="mi">1399839442</span><span class="cp">]</span> <span class="nt">Draft</span> <span class="nt">commit</span>
+<span class="nt">On</span> <span class="nt">branch</span> <span class="nt">bench</span>
+<span class="nt">Untracked</span> <span class="nt">files</span><span class="o">:</span>
+    <span class="nt">TAGS</span>
+    <span class="cp">[</span><span class="nx">...</span><span class="cp">]</span>
 
-<span class="n">nothing</span> <span class="n">added</span> <span class="n">to</span> <span class="n">commit</span> <span class="n">but</span> <span class="n">untracked</span> <span class="n">files</span> <span class="n">present</span>
-<span class="n">Pushing</span> <span class="n">branch</span><span class="o">:</span> <span class="n">bench</span>
-<span class="nl">Password:</span>
-<span class="n">Everything</span> <span class="n">up</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">date</span>
-<span class="nl">Password:</span>
-<span class="n">From</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">remote</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="p">.</span><span class="n">testing</span><span class="o">/</span><span class="n">WikipediaBase</span>
- <span class="o">*</span> <span class="n">branch</span>            <span class="n">bench</span>      <span class="o">-&gt;</span> <span class="n">FETCH_HEAD</span>
-<span class="n">Already</span> <span class="n">up</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">date</span><span class="p">.</span>
-<span class="n">running</span> <span class="n">test</span>
-<span class="n">running</span> <span class="n">egg_info</span>
+<span class="nt">nothing</span> <span class="nt">added</span> <span class="nt">to</span> <span class="nt">commit</span> <span class="nt">but</span> <span class="nt">untracked</span> <span class="nt">files</span> <span class="nt">present</span>
+<span class="nt">Pushing</span> <span class="nt">branch</span><span class="o">:</span> <span class="nt">bench</span>
+<span class="nt">Password</span><span class="o">:</span>
+<span class="nt">Everything</span> <span class="nt">up-to-date</span>
+<span class="nt">Password</span><span class="o">:</span>
+<span class="nt">From</span> <span class="o">/</span><span class="nt">path</span><span class="o">/</span><span class="nt">to</span><span class="o">/</span><span class="nt">remote</span><span class="o">/</span><span class="nt">home</span><span class="o">/</span><span class="nc">.testing</span><span class="o">/</span><span class="nt">WikipediaBase</span>
+ <span class="o">*</span> <span class="nt">branch</span>            <span class="nt">bench</span>      <span class="nt">-</span><span class="o">&gt;</span> <span class="nt">FETCH_HEAD</span>
+<span class="nt">Already</span> <span class="nt">up-to-date</span><span class="o">.</span>
+<span class="nt">running</span> <span class="nt">test</span>
+<span class="nt">running</span> <span class="nt">egg_info</span>
 
-<span class="p">[...]</span>
+<span class="cp">[</span><span class="nx">...</span><span class="cp">]</span>
 </pre></div>
 
 
@@ -349,10 +350,10 @@ may also want to setup password-less login to your server. Not only is
 it easier but it is much safer.</p>
   </article>
 
-    <div class="divider"><!-- lines divider --></div>
+  <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
-  <p class="socials">
+<p class="socials">
   <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/remote-testing-with-git-and-ssh.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
     <a href="http://twitter.com/home?status=http://fakedrake.github.io/remote-testing-with-git-and-ssh.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
     <a href="https://plus.google.com/share?url=http://fakedrake.github.io/remote-testing-with-git-and-ssh.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
@@ -362,15 +363,15 @@ it easier but it is much safer.</p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <a href="/tag/git.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> git</a>
-              <a href="/tag/ssh.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> ssh</a>
-              <a href="/tag/remote.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> remote</a>
-              <a href="/tag/testin.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> testin</a>
-            </p>
+        <a href="/tag/git.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> git</a>
+        <a href="/tag/ssh.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> ssh</a>
+        <a href="/tag/remote.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> remote</a>
+        <a href="/tag/testin.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> testin</a>
+  </p>
 
   <hr /><!-- divider -->
 
-      <div id="comments" class="comments">
+    <div id="comments" class="comments">
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
@@ -385,11 +386,11 @@ it easier but it is much safer.</p>
       </script>
       <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
     </div>
-            </div>
+          </div>
 
           <!-- SIDEBAR -->
           <div class="right col-md-3">
-                        <!-- recent work -->
+            <!-- recent work -->
             <!-- <div class="widget">
 
               <h3>Recent Work</h3>
@@ -423,12 +424,12 @@ it easier but it is much safer.</p>
               <h3>Categories</h3>
 
               <ul>
-                                                <li><a href="http://fakedrake.github.io/category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
-                                <li><a href="http://fakedrake.github.io/category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
-                                <li><a href="http://fakedrake.github.io/category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
-                                <li><a href="http://fakedrake.github.io/category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
-                                <li><a href="http://fakedrake.github.io/category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
-                              </ul>
+                <li><a href="http://fakedrake.github.io/category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
+                <li><a href="http://fakedrake.github.io/category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
+                <li><a href="http://fakedrake.github.io/category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
+                <li><a href="http://fakedrake.github.io/category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
+                <li><a href="http://fakedrake.github.io/category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
+              </ul>
 
             </div>
 
@@ -439,49 +440,49 @@ it easier but it is much safer.</p>
 
               <!-- hide this part -->
               <div class="hidden">
-                                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                              </div>
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+              </div>
 
               <ul class="tree">
                 <li>
-                                    <span><i class="fa fa-minus-square-o"></i>2014</span>
+                  <span><i class="fa fa-minus-square-o"></i>2014</span>
                   <ul>
                     <li>
-                                            <span><i class="fa fa-minus-square-o"></i>07</span>
+                      <span><i class="fa fa-minus-square-o"></i>07</span>
                       <ul>
-                                                <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
-                                                <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>06</span>
+                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
+                        <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>06</span>
                       <ul>
-                                                <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>05</span>
+                        <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>05</span>
                       <ul>
-                                                <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
-                                                <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
-                                                <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>04</span>
+                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
+                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
+                        <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>04</span>
                       <ul>
-                                                <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>03</span>
+                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
                       <ul>
-                                                <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
-                                                <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
-                                              </ul>
-                                          </li>
+                        <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
+                        <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
+                      </ul>
+                    </li>
                   </ul>
-                                  </li>
+                </li>
               </ul>
 
             </div>
@@ -495,7 +496,7 @@ it easier but it is much safer.</p>
     </section>
     <!-- /BLOG -->
 
-    <!-- FOOTER -->
+<!-- FOOTER -->
 <footer>
 
   <!-- SCROOL TO TOP -->
@@ -512,10 +513,10 @@ it easier but it is much safer.</p>
         </div>
 
         <div class="col-md-6 text-right">
-                          <a href="https://twitter.com/drNinjaBatman" class="social fa fa-twitter"></a>
-                          <a href="https://github.com/fakedrake" class="social fa fa-github"></a>
-                          <a href="https://www.facebook.com/chris.perivolaropoulos" class="social fa fa-facebook"></a>
-                    </div>
+              <a href="https://twitter.com/drNinjaBatman" class="social fa fa-twitter"></a>
+              <a href="https://github.com/fakedrake" class="social fa fa-github"></a>
+              <a href="https://www.facebook.com/chris.perivolaropoulos" class="social fa fa-facebook"></a>
+        </div>
 
     </div>
 

@@ -76,20 +76,20 @@ may it be because I just want the kernel to do my bidding and load a
 ramdisk that is as big as half a Gigabyte. The point is, shoving such
 a big ramdisk down the kernel's throat will result in it choking into
 something like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;...
 
-&lt;span class="nl"&gt;RAMDISK:&lt;/span&gt; &lt;span class="n"&gt;ext2&lt;/span&gt; &lt;span class="n"&gt;filesystem&lt;/span&gt; &lt;span class="n"&gt;found&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;block&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
-&lt;span class="nl"&gt;RAMDISK:&lt;/span&gt; &lt;span class="n"&gt;image&lt;/span&gt; &lt;span class="n"&gt;too&lt;/span&gt; &lt;span class="n"&gt;big&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;500496&lt;/span&gt;&lt;span class="n"&gt;KiB&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;16384&lt;/span&gt;&lt;span class="n"&gt;KiB&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;xemacps&lt;/span&gt; &lt;span class="n"&gt;e000b000&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;eth&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Set&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="mi"&gt;124999998&lt;/span&gt; &lt;span class="n"&gt;Hz&lt;/span&gt;
-&lt;span class="n"&gt;xemacps&lt;/span&gt; &lt;span class="n"&gt;e000b000&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;eth&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;link&lt;/span&gt; &lt;span class="n"&gt;up&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;FULL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;List&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;all&lt;/span&gt; &lt;span class="n"&gt;partitions&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt;            &lt;span class="mi"&gt;1024&lt;/span&gt; &lt;span class="n"&gt;mtdblock0&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;01&lt;/span&gt;            &lt;span class="mi"&gt;5120&lt;/span&gt; &lt;span class="n"&gt;mtdblock1&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;02&lt;/span&gt;             &lt;span class="mi"&gt;128&lt;/span&gt; &lt;span class="n"&gt;mtdblock2&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;03&lt;/span&gt;            &lt;span class="mi"&gt;6016&lt;/span&gt; &lt;span class="n"&gt;mtdblock3&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="mo"&gt;04&lt;/span&gt;            &lt;span class="mi"&gt;4096&lt;/span&gt; &lt;span class="n"&gt;mtdblock4&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;filesystem&lt;/span&gt; &lt;span class="n"&gt;could&lt;/span&gt; &lt;span class="n"&gt;mount&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tried&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;  &lt;span class="n"&gt;ext3&lt;/span&gt; &lt;span class="n"&gt;ext2&lt;/span&gt; &lt;span class="n"&gt;ext4&lt;/span&gt; &lt;span class="n"&gt;vfat&lt;/span&gt; &lt;span class="n"&gt;msdos&lt;/span&gt;
-&lt;span class="n"&gt;Kernel&lt;/span&gt; &lt;span class="n"&gt;panic&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;not&lt;/span&gt; &lt;span class="n"&gt;syncing&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VFS&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Unable&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;mount&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;fs&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;unknown&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;block&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+RAMDISK: ext2 filesystem found at block 0
+RAMDISK: image too big! (500496KiB/16384KiB)
+xemacps e000b000.eth: Set clk to 124999998 Hz
+xemacps e000b000.eth: link up (1000/FULL)
+List of all partitions:
+1f00            1024 mtdblock0  (driver?)
+1f01            5120 mtdblock1  (driver?)
+1f02             128 mtdblock2  (driver?)
+1f03            6016 mtdblock3  (driver?)
+1f04            4096 mtdblock4  (driver?)
+No filesystem could mount root, tried:  ext3 ext2 ext4 vfat msdos
+Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(1,0)
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -146,10 +146,10 @@ the source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
 
     &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;get_option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="k"&gt;switch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;:
+        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
             &lt;span class="n"&gt;rd_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
             &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;:
+        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
             &lt;span class="n"&gt;rd_nr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
             &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
@@ -164,11 +164,11 @@ the source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
 just one 500M disk, while having &lt;em&gt;ramdisk_size=500000&lt;/em&gt; behave as
 before. Noice!&lt;/p&gt;
 &lt;p&gt;So now we simply run qemu&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;qemu&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;arm&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;M&lt;/span&gt; &lt;span class="n"&gt;xilinx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zynq&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a9&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;serial&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;serial&lt;/span&gt;
-    &lt;span class="nl"&gt;mon:&lt;/span&gt;&lt;span class="n"&gt;stdio&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dtb&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;devtree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dtb&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;zImage&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;initrd&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;enormous&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ramdisk&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;nographic&lt;/span&gt;
-    &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp \&lt;/span&gt;
-&lt;span class="s"&gt;        loglevel=7 ramdisk_size=500496,1p&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;qemu-system-arm -M xilinx-zynq-a9 -m 1024 -serial null -serial
+    mon:stdio -dtb ./devtree.dtb -kernel path/to/zImage
+    -initrd path/to/enormous-ramdisk.img -nographic
+    -append &amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp \
+        loglevel=7 ramdisk_size=500496,1p&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -177,11 +177,11 @@ before. Noice!&lt;/p&gt;
 relevan excerpt&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;...
 
-&lt;span class="nv"&gt;BOOTCMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=$(du --apparent-size $RAMDISK | awk &amp;#39;{print $1}&amp;#39;),1&amp;#39;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$QEMU -M xilinx-zynq-a9  -m 1024  -serial null -serial mon:stdio -dtb $DTB -kernel $KERNEL -initrd $RAMDISK -nographic&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;BOOTCMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;du --apparent-size &lt;span class="nv"&gt;$RAMDISK&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;,1&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$QEMU&lt;/span&gt;&lt;span class="s2"&gt; -M xilinx-zynq-a9  -m 1024  -serial null -serial mon:stdio -dtb &lt;/span&gt;&lt;span class="nv"&gt;$DTB&lt;/span&gt;&lt;span class="s2"&gt; -kernel &lt;/span&gt;&lt;span class="nv"&gt;$KERNEL&lt;/span&gt;&lt;span class="s2"&gt; -initrd &lt;/span&gt;&lt;span class="nv"&gt;$RAMDISK&lt;/span&gt;&lt;span class="s2"&gt; -nographic&amp;quot;&lt;/span&gt;
 
-&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Running: $CMD -append $BOOTCMD\nC-a x to kill...&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;$CMD&lt;/span&gt; -append &lt;span class="s2"&gt;&amp;quot;$BOOTCMD&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Running: &lt;/span&gt;&lt;span class="nv"&gt;$CMD&lt;/span&gt;&lt;span class="s2"&gt; -append &lt;/span&gt;&lt;span class="nv"&gt;$BOOTCMD&lt;/span&gt;&lt;span class="s2"&gt;\nC-a x to kill...&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$CMD&lt;/span&gt; -append &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$BOOTCMD&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -203,7 +203,7 @@ the project root. For me there are usually some nasty device tree
 changes that I make to fit Qemu and also my .config is setup for
 debugging. I definitely dont want reverting any of that. Actually all
 I want to revert is the .c files I threw printks in.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;sed&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;modified&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;(.&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;xargs&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git status | sed -n &amp;#39;s/.*modified: *\(.*\.c\)/\1/p&amp;#39; | xargs git checkout
 &lt;/pre&gt;&lt;/div&gt;
 
 

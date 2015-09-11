@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="http://fakedrake.github.io/theme/img/logo_og.png" />
     <title>
-      Enabling python virtualenvs dumb and fast - Chris Perivolaropoulos
+Enabling python virtualenvs dumb and fast - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -43,8 +43,8 @@
        <link href="http://fakedrake.github.io/theme/css/pygment-solarized-dark.css" rel="stylesheet" type="text/css" />
 
        <!-- ICONS -->
-              <link rel="shortcut icon" href="/theme/img/favicon.png" type="image/x-icon" />
-                     
+       <link rel="shortcut icon" href="/theme/img/favicon.png" type="image/x-icon" />
+
        <!-- mobile settings -->
        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
 
@@ -52,12 +52,12 @@
        <script type="text/javascript" src="http://fakedrake.github.io/theme/js/modernizr.min.js"></script>
 
        <!-- google authorship -->
-                                                 
+
   </head>
 
   <body>
 
-    <!-- Main Nav -->
+<!-- Main Nav -->
 <header id="header" style="margin-top:0">
 
   <nav class="navbar navbar-inverse" role="navigation">
@@ -86,16 +86,17 @@
           <li><a href="http://fakedrake.github.io/index.html#work">Work</a></li>
 	  <li><a href="http://fakedrake.github.io/index.html#quick-blog">News</a></li>
 	  <li><a href="http://fakedrake.github.io/archives.html">Archive</a></li>
-                      <li class="dropdown">
+            <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Links <b class="caret"></b></a>
               <ul class="dropdown-menu" style="background-color:#000">
-                              <li style="background-color:#000"><a href="http://think-silicon.com/" target="_blank">Think Silicon Ltd</a></li>
-                              <li style="background-color:#000"><a href="http://p-space.gr" target="_blank">P-Space</a></li>
-                              <li style="background-color:#000"><a href="http://start.mit.edu" target="_blank">START</a></li>
-                              <li style="background-color:#000"><a href="http://www.csail.mit.edu" target="_blank">CSAIL MiT</a></li>
-                            </ul>
+                <li style="background-color:#000"><a href="http://codebender.cc/" target="_blank">codebender.cc</a></li>
+                <li style="background-color:#000"><a href="http://think-silicon.com/" target="_blank">Think Silicon Ltd</a></li>
+                <li style="background-color:#000"><a href="http://p-space.gr" target="_blank">P-Space</a></li>
+                <li style="background-color:#000"><a href="http://start.mit.edu" target="_blank">START</a></li>
+                <li style="background-color:#000"><a href="http://www.csail.mit.edu" target="_blank">CSAIL MiT</a></li>
+              </ul>
             </li>
-                  </ul>
+        </ul>
       </div>
       <!-- /.navbar-collapse -->
 
@@ -107,17 +108,17 @@
 
         <div class="row">
           <div class="left col-md-9">
-	      <header>
-          <h1>Enabling python virtualenvs dumb and fast</h1>
-        <small class="fsize13">
-                                                                                                                        <a href="http://fakedrake.github.io/category/python.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> python</a>
-                              <a href="http://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="enabling-python-virtualenvs-dumb-and-fast.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+  <header>
+      <h1>Enabling python virtualenvs dumb and fast</h1>
+    <small class="fsize13">
+            <a href="http://fakedrake.github.io/category/python.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> python</a>
+      <a href="http://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="enabling-python-virtualenvs-dumb-and-fast.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       <span class="label label-default light">Wed 16 July 2014</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
-                <article class='content'>
-        <p>Unless you are using
+  <article class='content'>
+    <p>Unless you are using
 <a href="https://bitbucket.org/dhellmann/virtualenvwrapper/">virtualenvwrapper</a>
 or something else fancy that the cool kids like these days a common
 series of commands to run python tests is. I also annotated my
@@ -139,17 +140,17 @@ hard time context switching like that. Thankfully shell scripting can
 help out with this. I recently added this stupid little function in my
 <em>.zshrc</em> and my life has been a wonderful journey in unicorn rainbow
 land ever since</p>
-<div class="highlight"><pre><span class="cp"># find the first venv backwards and activate it.</span>
-<span class="n">pv</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">A</span><span class="o">=</span><span class="p">.</span><span class="o">/</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">activate</span><span class="p">;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="p">{</span><span class="mf">1.</span><span class="p">.</span><span class="err">$</span><span class="p">(</span><span class="n">pwd</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span> <span class="o">|</span> <span class="n">wc</span> <span class="o">-</span><span class="n">l</span><span class="p">)};</span> <span class="k">do</span>
-    <span class="k">if</span> <span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="s">&quot;ls $A&quot;</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span><span class="p">;</span> <span class="n">then</span>
-        <span class="n">source</span> <span class="err">$</span><span class="p">(</span><span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="s">&quot;ls $A | head -1&quot;</span><span class="p">);</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="n">fi</span><span class="p">;</span>
-    <span class="n">A</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="err">$</span><span class="n">A</span><span class="p">;</span>
-    <span class="n">done</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span class="c"># find the first venv backwards and activate it.</span>
+pv<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">A</span><span class="o">=</span>./*/bin/activate<span class="p">;</span>
+    <span class="k">for</span> i in <span class="o">{</span>1..<span class="k">$(</span><span class="nb">pwd</span> <span class="p">|</span> grep -o / <span class="p">|</span> wc -l<span class="k">)</span><span class="o">}</span><span class="p">;</span> <span class="k">do</span>
+    <span class="k">if</span> bash -c <span class="s2">&quot;ls </span><span class="nv">$A</span><span class="s2">&quot;</span> 2&gt; /dev/null<span class="p">;</span> <span class="k">then</span>
+        <span class="nb">source</span> <span class="k">$(</span>bash -c <span class="s2">&quot;ls </span><span class="nv">$A</span><span class="s2"> | head -1&quot;</span><span class="k">)</span><span class="p">;</span>
+        <span class="nb">break</span><span class="p">;</span>
+    <span class="k">fi</span><span class="p">;</span>
+    <span class="nv">A</span><span class="o">=</span>../<span class="nv">$A</span><span class="p">;</span>
+    <span class="k">done</span>
+<span class="o">}</span>
 </pre></div>
 
 
@@ -164,10 +165,10 @@ land ever since</p>
 </pre></div>
   </article>
 
-    <div class="divider"><!-- lines divider --></div>
+  <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
-  <p class="socials">
+<p class="socials">
   <a href="http://www.facebook.com/sharer/sharer.php?u=http://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
     <a href="http://twitter.com/home?status=http://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
     <a href="https://plus.google.com/share?url=http://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
@@ -177,14 +178,14 @@ land ever since</p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <a href="/tag/shell.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> shell</a>
-              <a href="/tag/virtualenv.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> virtualenv</a>
-              <a href="/tag/python.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> python</a>
-            </p>
+        <a href="/tag/shell.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> shell</a>
+        <a href="/tag/virtualenv.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> virtualenv</a>
+        <a href="/tag/python.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> python</a>
+  </p>
 
   <hr /><!-- divider -->
 
-      <div id="comments" class="comments">
+    <div id="comments" class="comments">
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
@@ -199,11 +200,11 @@ land ever since</p>
       </script>
       <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
     </div>
-            </div>
+          </div>
 
           <!-- SIDEBAR -->
           <div class="right col-md-3">
-                        <!-- recent work -->
+            <!-- recent work -->
             <!-- <div class="widget">
 
               <h3>Recent Work</h3>
@@ -237,12 +238,12 @@ land ever since</p>
               <h3>Categories</h3>
 
               <ul>
-                                                <li><a href="http://fakedrake.github.io/category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
-                                <li><a href="http://fakedrake.github.io/category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
-                                <li><a href="http://fakedrake.github.io/category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
-                                <li><a href="http://fakedrake.github.io/category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
-                                <li><a href="http://fakedrake.github.io/category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
-                              </ul>
+                <li><a href="http://fakedrake.github.io/category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
+                <li><a href="http://fakedrake.github.io/category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
+                <li><a href="http://fakedrake.github.io/category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
+                <li><a href="http://fakedrake.github.io/category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
+                <li><a href="http://fakedrake.github.io/category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
+              </ul>
 
             </div>
 
@@ -253,49 +254,49 @@ land ever since</p>
 
               <!-- hide this part -->
               <div class="hidden">
-                                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                                None
-                              </div>
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+              </div>
 
               <ul class="tree">
                 <li>
-                                    <span><i class="fa fa-minus-square-o"></i>2014</span>
+                  <span><i class="fa fa-minus-square-o"></i>2014</span>
                   <ul>
                     <li>
-                                            <span><i class="fa fa-minus-square-o"></i>07</span>
+                      <span><i class="fa fa-minus-square-o"></i>07</span>
                       <ul>
-                                                <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
-                                                <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>06</span>
+                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
+                        <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>06</span>
                       <ul>
-                                                <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>05</span>
+                        <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>05</span>
                       <ul>
-                                                <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
-                                                <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
-                                                <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>04</span>
+                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
+                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
+                        <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>04</span>
                       <ul>
-                                                <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                                              </ul>
-                                            <span><i class="fa fa-minus-square-o"></i>03</span>
+                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
                       <ul>
-                                                <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
-                                                <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
-                                              </ul>
-                                          </li>
+                        <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
+                        <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
+                      </ul>
+                    </li>
                   </ul>
-                                  </li>
+                </li>
               </ul>
 
             </div>
@@ -309,7 +310,7 @@ land ever since</p>
     </section>
     <!-- /BLOG -->
 
-    <!-- FOOTER -->
+<!-- FOOTER -->
 <footer>
 
   <!-- SCROOL TO TOP -->
@@ -326,10 +327,10 @@ land ever since</p>
         </div>
 
         <div class="col-md-6 text-right">
-                          <a href="https://twitter.com/drNinjaBatman" class="social fa fa-twitter"></a>
-                          <a href="https://github.com/fakedrake" class="social fa fa-github"></a>
-                          <a href="https://www.facebook.com/chris.perivolaropoulos" class="social fa fa-facebook"></a>
-                    </div>
+              <a href="https://twitter.com/drNinjaBatman" class="social fa fa-twitter"></a>
+              <a href="https://github.com/fakedrake" class="social fa fa-github"></a>
+              <a href="https://www.facebook.com/chris.perivolaropoulos" class="social fa fa-facebook"></a>
+        </div>
 
     </div>
 

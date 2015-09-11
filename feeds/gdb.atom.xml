@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/gdb.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-05-06T16:36:00+03:00</updated><entry><title>Gdb signals</title><link href="http://fakedrake.github.io/gdb-signals.html" rel="alternate"></link><updated>2014-05-06T16:36:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-06:gdb-signals.html</id><summary type="html">&lt;p&gt;So unless you are debugging your own program and you know what you are
 doing this is probably not what you expect to happen while a program
 runs under GDB.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Program&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt; &lt;span class="n"&gt;signal&lt;/span&gt; &lt;span class="n"&gt;SIGUSR1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="n"&gt;defined&lt;/span&gt; &lt;span class="n"&gt;signal&lt;/span&gt; &lt;span class="mf"&gt;1.&lt;/span&gt;
-&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Switching&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;Thread&lt;/span&gt; &lt;span class="mh"&gt;0x7fffcff2c700&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LWP&lt;/span&gt; &lt;span class="mi"&gt;3296&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-&lt;span class="p"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gdb&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Program received signal SIGUSR1, User defined signal 1.
+[Switching to Thread 0x7fffcff2c700 (LWP 3296)]
+...
+(gdb)
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -45,9 +45,9 @@ Use the "handle" command to change these tables.
 be passed to the program. The other thing we notice here is that
 &lt;code&gt;SIGTRAP&lt;/code&gt; is not passed to the program.&lt;/p&gt;
 &lt;p&gt;To have &lt;code&gt;SIGUSR1&lt;/code&gt; be ignored by GDB&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gdb&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;handle&lt;/span&gt; &lt;span class="n"&gt;SIGUSR1&lt;/span&gt; &lt;span class="n"&gt;nostop&lt;/span&gt; &lt;span class="n"&gt;noprint&lt;/span&gt;
-&lt;span class="n"&gt;Signal&lt;/span&gt;        &lt;span class="n"&gt;Stop&lt;/span&gt;  &lt;span class="n"&gt;Print&lt;/span&gt;   &lt;span class="n"&gt;Pass&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt; &lt;span class="n"&gt;Description&lt;/span&gt;
-&lt;span class="n"&gt;SIGUSR1&lt;/span&gt;       &lt;span class="n"&gt;No&lt;/span&gt;    &lt;span class="n"&gt;No&lt;/span&gt;  &lt;span class="n"&gt;Yes&lt;/span&gt;     &lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="n"&gt;defined&lt;/span&gt; &lt;span class="n"&gt;signal&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;(gdb) handle SIGUSR1 nostop noprint
+Signal        Stop  Print   Pass to program Description
+SIGUSR1       No    No  Yes     User defined signal 1
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -63,13 +63,13 @@ run.&lt;/p&gt;
 
 
 &lt;p&gt;If you are using &lt;em&gt;emacs&lt;/em&gt; and &lt;em&gt;gud&lt;/em&gt; like me you can automate this with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;defun&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;gud&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;trap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;optional&lt;/span&gt; &lt;span class="n"&gt;wrapping&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;script&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;interactive&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;child&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;xargs pgrep -P | head -1 |&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;async&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;
-     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;echo %d | %s %s xargs echo kill -TRAP&amp;quot;&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;buffer&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*gud*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-         &lt;span class="n"&gt;child&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;wrapping&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;script&lt;/span&gt; &lt;span class="n"&gt;child&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;my:gud-trap-process&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;&amp;amp;optional&lt;/span&gt; &lt;span class="nv"&gt;wrapping-script&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;interactive&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;child-pid&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;xargs pgrep -P | head -1 |&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;async-shell-command&lt;/span&gt;
+     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;format&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;echo %d | %s %s xargs echo kill -TRAP&amp;quot;&lt;/span&gt;
+         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;process-id&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;get-buffer-process&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*gud*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+         &lt;span class="nv"&gt;child-pid&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;wrapping-script&lt;/span&gt; &lt;span class="nv"&gt;child-pid&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -78,7 +78,7 @@ my:gud-trap-process&lt;/code&gt; to give control to gdb. If you are running gdb
 from within a shell script like I usually do provide a prefix
 argument, ie. &lt;code&gt;C-u M-x my:gud-trap-process&lt;/code&gt; to handle child processes
 correctly. I also have it bound to &lt;code&gt;C-x C-a t&lt;/code&gt; for brevity:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;global&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kbd&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C-x C-a t&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;gud&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;trap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;(global-set-key (kbd &amp;quot;C-x C-a t&amp;quot;) `my:gud-trap-process)
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -86,5 +86,5 @@ correctly. I also have it bound to &lt;code&gt;C-x C-a t&lt;/code&gt; for brevit
 earlier but rather it will find the pid of gdb and send &lt;code&gt;SIGTRAP&lt;/code&gt; to it's
 first child process. So if you want to automate the process in another
 way here is the main idea:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;pgrep&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;gdb&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;xargs&lt;/span&gt; &lt;span class="n"&gt;kill&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;TRAP&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pgrep -P &amp;lt;gdb pid&amp;gt; &lt;span class="p"&gt;|&lt;/span&gt; head -1 &lt;span class="p"&gt;|&lt;/span&gt; xargs &lt;span class="nb"&gt;kill&lt;/span&gt; -TRAP
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="GDB"></category><category term="C/C++"></category><category term="signals"></category></entry></feed>
