@@ -51,7 +51,7 @@ START_JOB_DESCRIPTION = """START is a system developed by CSAIL's InfoLab that a
 accurately answer natural language questions. Working the wikipedia
 backend."""
 CB_JOB_DESCRIPTION = """Making your browser talk to your hardware."""
-JOB_STYLE = "width:70%; height:70%; text-align: center; margin: 10 auto"
+JOB_STYLE = "width:70%; height:70%; text-align: center; margin: 10px auto"
 # work_type, work_cover_link, work_cover_style, work_title, work_description, work_link
 WORK_LIST = [
     ("http://i62.tinypic.com/33dl4pt.png", JOB_STYLE,
