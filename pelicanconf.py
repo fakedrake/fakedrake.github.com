@@ -54,7 +54,7 @@ CB_JOB_DESCRIPTION = """Making your browser talk to your hardware."""
 JOB_STYLE = "width:70%; height:70%; text-align: center; margin: 0 auto"
 # work_type, work_cover_link, work_cover_style, work_title, work_description, work_link
 WORK_LIST = [
-    ("http://i59.tinypic.com/2w68mcw.png", JOB_STYLE,
+    ("http://i62.tinypic.com/33dl4pt.png", JOB_STYLE,
      "Software engineer at codebender.cc",
      CB_JOB_DESCRIPTION, "http://codebender.cc"),
     # ("http://i57.tinypic.com/2rnd9g8.png", "",

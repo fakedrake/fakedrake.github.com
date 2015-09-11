@@ -10,8 +10,8 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = 'http://fakedrake.github.io'
-RELATIVE_URLS = False
+SITEURL = 'https://fakedrake.github.io'
+RELATIVE_URLS = True
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
@@ -25,4 +25,4 @@ GOOGLE_ANALYTICS_TRACKING_ID = 'UA-44345210-1'
 GOOGLE_ANALYTICS_URL = "fakedrake.github.io"
 
 DISQUS_SITENAME = "drninjabatman-blog"
-SITEURL_DISQUS = 'http://fakedrake.github.io'
+SITEURL_DISQUS = 'https://fakedrake.github.io'
