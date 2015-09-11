@@ -16,7 +16,8 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS =  (('Think Silicon Ltd', 'http://think-silicon.com/'),
+LINKS =  (('codebender.cc', 'http://codebender.cc/'),
+          ('Think Silicon Ltd', 'http://think-silicon.com/'),
           ('P-Space', 'http://p-space.gr'),
           ('START', 'http://start.mit.edu'),
           ('CSAIL MiT', 'http://www.csail.mit.edu'),
@@ -49,11 +50,16 @@ TS_JOB_DESCRIPTION = """At Think-Silicon we build awesome GPUs for mobile device
 START_JOB_DESCRIPTION = """START is a system developed by CSAIL's InfoLab that aims to
 accurately answer natural language questions. Working the wikipedia
 backend."""
+CB_JOB_DESCRIPTION = """Making your browser talk to your hardware."""
 
 # work_type, work_cover_link, work_cover_style, work_title, work_description, work_link
-WORK_LIST = [("http://i57.tinypic.com/2rnd9g8.png", "",
-     "Software Engineer at Think-Silicon Ltd.",
-     TS_JOB_DESCRIPTION, "http://www.think-silicon.com"),
+WORK_LIST = [
+    ("http://i59.tinypic.com/2w68mcw.png", "",
+     "Software engineer at codebender.cc",
+     CB_JOB_DESCRIPTION),
+    # ("http://i57.tinypic.com/2rnd9g8.png", "",
+    #  "Software Engineer at Think-Silicon Ltd.",
+    #  TS_JOB_DESCRIPTION, "http://www.think-silicon.com"),
     (
      "http://img2.wikia.nocookie.net/__cb20111105140719/how-i-met-your-mother/de/images/1/12/Wikipedia.png",
      "width:70%; height:70%; text-align: center; margin: 0 auto", "CSAIL's START Wikipedia backend", START_JOB_DESCRIPTION,
