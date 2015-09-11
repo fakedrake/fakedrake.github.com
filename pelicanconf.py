@@ -51,18 +51,18 @@ START_JOB_DESCRIPTION = """START is a system developed by CSAIL's InfoLab that a
 accurately answer natural language questions. Working the wikipedia
 backend."""
 CB_JOB_DESCRIPTION = """Making your browser talk to your hardware."""
-
+JOB_STYLE = "width:70%; height:70%; text-align: center; margin: 0 auto"
 # work_type, work_cover_link, work_cover_style, work_title, work_description, work_link
 WORK_LIST = [
-    ("http://i59.tinypic.com/2w68mcw.png", "",
+    ("http://i59.tinypic.com/2w68mcw.png", JOB_STYLE,
      "Software engineer at codebender.cc",
-     CB_JOB_DESCRIPTION),
+     CB_JOB_DESCRIPTION, "http://codebender.cc"),
     # ("http://i57.tinypic.com/2rnd9g8.png", "",
     #  "Software Engineer at Think-Silicon Ltd.",
     #  TS_JOB_DESCRIPTION, "http://www.think-silicon.com"),
     (
      "http://img2.wikia.nocookie.net/__cb20111105140719/how-i-met-your-mother/de/images/1/12/Wikipedia.png",
-     "width:70%; height:70%; text-align: center; margin: 0 auto", "CSAIL's START Wikipedia backend", START_JOB_DESCRIPTION,
+     JOB_STYLE, "CSAIL's START Wikipedia backend", START_JOB_DESCRIPTION,
      "http://start.mit.edu"),
 ]
 
