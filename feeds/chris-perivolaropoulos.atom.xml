@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/chris-perivolaropoulos.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-07-16T19:27:00+03:00</updated><entry><title>Enabling python virtualenvs dumb and fast</title><link href="http://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" rel="alternate"></link><updated>2014-07-16T19:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:enabling-python-virtualenvs-dumb-and-fast.html</id><summary type="html">&lt;p&gt;Unless you are using
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2014-07-16T19:27:00+03:00</updated><entry><title>Enabling python virtualenvs dumb and fast</title><link href="https://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" rel="alternate"></link><updated>2014-07-16T19:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:enabling-python-virtualenvs-dumb-and-fast.html</id><summary type="html">&lt;p&gt;Unless you are using
 &lt;a href="https://bitbucket.org/dhellmann/virtualenvwrapper/"&gt;virtualenvwrapper&lt;/a&gt;
 or something else fancy that the cool kids like these days a common
 series of commands to run python tests is. I also annotated my
@@ -43,7 +43,7 @@ pv&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
 &lt;span class="gp"&gt;#&lt;/span&gt; Set!
 &lt;span class="gp"&gt;$&lt;/span&gt; python setup.py &lt;span class="nb"&gt;test&lt;/span&gt;
 &lt;span class="go"&gt;[...]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category><category term="virtualenv"></category><category term="shell"></category></entry><entry><title>Ethernet deadlocks and forking the kernel</title><link href="http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" rel="alternate"></link><updated>2014-07-16T18:25:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:ethernet-deadlocks-and-forking-the-kernel.html</id><summary type="html">&lt;p&gt;This is a bit specific but it is something I encountered more than
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category><category term="virtualenv"></category><category term="shell"></category></entry><entry><title>Ethernet deadlocks and forking the kernel</title><link href="https://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" rel="alternate"></link><updated>2014-07-16T18:25:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:ethernet-deadlocks-and-forking-the-kernel.html</id><summary type="html">&lt;p&gt;This is a bit specific but it is something I encountered more than
 once and spent a couple of hours trying to fix. So here is the
 problem. I have a xilinx zynq zc702 board and I load a slightly
 customized 3.8 linux kernel on it. I boot it and it freezes at&lt;/p&gt;
@@ -109,7 +109,7 @@ the xqspi struct. Essentially changing&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;did the trick.&lt;/p&gt;</summary><category term="drivers"></category><category term="irq"></category><category term="linux"></category><category term="kernel"></category></entry><entry><title>Programmatically add search engines to firefox</title><link href="http://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html" rel="alternate"></link><updated>2014-06-07T15:21:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-06-07:programmatically-add-search-engines-to-firefox.html</id><summary type="html">&lt;p&gt;What we are doing here is adding a search engine to firefox like real
+&lt;p&gt;did the trick.&lt;/p&gt;</summary><category term="drivers"></category><category term="irq"></category><category term="linux"></category><category term="kernel"></category></entry><entry><title>Programmatically add search engines to firefox</title><link href="https://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html" rel="alternate"></link><updated>2014-06-07T15:21:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-06-07:programmatically-add-search-engines-to-firefox.html</id><summary type="html">&lt;p&gt;What we are doing here is adding a search engine to firefox like real
 men ie programmatically. This is nice because you can then write
 scripts to do interesting stuff with them. First of all let's see what
 we can find out without looking at code.&lt;/p&gt;
@@ -195,7 +195,7 @@ can do it with:&lt;/p&gt;
 
 &lt;p&gt;There's more you can do with the browser search service but I think I
 would just be repeating the documentation from now on, I hope this is
-a good example to get you started.&lt;/p&gt;</summary><category term="firefox"></category><category term="javascript"></category></entry><entry><title>Remote testing with git and ssh</title><link href="http://fakedrake.github.io/remote-testing-with-git-and-ssh.html" rel="alternate"></link><updated>2014-05-11T21:37:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-11:remote-testing-with-git-and-ssh.html</id><summary type="html">&lt;p&gt;Running tests is an important part of the development workflow. You
+a good example to get you started.&lt;/p&gt;</summary><category term="firefox"></category><category term="javascript"></category></entry><entry><title>Remote testing with git and ssh</title><link href="https://fakedrake.github.io/remote-testing-with-git-and-ssh.html" rel="alternate"></link><updated>2014-05-11T21:37:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-11:remote-testing-with-git-and-ssh.html</id><summary type="html">&lt;p&gt;Running tests is an important part of the development workflow. You
 want to do it often and you want it to be quick. Yet at times tests
 are not quick. Tests can be slow and they can be fat. This means that
 you probably prefer to run them on a powerful server rather than your
@@ -424,7 +424,7 @@ command. Thus my emacs setup for example would do:&lt;/p&gt;
 &lt;p&gt;And compilation-mode sees the paths that it expects so I can jump
 around the source based on the errors. If you haven't done already you
 may also want to setup password-less login to your server. Not only is
-it easier but it is much safer.&lt;/p&gt;</summary><category term="testin"></category><category term="git"></category><category term="ssh"></category><category term="remote"></category></entry><entry><title>Moving git branches across repositories</title><link href="http://fakedrake.github.io/moving-git-branches-across-repositories.html" rel="alternate"></link><updated>2014-05-07T15:49:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-07:moving-git-branches-across-repositories.html</id><summary type="html">&lt;p&gt;In a perfect world there is a one-to-one relationship between projects
+it easier but it is much safer.&lt;/p&gt;</summary><category term="testin"></category><category term="git"></category><category term="ssh"></category><category term="remote"></category></entry><entry><title>Moving git branches across repositories</title><link href="https://fakedrake.github.io/moving-git-branches-across-repositories.html" rel="alternate"></link><updated>2014-05-07T15:49:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-07:moving-git-branches-across-repositories.html</id><summary type="html">&lt;p&gt;In a perfect world there is a one-to-one relationship between projects
 and git trees. As you are happily working on your local repo, and
 decide you want to get some commits from a different source you just
 &lt;code&gt;git remote add&lt;/code&gt; that source and you have full access to it's
@@ -442,7 +442,7 @@ branch at the new repo with the same name and pipe the descriptions of
 the commits to &lt;code&gt;git am&lt;/code&gt; to create them in the new place.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; the commits in the new repo will not have the same SHA as in
  the old one so we are not really &lt;em&gt;moving&lt;/em&gt; the commits from one repo
- to another as much as &lt;em&gt;recreating&lt;/em&gt; them.&lt;/p&gt;</summary><category term="git"></category><category term="branch"></category><category term="shell"></category></entry><entry><title>Gdb signals</title><link href="http://fakedrake.github.io/gdb-signals.html" rel="alternate"></link><updated>2014-05-06T16:36:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-06:gdb-signals.html</id><summary type="html">&lt;p&gt;So unless you are debugging your own program and you know what you are
+ to another as much as &lt;em&gt;recreating&lt;/em&gt; them.&lt;/p&gt;</summary><category term="git"></category><category term="branch"></category><category term="shell"></category></entry><entry><title>Gdb signals</title><link href="https://fakedrake.github.io/gdb-signals.html" rel="alternate"></link><updated>2014-05-06T16:36:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-06:gdb-signals.html</id><summary type="html">&lt;p&gt;So unless you are debugging your own program and you know what you are
 doing this is probably not what you expect to happen while a program
 runs under GDB.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;Program received signal SIGUSR1, User defined signal 1.
@@ -530,7 +530,7 @@ earlier but rather it will find the pid of gdb and send &lt;code&gt;SIGTRAP&lt;/
 first child process. So if you want to automate the process in another
 way here is the main idea:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pgrep -P &amp;lt;gdb pid&amp;gt; &lt;span class="p"&gt;|&lt;/span&gt; head -1 &lt;span class="p"&gt;|&lt;/span&gt; xargs &lt;span class="nb"&gt;kill&lt;/span&gt; -TRAP
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="GDB"></category><category term="C/C++"></category><category term="signals"></category></entry><entry><title>Dumping tab information with vimperator</title><link href="http://fakedrake.github.io/dumping-tab-information-with-vimperator.html" rel="alternate"></link><updated>2014-04-20T20:18:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-04-20:dumping-tab-information-with-vimperator.html</id><summary type="html">&lt;p&gt;To me it is quite usual that I am looking at a list of links to things
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="GDB"></category><category term="C/C++"></category><category term="signals"></category></entry><entry><title>Dumping tab information with vimperator</title><link href="https://fakedrake.github.io/dumping-tab-information-with-vimperator.html" rel="alternate"></link><updated>2014-04-20T20:18:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-04-20:dumping-tab-information-with-vimperator.html</id><summary type="html">&lt;p&gt;To me it is quite usual that I am looking at a list of links to things
 (songs, articls, books etc.) and I want to first select the ones I am
 interested in and then look into them one by one. Most of the time
 this does not go as smoothly as I would want it to. I wildly
@@ -582,7 +582,7 @@ the above I would come up with something like&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Which should open again tabs 7 to 22.&lt;/p&gt;</summary><category term="firefox"></category><category term="vimperator"></category><category term="javascript"></category><category term="tabs"></category></entry><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
+&lt;p&gt;Which should open again tabs 7 to 22.&lt;/p&gt;</summary><category term="firefox"></category><category term="vimperator"></category><category term="javascript"></category><category term="tabs"></category></entry><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="https://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
 anything crucial. Make them small and mount the rest of the filesystem
 using the rootfs related boot commands and the &lt;code&gt;-hda&lt;/code&gt; option on qemu
 or use nfs or whatever.&lt;/p&gt;
@@ -703,7 +703,7 @@ relevan excerpt&lt;/p&gt;
 
 
 &lt;p&gt;As an extra benefit this will actually measure the ramdisk and make
-the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="http://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
+the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="https://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
 proper debugging methods are is sometimes
 &lt;a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN"&gt;debateable&lt;/a&gt;),
 I always (over)use printks to debug the kernel. Now the problem with

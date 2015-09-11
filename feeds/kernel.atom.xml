@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="http://fakedrake.github.io/" rel="alternate"></link><link href="http://fakedrake.github.io/feeds/kernel.atom.xml" rel="self"></link><id>http://fakedrake.github.io/</id><updated>2014-07-16T18:25:00+03:00</updated><entry><title>Ethernet deadlocks and forking the kernel</title><link href="http://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" rel="alternate"></link><updated>2014-07-16T18:25:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:ethernet-deadlocks-and-forking-the-kernel.html</id><summary type="html">&lt;p&gt;This is a bit specific but it is something I encountered more than
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Batman Ph.D</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/kernel.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2014-07-16T18:25:00+03:00</updated><entry><title>Ethernet deadlocks and forking the kernel</title><link href="https://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" rel="alternate"></link><updated>2014-07-16T18:25:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:ethernet-deadlocks-and-forking-the-kernel.html</id><summary type="html">&lt;p&gt;This is a bit specific but it is something I encountered more than
 once and spent a couple of hours trying to fix. So here is the
 problem. I have a xilinx zynq zc702 board and I load a slightly
 customized 3.8 linux kernel on it. I boot it and it freezes at&lt;/p&gt;
@@ -65,7 +65,7 @@ the xqspi struct. Essentially changing&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;did the trick.&lt;/p&gt;</summary><category term="drivers"></category><category term="irq"></category><category term="linux"></category><category term="kernel"></category></entry><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="http://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
+&lt;p&gt;did the trick.&lt;/p&gt;</summary><category term="drivers"></category><category term="irq"></category><category term="linux"></category><category term="kernel"></category></entry><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="https://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
 anything crucial. Make them small and mount the rest of the filesystem
 using the rootfs related boot commands and the &lt;code&gt;-hda&lt;/code&gt; option on qemu
 or use nfs or whatever.&lt;/p&gt;
@@ -186,7 +186,7 @@ relevan excerpt&lt;/p&gt;
 
 
 &lt;p&gt;As an extra benefit this will actually measure the ramdisk and make
-the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="http://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
+the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="https://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
 proper debugging methods are is sometimes
 &lt;a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN"&gt;debateable&lt;/a&gt;),
 I always (over)use printks to debug the kernel. Now the problem with
