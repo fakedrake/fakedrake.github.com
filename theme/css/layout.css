@@ -373,7 +373,7 @@ section .btn {
 	}
 	#home .image-caption h1,
 	#home .image-caption h2 {
-		font-family: 'Open Sans', sans-serif;
+	    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 		font-weight:800;
 		font-size:600%;
 		line-height:95%;

@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Chris Perivolaropoulos'
-SITENAME = u'λ'
+SITENAME = u'λα.mbdα'
 SITEURL = ''
 
 CONTACT = [
