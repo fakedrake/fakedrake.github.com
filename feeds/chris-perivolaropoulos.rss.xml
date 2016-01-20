@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Batman Ph.D</title><link>https://fakedrake.github.io/</link><description>Hacking my way out of the existential deadlock</description><atom:link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 16 Jul 2014 19:27:00 +0300</lastBuildDate><item><title>Enabling python virtualenvs dumb and fast</title><link>https://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html</link><description>&lt;p&gt;Unless you are using
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>λ</title><link>https://fakedrake.github.io/</link><description>Hacking my way out of the existential deadlock</description><atom:link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 20 Jan 2016 13:07:00 +0200</lastBuildDate><item><title>Killing mysql queries</title><link>https://fakedrake.github.io/killing-mysql-queries.html</link><description>&lt;p&gt;MySQL queries are many times painfully slow. So slow that it is not
+worth waiting. Here is how to kill a running query.&lt;/p&gt;
+&lt;p&gt;First of all you need to know what is running to choose what to kill.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt; show processlist
+|       Id | User | Host | db      | Command | Time | State        | Info                      |
+|----------+------+------+---------+---------+------+--------------+---------------------------|
+| 35162105 | me   | host | db_name | Query   |  183 | Sending data | SELECT * FROM `HugeTable` |
+| 35162616 | me   | host | db_name | Query   |    0 | NULL         | show processlist          |
+| 35162617 | me   | host | db_name | Sleep   |    0 |              | NULL                      |
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The last process we don't care about and the one before that is the
+one we just ran to get the process list itself. The first one is the
+one to kill. So now that we have the id, we can kill it by running&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt; kill 35162105
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And we freed up the server!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Wed, 20 Jan 2016 13:07:00 +0200</pubDate><guid>tag:fakedrake.github.io,2016-01-20:killing-mysql-queries.html</guid></item><item><title>Enabling python virtualenvs dumb and fast</title><link>https://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html</link><description>&lt;p&gt;Unless you are using
 &lt;a href="https://bitbucket.org/dhellmann/virtualenvwrapper/"&gt;virtualenvwrapper&lt;/a&gt;
 or something else fancy that the cool kids like these days a common
 series of commands to run python tests is. I also annotated my
