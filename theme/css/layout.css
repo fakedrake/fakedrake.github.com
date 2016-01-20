@@ -248,7 +248,7 @@ section .btn {
 	line-height:60px;
 	font-size:25px;
 	font-weight:400;
-	text-transform:uppercase;
+	text-transform:none;
 	padding-left:15px;
 }
 	#header a.navbar-brand .white {
@@ -377,7 +377,7 @@ section .btn {
 		font-weight:800;
 		font-size:600%;
 		line-height:95%;
-		text-transform:uppercase;
+		text-transform:none;
 		text-shadow:none;
 		color:#fff;	display:block;
 	}
@@ -503,15 +503,15 @@ section .btn {
 		text-align:center;
 		margin-bottom:30px;
 	}
-	#ajax_modal button.close-modal { 
-		background:url('../images/icons/close.png') no-repeat; 
-		background-position:-35px -33px; 
-		display:inline-block; 
-		width:73px; 
-		height:73px; 
+	#ajax_modal button.close-modal {
+		background:url('../images/icons/close.png') no-repeat;
+		background-position:-35px -33px;
+		display:inline-block;
+		width:73px;
+		height:73px;
 	}
-	#ajax_modal button.close-modal:hover { 
-		background-position:-35px -173px; 
+	#ajax_modal button.close-modal:hover {
+		background-position:-35px -173px;
 	}
 
 figure.top {
@@ -610,8 +610,8 @@ div.inner-cover {
 	}
 
 
-/* 
-	Isotope CSS3 transitions 
+/*
+	Isotope CSS3 transitions
 */
 .isotope,
 .isotope .isotope-item {
@@ -662,7 +662,7 @@ div.contactModal .modal-header h4 {
 div.contactModal .modal-header i.fa {
 	margin-right:8px;
 }
- 
+
 
 /* google map */
 
@@ -678,7 +678,7 @@ div.contactModal .modal-header i.fa {
 		-o-filter: grayscale(100%);
 		   filter: grayscale(100%);
 		   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-		   filter: gray; 
+		   filter: gray;
 
 	z-index:1;
 }
@@ -704,7 +704,7 @@ div.contactModal .modal-header i.fa {
 	}
 	#googleMap address .address-sprite {
 		margin-bottom:20px;
-		padding-left:30px; 
+		padding-left:30px;
 		background:url('../images/icons/address_sprite.png') no-repeat 0 0;
 	}
 	#googleMap address .address-sprite.address {
@@ -713,7 +713,7 @@ div.contactModal .modal-header i.fa {
 	#googleMap address .address-sprite.phone {
 		background-position:0 -138px;
 		line-height:30px;
-	}		
+	}
 	#googleMap address .address-sprite.email {
 		background-position:0 -247px;
 	}
@@ -799,7 +799,7 @@ div.contactModal .modal-header i.fa {
 }
 
 
-/** 07. Util Row 
+/** 07. Util Row
 	example: newsletter subscribe
  **************************************************************** **/
 section.util-row {
@@ -833,8 +833,8 @@ section.util-row .btn {
 		line-height:20px;
 	}
 
-	/* 
-		custom sections 
+	/*
+		custom sections
 		Write here needed Paddings
 	*/
 	section.util-row .newsletter-subscribe { padding-top:10px; padding-bottom:10px; }	/* newsletter subvscribe */
@@ -885,7 +885,7 @@ div.price-table {
 	}
 	div.price-table.popular {
 		background:#676767;
-	}	
+	}
 
 
 
@@ -909,11 +909,11 @@ div.price-table {
 		border-right:0 !important;
 
 	}
-	ul.bstrap-tabs>li>a, 
-	ul.bstrap-tabs>li>a:hover, 
-	ul.bstrap-tabs>li>a:focus, 
-	ul.bstrap-tabs>li.active>a, 
-	ul.bstrap-tabs>li.active>a:hover, 
+	ul.bstrap-tabs>li>a,
+	ul.bstrap-tabs>li>a:hover,
+	ul.bstrap-tabs>li>a:focus,
+	ul.bstrap-tabs>li.active>a,
+	ul.bstrap-tabs>li.active>a:hover,
 	ul.bstrap-tabs>li.active>a:focus {
 		border-top:#999 1px solid;
 	}
@@ -1155,7 +1155,7 @@ a.service:hover i {
 	a.service.green i {
 		border:#7E8344 4px solid;
 		border-bottom:0;
-	} 
+	}
 		a.service.green:hover i {
 			color:#fff;
 			background:#7E8344;
@@ -1210,7 +1210,7 @@ a.service:hover i {
 	.service-desc h3 							{ padding-bottom:20px; }
 	.service-desc i 								{ font-size:11px; color:#ddd; }
 	.service-desc p								{ padding-top:0; }
- 
+
 
 
 
@@ -1240,11 +1240,11 @@ a.service:hover i {
 
 	#home .image-caption h1,
 	#home .image-caption h2 {
-		font-size:450%;	
+		font-size:450%;
 	}
 
 	#mobileMenu {
-		display:block; 
+		display:block;
 		width:50px; height:60px;
 		float:right;
 		margin-right:15px;
@@ -1295,7 +1295,7 @@ a.service:hover i {
 		font-size:26px;
 		line-height:30px;
 	}
-	#slider .slides-navigation a { 
+	#slider .slides-navigation a {
 		top:auto;
 		bottom:30px;
 	}
@@ -1357,7 +1357,7 @@ a.service:hover i {
 	ul.bstrap-tabs li a i {
 		display:none;
 	}
-	
+
 	.newsletter-subscribe {
 		padding-right:15px !important;
 	}

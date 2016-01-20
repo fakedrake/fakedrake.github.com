@@ -25,7 +25,7 @@ languages. There are 3 main viewpoints that languages have on them:
   (at least partially) document code but most importantly to infer as
   much logic as possible.
 
-The main trick that is employed for this is Monads. They say that once
+The main "trick" that is employed for this is Monads. They say that once
 you grasp what a monad is you lose the ability to explain what a monad
 is. The fact that you could not explain them in the first place either
 aside, this slightly delayed article is a continuation of the
@@ -82,7 +82,8 @@ category. More formally
     class Functor f where
         fmap :: (a -> b) -> f a -> f b
 
-An infix version of `fmap` is `<$>`
+An infix version of `fmap` is `<$>`. This will come up in the next
+section.
 
 # Applicative
 
@@ -124,6 +125,9 @@ For example
 
 # Monoids
 
+
+*TODO*
+
 # CoMonads
 
 Comonads are the reverse of monads. They are things that you know how
@@ -146,3 +150,4 @@ other planes we can trivially pipe those together.
 Here we have the means to create the underlying type but for the
 specific use we are better at manipulating the Comonad than
 manipulating the underlying type.
+)

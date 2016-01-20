@@ -3,11 +3,25 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Chris Perivolaropoulos'
-SITENAME = u'Batman Ph.D'
+SITENAME = u'λ'
 SITEURL = ''
 
-TIMEZONE = 'Europe/Athens'
+CONTACT = [
+    {'label': 'e-mail',
+     'link': 'mailto:cperivol@csail.mit.edu',
+     'name': 'cperivol@csail.mit.edu'
+    },
+    {'label': 'github',
+     'link': 'https://github.com/fakedrake',
+     'name': 'fakedrake'
+    },
+    {'label': 'twitter',
+     'link': 'https://twitter.com/drninjabatman',
+     'name': '@drninjabatman'
+    }
+]
 
+TIMEZONE = 'Europe/Athens'
 DEFAULT_LANG = u'en'
 
 # Feed generation is usually not desired when developing
@@ -40,8 +54,7 @@ SITESUBTITLE = "Hacking my way out of the existential deadlock"
 EXTRA_COPYRIGHTS = "Photos by <a href=\"https://marianasioti.exposure.so/\">Maria Nasioti</a>"
 PERSONAL_PHOTO = "/theme/img/little_me.jpg"
 PERSONAL_INFO = """A flea lost in the haze of existential insanity. In between
-procrastination sessions I may write some code too.
-"""
+procrastination sessions I may write some code too."""
 
 FAVICON = "/theme/img/favicon.png"
 
@@ -97,3 +110,4 @@ class CustomMarkdownReader(MarkdownReader):
         return content, metadata
 
 # READERS={"fdmd": CustomMarkdownReader}
+DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'contact']
