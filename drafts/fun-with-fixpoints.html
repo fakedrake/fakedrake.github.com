@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="../theme/img/logo_og.png" />
     <title>
-Unlocking python functions - Chris Perivolaropoulos
+Fun with fixpoints - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -109,33 +109,34 @@ Unlocking python functions - Chris Perivolaropoulos
         <div class="row">
           <div class="left col-md-9">
   <header>
-      <h1>Unlocking python functions</h1>
+      <h1>Fun with fixpoints</h1>
     <small class="fsize13">
             <a href="../category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
-      <a href="../drafts/unlocking-python-functions.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="drafts/unlocking-python-functions.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Sat 19 September 2015</span>
+      <a href="../drafts/fun-with-fixpoints.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="drafts/fun-with-fixpoints.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Thu 04 February 2016</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
   <article class='content'>
     <p><em>This article is hidden. Remove status: hidden or make it status:
 published to be able to publish</em></p>
-<p>Python functions, methods, partials and all the rest can be a bit
-strange. There are usually ways of getting around the complexity of
-which is which and why but knowledge is power.</p>
-<h1>Functions and methods the self</h1>
-<p>The first to look for is <code>Objects/functools.c</code>. Here</p>
+<p>Let's start with the fibonacci sequence</p>
+<p>λ&gt; let minus (x:xs) (y:ys) = if x == y then (minus xs ys) else x:(minus xs (y:ys))
+λ&gt; let naturalSum = (fix (\f (x:y:xs) -&gt; x:(f $ y+x:xs))) [1..]
+λ&gt; take 10 naturalSum
+[1,3,6,10,15,21,28,36,45,55]
+λ&gt; let meanStream = (zipWith (\i s -&gt; s/i) ([1..] :: [Float])) . (fix (\f (x:y:xs) -&gt; x:(f $ y+x:xs)))</p>
   </article>
 
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
 <p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=../drafts/unlocking-python-functions.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=../drafts/unlocking-python-functions.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=../drafts/unlocking-python-functions.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=../drafts/unlocking-python-functions.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=../drafts/unlocking-python-functions.html&title=Unlocking python functions&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=../drafts/fun-with-fixpoints.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=../drafts/fun-with-fixpoints.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=../drafts/fun-with-fixpoints.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=../drafts/fun-with-fixpoints.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=../drafts/fun-with-fixpoints.html&title=Fun with fixpoints&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>
 
   <!-- TAGS -->
@@ -148,9 +149,9 @@ which is which and why but knowledge is power.</p>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "drafts/unlocking-python-functions.html";
-        var disqus_title = "Unlocking python functions";
-        var disqus_url = "https://fakedrake.github.io/drafts/unlocking-python-functions.html";
+        var disqus_identifier = "drafts/fun-with-fixpoints.html";
+        var disqus_title = "Fun with fixpoints";
+        var disqus_url = "https://fakedrake.github.io/drafts/fun-with-fixpoints.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>λα.mbdα</title><link>https://fakedrake.github.io/</link><description>Hacking my way out of the existential deadlock</description><atom:link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 20 Jan 2016 13:07:00 +0200</lastBuildDate><item><title>Killing mysql queries</title><link>https://fakedrake.github.io/killing-mysql-queries.html</link><description>&lt;p&gt;MySQL queries are many times painfully slow. So slow that it is not
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>λα.mbdα</title><link>https://fakedrake.github.io/</link><description>Hacking my way out of the existential deadlock</description><atom:link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 01 Apr 2016 12:05:00 +0300</lastBuildDate><item><title>Multi-argument function composition</title><link>https://fakedrake.github.io/multiple-argument-function-composition.html</link><description>&lt;p&gt;Function composition is what functional programming is about. In
+haskell composition in general is the main theme. Function composition
+is in theory easy:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Prelude&amp;gt; let f = (+1)
+Prelude&amp;gt; :t f
+f :: Num a =&amp;gt; a -&amp;gt; a
+Prelude&amp;gt; let g = (+2)
+Prelude&amp;gt; :t g
+g :: Num a =&amp;gt; a -&amp;gt; a
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So &lt;code&gt;f&lt;/code&gt; and &lt;code&gt;g&lt;/code&gt; are composed with the &lt;code&gt;(.)&lt;/code&gt; operator to make a new
+function &lt;code&gt;f ( g (x) )&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Prelude&amp;gt; :t f.g
+f.g :: Num c =&amp;gt; c -&amp;gt; c
+Prelude&amp;gt; (f.g) 1
+4
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Which is simple. Enter a new function &lt;code&gt;h&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Prelude&amp;gt; let h = (-)
+Prelude&amp;gt; :t h
+h :: Num a =&amp;gt; a -&amp;gt; a -&amp;gt; a
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;How would we compose &lt;code&gt;f&lt;/code&gt; and &lt;code&gt;h&lt;/code&gt; so that we get &lt;code&gt;l(x,y) = f(h(x,
+y))&lt;/code&gt;. We will use the operator &lt;code&gt;((.).(.))&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Prelude&amp;gt; let (&amp;lt;.&amp;gt;) = ((.).(.))
+Prelude&amp;gt; :t f &amp;lt;.&amp;gt; h
+f &amp;lt;.&amp;gt; h :: Num c =&amp;gt; c -&amp;gt; c -&amp;gt; c
+Prelude&amp;gt; (f &amp;lt;.&amp;gt; h) 1 2
+0
+Prelude&amp;gt; (f &amp;lt;.&amp;gt; h) 1 3
+-1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So now that we have the final answer let's talk a bit about what just
+happened. Let's look at what happens on a lambda calculus level.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Fri, 01 Apr 2016 12:05:00 +0300</pubDate><guid>tag:fakedrake.github.io,2016-04-01:multiple-argument-function-composition.html</guid><category>haskell</category></item><item><title>Automated insights with org mode</title><link>https://fakedrake.github.io/automated-insights-with-org-mode.html</link><description>&lt;p&gt;The other day I trying to evaluate various roadmaps that a projact
+could continue into and try to compare the cost and the duration of
+each solution. I started off writing a an org mode document describing
+each scenario separately and putting each task in it's separate
+heading. Soon I made the following observation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Some tasks had unknown duration&lt;/li&gt;
+&lt;li&gt;Many tasks were common for more than one solution&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Fri, 29 Jan 2016 15:22:00 +0200</pubDate><guid>tag:fakedrake.github.io,2016-01-29:automated-insights-with-org-mode.html</guid><category>org-mode</category><category>emacs</category></item><item><title>Killing mysql queries</title><link>https://fakedrake.github.io/killing-mysql-queries.html</link><description>&lt;p&gt;MySQL queries are many times painfully slow. So slow that it is not
 worth waiting. Here is how to kill a running query.&lt;/p&gt;
 &lt;p&gt;First of all you need to know what is running to choose what to kill.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt; show processlist
