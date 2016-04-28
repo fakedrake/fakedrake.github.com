@@ -127,7 +127,9 @@ slightly harder is to download just a couple in parallel.</p>
 <p>I will start with an instroduction it <code>MVar</code>. Let's say we want a
 safer <code>putStrLn</code> that does not interleave it's output with other
 <code>putStrLn</code>s but rather waits for it's turn:</p>
-<div class="highlight"><pre><span class="nf">putStrLn&#39;</span> <span class="n">lock</span> <span class="n">x</span> <span class="ow">=</span> <span class="kr">do</span>
+<div class="highlight"><pre><span class="kr">import</span> <span class="nn">Control.Concurrent.MVar</span>
+
+<span class="nf">putStrLn&#39;</span> <span class="n">lock</span> <span class="n">x</span> <span class="ow">=</span> <span class="kr">do</span>
   <span class="n">putMVar</span> <span class="n">lock</span> <span class="nb">()</span>
   <span class="n">putStrLn</span> <span class="n">x</span>
   <span class="n">takeMVar</span> <span class="n">lock</span>
@@ -172,6 +174,17 @@ finish.</p>
   <span class="n">increment</span> <span class="n">procsLock</span>
   <span class="n">return</span> <span class="n">ret</span>
 </pre></div>
+
+
+<p>You can call it loke this:</p>
+<div class="highlight"><pre><span class="kr">do</span>
+  <span class="n">procs</span> <span class="ow">&lt;-</span> <span class="n">newMVar</span> <span class="mi">5</span>
+  <span class="o">...</span>
+  <span class="n">data_</span> <span class="ow">&lt;-</span> <span class="n">guarded</span> <span class="n">ioLock</span> <span class="n">procs</span> <span class="o">$</span> <span class="n">getUrl</span> <span class="n">ioLock</span> <span class="o">$</span> <span class="kt">T</span><span class="o">.</span><span class="n">unpack</span> <span class="n">url&#39;</span>
+</pre></div>
+
+
+<p>And <code>getUrl</code> will run at most 5 times samulatenously.</p>
   </article>
 
   <div class="divider"><!-- lines divider --></div>
