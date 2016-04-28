@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="../theme/img/logo_og.png" />
     <title>
-      λα.mbdα - Hacking my way out of the existential deadlock
+Multi-argument function composition - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -108,12 +108,92 @@
 
         <div class="row">
           <div class="left col-md-9">
-  <div class="item">
-      <div class="item-title">
-        <h2>haskell</h2>
-      </div>
-          <p><a href="../multiple-argument-function-composition.html"><span class="label label-default light">Fri 01 April 2016</span> Multi-argument function composition</a></p>
-  </div>
+  <header>
+      <h1>Multi-argument function composition</h1>
+    <small class="fsize13">
+            <a href="../category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
+      <a href="../drafts/multiple-argument-function-composition.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="drafts/multiple-argument-function-composition.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Fri 01 April 2016</span>
+      <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
+    </small>
+  </header>
+  <article class='content'>
+    <p>Function composition is what functional programming is about. In
+haskell composition in general is the main theme. Function composition
+is in theory easy:</p>
+<div class="highlight"><pre>Prelude&gt; let f = (+1)
+Prelude&gt; :t f
+f :: Num a =&gt; a -&gt; a
+Prelude&gt; let g = (+2)
+Prelude&gt; :t g
+g :: Num a =&gt; a -&gt; a
+</pre></div>
+
+
+<p>So <code>f</code> and <code>g</code> are composed with the <code>(.)</code> operator to make a new
+function <code>f ( g (x) )</code>.</p>
+<div class="highlight"><pre>Prelude&gt; :t f.g
+f.g :: Num c =&gt; c -&gt; c
+Prelude&gt; (f.g) 1
+4
+</pre></div>
+
+
+<p>Which is simple. Enter a new function <code>h</code>.</p>
+<div class="highlight"><pre>Prelude&gt; let h = (-)
+Prelude&gt; :t h
+h :: Num a =&gt; a -&gt; a -&gt; a
+</pre></div>
+
+
+<p>How would we compose <code>f</code> and <code>h</code> so that we get <code>l(x,y) = f(h(x,
+y))</code>. We will use the operator <code>((.).(.))</code>.</p>
+<div class="highlight"><pre>Prelude&gt; let (&lt;.&gt;) = ((.).(.))
+Prelude&gt; :t f &lt;.&gt; h
+f &lt;.&gt; h :: Num c =&gt; c -&gt; c -&gt; c
+Prelude&gt; (f &lt;.&gt; h) 1 2
+0
+Prelude&gt; (f &lt;.&gt; h) 1 3
+-1
+</pre></div>
+
+
+<p>So now that we have the final answer let's talk a bit about what just
+happened. Let's look at what happens on a lambda calculus level.</p>
+  </article>
+
+  <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+<p class="socials">
+  <a href="http://www.facebook.com/sharer/sharer.php?u=../drafts/multiple-argument-function-composition.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=../drafts/multiple-argument-function-composition.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=../drafts/multiple-argument-function-composition.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=../drafts/multiple-argument-function-composition.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=../drafts/multiple-argument-function-composition.html&title=Multi-argument function composition&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+  </p>
+
+  <hr /><!-- divider -->
+
+    <div id="comments" class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'drninjabatman-blog';
+        var disqus_identifier = "drafts/multiple-argument-function-composition.html";
+        var disqus_title = "Multi-argument function composition";
+        var disqus_url = "https://fakedrake.github.io/drafts/multiple-argument-function-composition.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
           </div>
 
           <!-- SIDEBAR -->
@@ -170,6 +250,16 @@
               <!-- hide this part -->
               <div class="hidden">
                 None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
+                None
               </div>
 
               <ul class="tree">
@@ -177,9 +267,39 @@
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
+                      <span><i class="fa fa-minus-square-o"></i>01</span>
+                      <ul>
+                        <li><a href=""><small>Fri 29 January 2016</small>Automated insights with org mode</a></li>
+                        <li><a href=""><small>Wed 20 January 2016</small>Killing mysql queries</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <span><i class="fa fa-minus-square-o"></i>2014</span>
+                  <ul>
+                    <li>
+                      <span><i class="fa fa-minus-square-o"></i>07</span>
+                      <ul>
+                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
+                        <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>06</span>
+                      <ul>
+                        <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <ul>
+                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
+                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
+                        <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
+                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>04</span>
                       <ul>
-                        <li><a href=""><small>Fri 01 April 2016</small>Multi-argument function composition</a></li>
+                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
+                      </ul>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                        <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
+                        <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
                       </ul>
                     </li>
                   </ul>
