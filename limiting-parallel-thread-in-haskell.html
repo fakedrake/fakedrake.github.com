@@ -175,10 +175,12 @@ finish.</p>
 
 
 <p>You can call it like this:</p>
-<div class="highlight"><pre><span class="kr">do</span>
+<div class="highlight"><pre><span class="kr">import</span> <span class="nn">Control.Monad.Parallel</span>
+
+<span class="nf">main</span> <span class="ow">=</span> <span class="kr">do</span>
   <span class="n">procs</span> <span class="ow">&lt;-</span> <span class="n">newMVar</span> <span class="mi">5</span>
   <span class="o">...</span>
-  <span class="n">data_</span> <span class="ow">&lt;-</span> <span class="n">guarded</span> <span class="n">ioLock</span> <span class="n">procs</span> <span class="o">$</span> <span class="n">getUrl</span> <span class="n">ioLock</span> <span class="o">$</span> <span class="kt">T</span><span class="o">.</span><span class="n">unpack</span> <span class="n">url&#39;</span>
+  <span class="n">data_</span> <span class="ow">&lt;-</span> <span class="n">mapM_</span> <span class="p">(</span><span class="n">guarded</span> <span class="n">ioLock</span> <span class="n">procs</span> <span class="o">.</span> <span class="n">getUrl</span> <span class="n">ioLock</span><span class="p">)</span> <span class="n">urls</span>
 </pre></div>
 
 

@@ -56,10 +56,12 @@ finish.&lt;/p&gt;
 
 
 &lt;p&gt;You can call it like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;do&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Control.Monad.Parallel&lt;/span&gt;
+
+&lt;span class="nf"&gt;main&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
   &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;newMVar&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
   &lt;span class="o"&gt;...&lt;/span&gt;
-  &lt;span class="n"&gt;data_&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;guarded&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt; &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="n"&gt;getUrl&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="kt"&gt;T&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unpack&lt;/span&gt; &lt;span class="n"&gt;url&amp;#39;&lt;/span&gt;
+  &lt;span class="n"&gt;data_&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;mapM_&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;guarded&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt; &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;getUrl&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;urls&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
