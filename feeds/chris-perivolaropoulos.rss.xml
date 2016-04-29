@@ -1,5 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>λα.mbdα</title><link>https://fakedrake.github.io/</link><description>Hacking my way out of the existential deadlock</description><atom:link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 29 Jan 2016 15:22:00 +0200</lastBuildDate><item><title>Automated insights with org mode</title><link>https://fakedrake.github.io/automated-insights-with-org-mode.html</link><description>&lt;p&gt;The other day I trying to evaluate various roadmaps that a projact
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>λα.mbdα</title><link>https://fakedrake.github.io/</link><description>Hacking my way out of the existential deadlock</description><atom:link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 29 Apr 2016 02:23:00 +0300</lastBuildDate><item><title>Limiting samulatenous threads in Haskell</title><link>https://fakedrake.github.io/limiting-parallel-thread-in-haskell.html</link><description>&lt;p&gt;Iwas making a mini crawler to download all mp3s from a website in
+Haskell and was confronted with the following problem: it is easy to
+download stuff serially or to download them all in parallel. What is
+slightly harder is to download just a couple in parallel.&lt;/p&gt;
+&lt;p&gt;I will start with an instroduction it &lt;code&gt;MVar&lt;/code&gt;. Let's say we want a
+safer &lt;code&gt;putStrLn&lt;/code&gt; that does not interleave it's output with other
+&lt;code&gt;putStrLn&lt;/code&gt;s but rather waits for it's turn:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Control.Concurrent.MVar&lt;/span&gt;
+
+&lt;span class="nf"&gt;putStrLn&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;lock&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;putMVar&lt;/span&gt; &lt;span class="n"&gt;lock&lt;/span&gt; &lt;span class="nb"&gt;()&lt;/span&gt;
+  &lt;span class="n"&gt;putStrLn&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;
+  &lt;span class="n"&gt;takeMVar&lt;/span&gt; &lt;span class="n"&gt;lock&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then we call it like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;main &lt;span class="o"&gt;=&lt;/span&gt; do
+  ioLock &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; newEmptyMVar
+  &lt;span class="kc"&gt;...&lt;/span&gt;
+  putStrLn&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="err"&gt; ioLock $ &amp;quot;Found talks: &amp;quot; ++ (show $ length urls)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now that was fairly easy. What about the case where we want a few
+samulatenous threads and the rest should wait for any of them to
+finish.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;-- | There is no 0 state for MVar. 0 means taken. So check if it is&lt;/span&gt;
+&lt;span class="c1"&gt;-- taken and if so treat it as 0 by putting 1, otherwise take,&lt;/span&gt;
+&lt;span class="c1"&gt;-- increment, put&lt;/span&gt;
+&lt;span class="nf"&gt;increment&lt;/span&gt; &lt;span class="ow"&gt;::&lt;/span&gt; &lt;span class="kt"&gt;MVar&lt;/span&gt; &lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kt"&gt;IO&lt;/span&gt; &lt;span class="kt"&gt;Int&lt;/span&gt;
+&lt;span class="nf"&gt;increment&lt;/span&gt; &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;taken&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;isEmptyMVar&lt;/span&gt; &lt;span class="n"&gt;procs&lt;/span&gt;
+  &lt;span class="kr"&gt;if&lt;/span&gt; &lt;span class="n"&gt;taken&lt;/span&gt; &lt;span class="kr"&gt;then&lt;/span&gt; &lt;span class="n"&gt;putMVar&lt;/span&gt; &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;else&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;takeMVar&lt;/span&gt; &lt;span class="n"&gt;procs&lt;/span&gt;
+    &lt;span class="n"&gt;putMVar&lt;/span&gt; &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- | If we are going for 0 don&amp;#39;t put back. 0 is special in that it&lt;/span&gt;
+&lt;span class="c1"&gt;-- blocks everyone trying to decrement.&lt;/span&gt;
+&lt;span class="nf"&gt;decrement&lt;/span&gt; &lt;span class="ow"&gt;::&lt;/span&gt; &lt;span class="kt"&gt;MVar&lt;/span&gt; &lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kt"&gt;IO&lt;/span&gt; &lt;span class="kt"&gt;Int&lt;/span&gt;
+&lt;span class="nf"&gt;decrement&lt;/span&gt; &lt;span class="n"&gt;procsLock&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;takeMVar&lt;/span&gt; &lt;span class="n"&gt;procsLock&lt;/span&gt;
+  &lt;span class="kr"&gt;if&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kr"&gt;then&lt;/span&gt; &lt;span class="n"&gt;putMVar&lt;/span&gt; &lt;span class="n"&gt;procsLock&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kr"&gt;else&lt;/span&gt; &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- | Decrement until we are done then increment&lt;/span&gt;
+&lt;span class="nf"&gt;guarded&lt;/span&gt; &lt;span class="ow"&gt;::&lt;/span&gt; &lt;span class="kt"&gt;MVar&lt;/span&gt; &lt;span class="nb"&gt;()&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kt"&gt;MVar&lt;/span&gt; &lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kt"&gt;IO&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kt"&gt;IO&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+&lt;span class="nf"&gt;guarded&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt; &lt;span class="n"&gt;procsLock&lt;/span&gt; &lt;span class="n"&gt;io&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;slotsLeft&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;decrement&lt;/span&gt; &lt;span class="n"&gt;procsLock&lt;/span&gt;
+  &lt;span class="n"&gt;putStrLn&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Slots left: &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt; &lt;span class="n"&gt;show&lt;/span&gt; &lt;span class="n"&gt;slotsLeft&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;io&lt;/span&gt;
+  &lt;span class="n"&gt;increment&lt;/span&gt; &lt;span class="n"&gt;procsLock&lt;/span&gt;
+  &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can call it loke this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;newMVar&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
+  &lt;span class="o"&gt;...&lt;/span&gt;
+  &lt;span class="n"&gt;data_&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;guarded&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt; &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="n"&gt;getUrl&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="kt"&gt;T&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unpack&lt;/span&gt; &lt;span class="n"&gt;url&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And &lt;code&gt;getUrl&lt;/code&gt; will run at most 5 times samulatenously.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Fri, 29 Apr 2016 02:23:00 +0300</pubDate><guid>tag:fakedrake.github.io,2016-04-29:limiting-parallel-thread-in-haskell.html</guid></item><item><title>Automated insights with org mode</title><link>https://fakedrake.github.io/automated-insights-with-org-mode.html</link><description>&lt;p&gt;The other day I trying to evaluate various roadmaps that a projact
 could continue into and try to compare the cost and the duration of
 each solution. I started off writing a an org mode document describing
 each scenario separately and putting each task in it's separate
