@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="./theme/img/logo_og.png" />
     <title>
-Limiting samulatenous threads in Haskell - Chris Perivolaropoulos
+Limiting simultaneous threads in Haskell - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -109,7 +109,7 @@ Limiting samulatenous threads in Haskell - Chris Perivolaropoulos
         <div class="row">
           <div class="left col-md-9">
   <header>
-      <h1>Limiting samulatenous threads in Haskell</h1>
+      <h1>Limiting simultaneous threads in Haskell</h1>
     <small class="fsize13">
             <a href="./category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
       <a href="./limiting-parallel-thread-in-haskell.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="limiting-parallel-thread-in-haskell.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
@@ -122,7 +122,7 @@ Limiting samulatenous threads in Haskell - Chris Perivolaropoulos
 Haskell and was confronted with the following problem: it is easy to
 download stuff serially or to download them all in parallel. What is
 slightly harder is to download just a couple in parallel.</p>
-<p>I will start with an instroduction it <code>MVar</code>. Let's say we want a
+<p>I will start with an introduction it <code>MVar</code>. Let's say we want a
 safer <code>putStrLn</code> that does not interleave it's output with other
 <code>putStrLn</code>s but rather waits for it's turn:</p>
 <div class="highlight"><pre><span class="kr">import</span> <span class="nn">Control.Concurrent.MVar</span>
@@ -143,7 +143,7 @@ safer <code>putStrLn</code> that does not interleave it's output with other
 
 
 <p>Now that was fairly easy. What about the case where we want a few
-samulatenous threads and the rest should wait for any of them to
+simultaneous threads and the rest should wait for any of them to
 finish.</p>
 <div class="highlight"><pre><span class="c1">-- | There is no 0 state for MVar. 0 means taken. So check if it is</span>
 <span class="c1">-- taken and if so treat it as 0 by putting 1, otherwise take,</span>
@@ -174,7 +174,7 @@ finish.</p>
 </pre></div>
 
 
-<p>You can call it loke this:</p>
+<p>You can call it like this:</p>
 <div class="highlight"><pre><span class="kr">do</span>
   <span class="n">procs</span> <span class="ow">&lt;-</span> <span class="n">newMVar</span> <span class="mi">5</span>
   <span class="o">...</span>
@@ -182,7 +182,7 @@ finish.</p>
 </pre></div>
 
 
-<p>And <code>getUrl</code> will run at most 5 times samulatenously.</p>
+<p>And <code>getUrl</code> will run at most 5 times simultaneously.</p>
   </article>
 
   <div class="divider"><!-- lines divider --></div>
@@ -193,7 +193,7 @@ finish.</p>
     <a href="http://twitter.com/home?status=./limiting-parallel-thread-in-haskell.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
     <a href="https://plus.google.com/share?url=./limiting-parallel-thread-in-haskell.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
     <a href="http://pinterest.com/pin/create/link/?url=./limiting-parallel-thread-in-haskell.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./limiting-parallel-thread-in-haskell.html&title=Limiting samulatenous threads in Haskell&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./limiting-parallel-thread-in-haskell.html&title=Limiting simultaneous threads in Haskell&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>
 
   <!-- TAGS -->
@@ -207,7 +207,7 @@ finish.</p>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
         var disqus_identifier = "limiting-parallel-thread-in-haskell.html";
-        var disqus_title = "Limiting samulatenous threads in Haskell";
+        var disqus_title = "Limiting simultaneous threads in Haskell";
         var disqus_url = "https://fakedrake.github.io/limiting-parallel-thread-in-haskell.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -293,7 +293,7 @@ finish.</p>
                     <li>
                       <span><i class="fa fa-minus-square-o"></i>04</span>
                       <ul>
-                        <li><a href=""><small>Fri 29 April 2016</small>Limiting samulatenous threads in Haskell</a></li>
+                        <li><a href=""><small>Fri 29 April 2016</small>Limiting simultaneous threads in Haskell</a></li>
                       </ul>
                       <span><i class="fa fa-minus-square-o"></i>01</span>
                       <ul>
