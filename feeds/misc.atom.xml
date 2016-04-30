@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/misc.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-04-29T02:23:00+03:00</updated><entry><title>Limiting simultaneous threads in Haskell</title><link href="https://fakedrake.github.io/limiting-parallel-thread-in-haskell.html" rel="alternate"></link><updated>2016-04-29T02:23:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-04-29:limiting-parallel-thread-in-haskell.html</id><summary type="html">&lt;p&gt;Iwas making a mini crawler to download all mp3s from a website in
+<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/misc.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-04-30T03:33:00+03:00</updated><entry><title>Streaming Data through HTTP with Haskell</title><link href="https://fakedrake.github.io/streaming-data-through-http-with-haskell.html" rel="alternate"></link><updated>2016-04-30T03:33:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-04-30:streaming-data-through-http-with-haskell.html</id><summary type="html">&lt;p&gt;So I wanted to do some processing on wikipedia articles but I don't
+have enough disk space to download them first and process them later,
+it needs to be on-the-fly. Fortunately they are stored bziped which
+means they are compressed at the block level and I don't need the last
+byte to know what the first one means. So I begun by finding a way to
+stream data. I struggled with Conduit a bit but then I stumbled upon a
+much simpler solution:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Network.HTTP.Client&lt;/span&gt;
+&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Network.HTTP.Client.TLS&lt;/span&gt;   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;tlsManagerSettings&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Control.Monad.Fix&lt;/span&gt;
+&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Data.Conduit&lt;/span&gt;
+&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="k"&gt;qualified&lt;/span&gt; &lt;span class="nn"&gt;Data.ByteString&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;BS&lt;/span&gt;
+
+&lt;span class="nf"&gt;url&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2&amp;quot;&lt;/span&gt;
+
+&lt;span class="nf"&gt;printLen&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;putStrLn&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Got bytes: &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="kt"&gt;BS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nf"&gt;getResp&lt;/span&gt; &lt;span class="ow"&gt;::&lt;/span&gt; &lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt;  &lt;span class="kt"&gt;IO&lt;/span&gt; &lt;span class="nb"&gt;()&lt;/span&gt;
+&lt;span class="nf"&gt;getResp&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;newManager&lt;/span&gt; &lt;span class="n"&gt;tlsManagerSettings&lt;/span&gt;
+  &lt;span class="n"&gt;req&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;parseUrl&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+  &lt;span class="n"&gt;withResponse&lt;/span&gt; &lt;span class="n"&gt;req&lt;/span&gt; &lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;putStrLn&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Got a response, now streaming...&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;fix&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+      &lt;span class="n"&gt;bytes&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;brRead&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="n"&gt;responseBody&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt;
+      &lt;span class="kr"&gt;if&lt;/span&gt; &lt;span class="kt"&gt;BS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt; &lt;span class="kr"&gt;then&lt;/span&gt; &lt;span class="n"&gt;putStrLn&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Done!&amp;quot;&lt;/span&gt; &lt;span class="kr"&gt;else&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+        &lt;span class="n"&gt;putStrLn&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Got &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt; &lt;span class="n"&gt;show&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt; &lt;span class="s"&gt;&amp;quot; but will ignore&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;loop&lt;/span&gt;
+
+&lt;span class="nf"&gt;main&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;getResp&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This just downloads the data, I haven't yet looked into actually
+decompressing. My plan is to convert this fixpoint call into a conduit
+and pipe the data trhough uncompression -- the conduit xml parser that
+is quite neat -- whatever processing I want. Fingers crossed.&lt;/p&gt;</summary></entry><entry><title>Limiting simultaneous threads in Haskell</title><link href="https://fakedrake.github.io/limiting-parallel-thread-in-haskell.html" rel="alternate"></link><updated>2016-04-29T02:23:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-04-29:limiting-parallel-thread-in-haskell.html</id><summary type="html">&lt;p&gt;Iwas making a mini crawler to download all mp3s from a website in
 Haskell and was confronted with the following problem: it is easy to
 download stuff serially or to download them all in parallel. What is
 slightly harder is to download just a couple in parallel.&lt;/p&gt;

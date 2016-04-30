@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="./theme/img/logo_og.png" />
     <title>
-Dumping tab information with vimperator - Chris Perivolaropoulos
+Streaming Data through HTTP with Haskell - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -109,87 +109,68 @@ Dumping tab information with vimperator - Chris Perivolaropoulos
         <div class="row">
           <div class="left col-md-9">
   <header>
-      <h1>Dumping tab information with vimperator</h1>
+      <h1>Streaming Data through HTTP with Haskell</h1>
     <small class="fsize13">
-            <a href="./category/firefox.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> firefox</a>
-      <a href="./dumping-tab-information-with-vimperator.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dumping-tab-information-with-vimperator.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Sun 20 April 2014</span>
+            <a href="./category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="4 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
+      <a href="./streaming-data-through-http-with-haskell.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="streaming-data-through-http-with-haskell.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Sat 30 April 2016</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
   <article class='content'>
-    <p>To me it is quite usual that I am looking at a list of links to things
-(songs, articls, books etc.) and I want to first select the ones I am
-interested in and then look into them one by one. Most of the time
-this does not go as smoothly as I would want it to. I wildly
-underestimate the length of the list and not only do I get many many
-more interesting results than I expected, but I also spend so much
-time going through the entire list that I need to check them later. I
-could bookmark everything and look at it later but the perfect
-solution would be to dump everything in a text file and
-<a href="http://gist.github.com">gist</a> it or then categorize it according to
-artist with Python or something else equally and needlessly nerdy.</p>
-<p>So anyway, turns out firefox welcomes this kind of thing if you are a
-core developer and have deep knowledge of it's inter-workings or if
-you have vimperator to abstract the interface/service
-inconvenience. And the matter is actually very simple.</p>
-<div class="highlight"><pre><span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span> <span class="p">});</span>
-<span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
+    <p>So I wanted to do some processing on wikipedia articles but I don't
+have enough disk space to download them first and process them later,
+it needs to be on-the-fly. Fortunately they are stored bziped which
+means they are compressed at the block level and I don't need the last
+byte to know what the first one means. So I begun by finding a way to
+stream data. I struggled with Conduit a bit but then I stumbled upon a
+much simpler solution:</p>
+<div class="highlight"><pre><span class="kr">import</span> <span class="nn">Network.HTTP.Client</span>
+<span class="kr">import</span> <span class="nn">Network.HTTP.Client.TLS</span>   <span class="p">(</span><span class="nf">tlsManagerSettings</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Control.Monad.Fix</span>
+<span class="kr">import</span> <span class="nn">Data.Conduit</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.ByteString</span> <span class="k">as</span> <span class="n">BS</span>
+
+<span class="nf">url</span> <span class="ow">=</span> <span class="s">&quot;https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2&quot;</span>
+
+<span class="nf">printLen</span> <span class="n">bytes</span> <span class="ow">=</span> <span class="n">putStrLn</span> <span class="o">$</span> <span class="s">&quot;Got bytes: &quot;</span> <span class="o">++</span> <span class="p">(</span><span class="n">show</span> <span class="o">$</span> <span class="kt">BS</span><span class="o">.</span><span class="n">length</span> <span class="n">bytes</span><span class="p">)</span>
+
+<span class="nf">getResp</span> <span class="ow">::</span> <span class="kt">String</span> <span class="ow">-&gt;</span>  <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">getResp</span> <span class="n">url</span> <span class="ow">=</span> <span class="kr">do</span>
+  <span class="n">man</span> <span class="ow">&lt;-</span> <span class="n">newManager</span> <span class="n">tlsManagerSettings</span>
+  <span class="n">req</span> <span class="ow">&lt;-</span> <span class="n">parseUrl</span> <span class="n">url</span>
+  <span class="n">withResponse</span> <span class="n">req</span> <span class="n">man</span> <span class="o">$</span> <span class="nf">\</span><span class="n">res</span> <span class="ow">-&gt;</span> <span class="kr">do</span>
+    <span class="n">putStrLn</span> <span class="s">&quot;Got a response, now streaming...&quot;</span>
+    <span class="n">fix</span> <span class="o">$</span> <span class="nf">\</span><span class="n">loop</span> <span class="ow">-&gt;</span> <span class="kr">do</span>
+      <span class="n">bytes</span> <span class="ow">&lt;-</span> <span class="n">brRead</span> <span class="o">$</span> <span class="n">responseBody</span> <span class="n">res</span>
+      <span class="kr">if</span> <span class="kt">BS</span><span class="o">.</span><span class="n">null</span> <span class="n">bytes</span> <span class="kr">then</span> <span class="n">putStrLn</span> <span class="s">&quot;Done!&quot;</span> <span class="kr">else</span> <span class="kr">do</span>
+        <span class="n">putStrLn</span> <span class="o">$</span> <span class="s">&quot;Got &quot;</span> <span class="o">++</span> <span class="n">show</span> <span class="p">(</span><span class="kt">BS</span><span class="o">.</span><span class="n">length</span> <span class="n">bytes</span><span class="p">)</span> <span class="o">++</span> <span class="s">&quot; but will ignore&quot;</span>
+        <span class="n">loop</span>
+
+<span class="nf">main</span> <span class="ow">=</span> <span class="kr">do</span>
+  <span class="n">getResp</span> <span class="n">url</span>
 </pre></div>
 
 
-<p>If you haven't got any better way of running more than one line of
-code on firefox you can use vimperator's <code>:js</code> which should go like</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span> <span class="p">});</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
-</pre></div>
-
-
-<p>So in brief what does this code do, it uses vimperator's interface to
-tabs to get a list of all tabs (basically tuples) and then you
-concatenate those tuples together and dump them into a string (line
-2). Then vimperator provides a simple way of file io with <code>io.File</code> to
-throw everything into a file. And there you have it</p>
-<p>If for example I were looking up bands going through a list and run
-the above I would come up with something like</p>
-<div class="highlight"><pre><span class="k">[...]</span>
-
-<span class="na">23 ~~~ kyuss at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">kyuss</span>
-<span class="na">24 ~~~ 311 at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">311</span>
-<span class="na">25 ~~~ high on fire at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">high+on+fire</span>
-<span class="na">26 ~~~ sleep at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">sleep</span>
-<span class="na">27 ~~~ cottonmouth kings at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">cottonmouth+kings</span>
-
-<span class="k">[...]</span>
-</pre></div>
-
-
-<p><em>EDIT</em>: If you want to reopen some of those you can easily do it with</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">read</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">)</span>
-<span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">l</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">l</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]}).</span><span class="nx">slice</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">23</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span><span class="nx">liberator</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span><span class="nx">where</span><span class="o">:</span> <span class="nx">liberator</span><span class="p">.</span><span class="nx">NEW_TAB</span><span class="p">})})</span>
-</pre></div>
-
-
-<p>Which should open again tabs 7 to 22.</p>
+<p>This just downloads the data, I haven't yet looked into actually
+decompressing. My plan is to convert this fixpoint call into a conduit
+and pipe the data trhough uncompression -- the conduit xml parser that
+is quite neat -- whatever processing I want. Fingers crossed.</p>
   </article>
 
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
 <p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=./dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=./dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=./dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=./dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./dumping-tab-information-with-vimperator.html&title=Dumping tab information with vimperator&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=./streaming-data-through-http-with-haskell.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=./streaming-data-through-http-with-haskell.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=./streaming-data-through-http-with-haskell.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=./streaming-data-through-http-with-haskell.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./streaming-data-through-http-with-haskell.html&title=Streaming Data through HTTP with Haskell&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-        <a href="/tag/firefox.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> firefox</a>
-        <a href="/tag/javascript.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> javascript</a>
-        <a href="/tag/tabs.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> tabs</a>
-        <a href="/tag/vimperator.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> vimperator</a>
   </p>
 
   <hr /><!-- divider -->
@@ -198,9 +179,9 @@ the above I would come up with something like</p>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "dumping-tab-information-with-vimperator.html";
-        var disqus_title = "Dumping tab information with vimperator";
-        var disqus_url = "https://fakedrake.github.io/dumping-tab-information-with-vimperator.html";
+        var disqus_identifier = "streaming-data-through-http-with-haskell.html";
+        var disqus_title = "Streaming Data through HTTP with Haskell";
+        var disqus_url = "https://fakedrake.github.io/streaming-data-through-http-with-haskell.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
