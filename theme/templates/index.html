@@ -84,58 +84,6 @@
     <!-- /Main Nav -->
 
 
-    <!-- BLOG -->
-    <section id="quick-blog" class="alternate">
-        <div class="container">
-            <header class="text-center">
-                <h1>BLOG</h1>
-                <p>RECENT ENTRIES</p>
-            </header>
-
-            <div class="divider"><!-- lines divider --></div>
-
-            <article>
-                <div class="row animate_fade_in">
-
-                    {% for article in articles_page.object_list[:3] %}
-                    <div class="col-md-4 quick-hover">
-                        <div class="quick-item">
-                            {% if article.featured %}
-                            <figure class="media-preview">
-                                {% if article.type|lower=='image' %}
-			        <img src="{{article.featured}}" class="img-responsive" data-src="holder.js/360x200/#676767:#555555/auto/" alt="img" />
-                                {%elif article.type|lower=='video'%}
-			        <iframe class="fitvids" src="{{article.featured}}" width="800" height="450"></iframe>
-                                {%elif article.type|lower=='audio'%}
-			        <iframe class="fullwidth" height="166" src="{{article.featured}}"></iframe>
-                                {% endif %}
-                            </figure>
-                            {% endif %}
-                            {% if article.link %}
-                            <h4><a href="{{ article.link }}">{{article.title}} <i class="fa fa-external-link" target="_blank"></i></a></h4>
-                            {%else%}
-                            <h4><a href="{{ SITEURL }}/{{ article.url }}">{{article.title}}</a></h4>
-                            {%endif%}
-                            <p>{{article.summary}}</p>
-                            <a href="{{ SITEURL }}/{{ article.url }}" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-
-                </div>
-            </article>
-
-            <div class="divider"><!-- lines divider --></div>
-
-            <!-- <article class="text-center" data-animation="bounceIn"> -->
-            <!--   <a href="blog.html" class="plusNav" title="more from blog">+</a> -->
-            <!-- </article> -->
-
-        </div>
-    </section>
-    <!-- /BLOG -->
-
-
     <!-- ABOUT -->
     <section id="about">
       <div class="container">
@@ -189,8 +137,57 @@
     </section>
     <!-- /ABOUT -->
 
+
+    <!-- BLOG -->
+    <section id="quick-blog" class="alternate arrow-down">
+        <div class="container">
+            <header class="text-center">
+                <h1>BLOG</h1>
+                <p>RECENT ENTRIES</p>
+            </header>
+
+            <div class="divider"><!-- lines divider --></div>
+
+            <article>
+                <div class="row animate_fade_in">
+
+                    {% for article in articles_page.object_list[:3] %}
+                    <div class="col-md-4 quick-hover">
+                        <div class="quick-item">
+                            {% if article.featured %}
+                            <figure class="media-preview">
+                                {% if article.type|lower=='image' %}
+			        <img src="{{article.featured}}" class="img-responsive" data-src="holder.js/360x200/#676767:#555555/auto/" alt="img" />
+                                {%elif article.type|lower=='video'%}
+			        <iframe class="fitvids" src="{{article.featured}}" width="800" height="450"></iframe>
+                                {%elif article.type|lower=='audio'%}
+			        <iframe class="fullwidth" height="166" src="{{article.featured}}"></iframe>
+                                {% endif %}
+                            </figure>
+                            {% endif %}
+                            {% if article.link %}
+                            <h4><a href="{{ article.link }}">{{article.title}} <i class="fa fa-external-link" target="_blank"></i></a></h4>
+                            {%else%}
+                            <h4><a href="{{ SITEURL }}/{{ article.url }}">{{article.title}}</a></h4>
+                            {%endif%}
+                            <p>{{article.summary}}</p>
+                            <a href="{{ SITEURL }}/{{ article.url }}" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </article>
+            <!-- <article class="text-center" data-animation="bounceIn"> -->
+            <!--   <a href="blog.html" class="plusNav" title="more from blog">+</a> -->
+            <!-- </article> -->
+
+        </div>
+    </section>
+    <!-- /BLOG -->
+
     <!-- WORK -->
-    <section id="work" class="alternate arrow-down">
+    <section id="work" class="alternate">
       <div class="container">
         <header class="text-center">
           <h1>MY WORK</h1>
