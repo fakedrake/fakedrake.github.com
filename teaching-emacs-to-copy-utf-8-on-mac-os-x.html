@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="./theme/img/logo_og.png" />
     <title>
-When printks are too many - Chris Perivolaropoulos
+Teaching emacs to copy utf-8 on Mac OS X - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -109,56 +109,62 @@ When printks are too many - Chris Perivolaropoulos
         <div class="row">
           <div class="left col-md-9">
   <header>
-      <h1>When printks are too many</h1>
+      <h1>Teaching emacs to copy utf-8 on Mac OS X</h1>
     <small class="fsize13">
-            <a href="./category/kernel.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles in this category"><i class="fa fa-dot-circle-o"></i> kernel</a>
-      <a href="./when-printks-are-too-many.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="when-printks-are-too-many.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Fri 28 March 2014</span>
+            <a href="./category/eacs.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> eacs</a>
+      <a href="./teaching-emacs-to-copy-utf-8-on-mac-os-x.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="teaching-emacs-to-copy-utf-8-on-mac-os-x.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Thu 12 May 2016</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
   <article class='content'>
-    <p>Being too lazy to use proper debugging methods as I am (although what
-proper debugging methods are is sometimes
-<a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN">debateable</a>),
-I always (over)use printks to debug the kernel. Now the problem with
-printks is that when you find your bug they are all over the kernel
-code and it can be a real pain to remove them one by one.</p>
-<p>This is not a trivial problem when you spend more than a couple of
-hours on a particular problem. The good news is that due to the nature
-of printk-debugging you usually know which one of your nasty hacks
-fixed the problem you were looking for. Thus you can <code>git diff</code> those
-to just keep the useful changes (I use emacs' ediff, meld or anything
-interactive should be good enough), then you commit just those.</p>
-<p>You should learn from my mistakes and not blindly <code>git checkout</code> at
-the project root. For me there are usually some nasty device tree
-changes that I make to fit Qemu and also my .config is setup for
-debugging. I definitely dont want reverting any of that. Actually all
-I want to revert is the .c files I threw printks in.</p>
-<div class="highlight"><pre>git status | sed -n &#39;s/.*modified: *\(.*\.c\)/\1/p&#39; | xargs git checkout
+    <p>Mac OS X comes with a command line tool for maniplating the clipboard
+called <code>pbcopy</code>. It's usage is simple: you throw stuff in it's stdin
+and that stuff is copied to the clipboard. This way we can teach emacs
+to copy stuff to the clipboard with this function</p>
+<div class="highlight"><pre><span class="p">(</span><span class="nb">defun</span> <span class="nv">paste-to-osx</span> <span class="p">(</span><span class="nv">text</span> <span class="k">&amp;optional</span> <span class="nb">push</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">process-connection-type</span> <span class="no">nil</span><span class="p">)</span>
+        <span class="p">(</span><span class="nv">default-directory</span> <span class="s">&quot;~&quot;</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">proc</span> <span class="p">(</span><span class="nv">start-process</span> <span class="s">&quot;pbcopy&quot;</span> <span class="s">&quot;*Messages*&quot;</span> <span class="s">&quot;pbcopy&quot;</span><span class="p">)))</span>
+      <span class="p">(</span><span class="nv">process-send-string</span> <span class="nv">proc</span> <span class="nv">text</span><span class="p">)</span>
+      <span class="p">(</span><span class="nv">process-send-eof</span> <span class="nv">proc</span><span class="p">))))</span>
+
+
+<span class="p">(</span><span class="k">setq</span> <span class="nv">interprogram-cut-function</span> <span class="ss">&#39;paste-to-osx</span><span class="p">)</span>
 </pre></div>
 
 
-<p>Works 99% of the time. To avoid the tragedy of the other 1% make sure
-you take a look at <code>git status</code> <em>beforehand</em>.</p>
+<p>And this will work pretty well for englshIf you. It will however fail
+in other languages. For example copying the string <code>λογος, αιμα,
+νοημα</code> from an emacs buffer will paste as random unicode characeters.</p>
+<p>Setting the <code>LANG</code> env var fixes the problem.</p>
+<div class="highlight"><pre>(defun paste-to-osx (text &amp;optional push)
+  (let ((process-connection-type nil)
+        (lang (getenv &quot;LANG&quot;))
+        (default-directory &quot;~&quot;))
+    (setenv &quot;LANG&quot; &quot;en_US.UTF-8&quot;)
+    (let ((proc (start-process &quot;pbcopy&quot; &quot;*Messages*&quot; &quot;pbcopy&quot;)))
+      (process-send-string proc text)
+      (process-send-eof proc))
+    (setenv &quot;LANG&quot; lang)))
+</pre></div>
   </article>
 
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
 <p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=./when-printks-are-too-many.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=./when-printks-are-too-many.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=./when-printks-are-too-many.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=./when-printks-are-too-many.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./when-printks-are-too-many.html&title=When printks are too many&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=./teaching-emacs-to-copy-utf-8-on-mac-os-x.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=./teaching-emacs-to-copy-utf-8-on-mac-os-x.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=./teaching-emacs-to-copy-utf-8-on-mac-os-x.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=./teaching-emacs-to-copy-utf-8-on-mac-os-x.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./teaching-emacs-to-copy-utf-8-on-mac-os-x.html&title=Teaching emacs to copy utf-8 on Mac OS X&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-        <a href="/tag/kernel.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> kernel</a>
-        <a href="/tag/git.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> git</a>
-        <a href="/tag/debugging.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> debugging</a>
+        <a href="/tag/emacs.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> emacs</a>
+        <a href="/tag/macosx.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> macosx</a>
   </p>
 
   <hr /><!-- divider -->
@@ -167,9 +173,9 @@ you take a look at <code>git status</code> <em>beforehand</em>.</p>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "when-printks-are-too-many.html";
-        var disqus_title = "When printks are too many";
-        var disqus_url = "https://fakedrake.github.io/when-printks-are-too-many.html";
+        var disqus_identifier = "teaching-emacs-to-copy-utf-8-on-mac-os-x.html";
+        var disqus_title = "Teaching emacs to copy utf-8 on Mac OS X";
+        var disqus_url = "https://fakedrake.github.io/teaching-emacs-to-copy-utf-8-on-mac-os-x.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

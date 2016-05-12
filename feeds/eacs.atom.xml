@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/eacs.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-05-12T16:48:00+03:00</updated><entry><title>Teaching emacs to copy utf-8 on Mac OS X</title><link href="https://fakedrake.github.io/teaching-emacs-to-copy-utf-8-on-mac-os-x.html" rel="alternate"></link><updated>2016-05-12T16:48:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-05-12:teaching-emacs-to-copy-utf-8-on-mac-os-x.html</id><summary type="html">&lt;p&gt;Mac OS X comes with a command line tool for maniplating the clipboard
+called &lt;code&gt;pbcopy&lt;/code&gt;. It's usage is simple: you throw stuff in it's stdin
+and that stuff is copied to the clipboard. This way we can teach emacs
+to copy stuff to the clipboard with this function&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;paste-to-osx&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt; &lt;span class="k"&gt;&amp;amp;optional&lt;/span&gt; &lt;span class="nb"&gt;push&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;process-connection-type&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;default-directory&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;proc&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;start-process&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;pbcopy&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*Messages*&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;pbcopy&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;process-send-string&lt;/span&gt; &lt;span class="nv"&gt;proc&lt;/span&gt; &lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;process-send-eof&lt;/span&gt; &lt;span class="nv"&gt;proc&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
+
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;setq&lt;/span&gt; &lt;span class="nv"&gt;interprogram-cut-function&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;paste-to-osx&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And this will work pretty well for englshIf you. It will however fail
+in other languages. For example copying the string &lt;code&gt;λογος, αιμα,
+νοημα&lt;/code&gt; from an emacs buffer will paste as random unicode characeters.&lt;/p&gt;
+&lt;p&gt;Setting the &lt;code&gt;LANG&lt;/code&gt; env var fixes the problem.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;(defun paste-to-osx (text &amp;amp;optional push)
+  (let ((process-connection-type nil)
+        (lang (getenv &amp;quot;LANG&amp;quot;))
+        (default-directory &amp;quot;~&amp;quot;))
+    (setenv &amp;quot;LANG&amp;quot; &amp;quot;en_US.UTF-8&amp;quot;)
+    (let ((proc (start-process &amp;quot;pbcopy&amp;quot; &amp;quot;*Messages*&amp;quot; &amp;quot;pbcopy&amp;quot;)))
+      (process-send-string proc text)
+      (process-send-eof proc))
+    (setenv &amp;quot;LANG&amp;quot; lang)))
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="emacs"></category><category term="macosx"></category></entry></feed>

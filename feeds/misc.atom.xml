@@ -102,7 +102,21 @@ finish.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;And &lt;code&gt;getUrl&lt;/code&gt; will run at most 5 times simultaneously.&lt;/p&gt;</summary></entry><entry><title>Automated insights with org mode</title><link href="https://fakedrake.github.io/automated-insights-with-org-mode.html" rel="alternate"></link><updated>2016-01-29T15:22:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-01-29:automated-insights-with-org-mode.html</id><summary type="html">&lt;p&gt;The other day I trying to evaluate various roadmaps that a projact
+&lt;p&gt;And &lt;code&gt;getUrl&lt;/code&gt; will run at most 5 times simultaneously.&lt;/p&gt;</summary></entry><entry><title>Automated insights with org mode</title><link href="https://fakedrake.github.io/automated-insights-with-org-mode.html" rel="alternate"></link><updated>2016-01-29T15:22:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-01-29:automated-insights-with-org-mode.html</id><summary type="html">&lt;p&gt;title:
+date: 2016-01-29 15:22
+tags: org-mode,emacs
+category:
+slug: automated-insights-with-org-mode
+author: Chris PerivolaropoulosYY&lt;/p&gt;
+&lt;p&gt;title: Automated insights with org mode
+date: 2016-05-12 16:10
+title: Automated insights with org mode
+date: 2016-01-29 15:22
+tags: org-mode,emacs
+category:
+slug: automated-insights-with-org-mode
+author: Chris Perivolaropoulos&lt;/p&gt;
+&lt;p&gt;The other day I trying to evaluate various roadmaps that a projact
 could continue into and try to compare the cost and the duration of
 each solution. I started off writing a an org mode document describing
 each scenario separately and putting each task in it's separate
