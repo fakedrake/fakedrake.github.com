@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="./theme/img/logo_og.png" />
     <title>
-Dumping tab information with vimperator - Chris Perivolaropoulos
+Installing haskell on linux - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -109,87 +109,45 @@ Dumping tab information with vimperator - Chris Perivolaropoulos
         <div class="row">
           <div class="left col-md-9">
   <header>
-      <h1>Dumping tab information with vimperator</h1>
+      <h1>Installing haskell on linux</h1>
     <small class="fsize13">
-            <a href="./category/firefox.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> firefox</a>
-      <a href="./dumping-tab-information-with-vimperator.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dumping-tab-information-with-vimperator.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Sun 20 April 2014</span>
+            <a href="./category/haskell.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> haskell</a>
+      <a href="./installing-haskell-on-linux.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="installing-haskell-on-linux.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Tue 14 June 2016</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
   <article class='content'>
-    <p>To me it is quite usual that I am looking at a list of links to things
-(songs, articls, books etc.) and I want to first select the ones I am
-interested in and then look into them one by one. Most of the time
-this does not go as smoothly as I would want it to. I wildly
-underestimate the length of the list and not only do I get many many
-more interesting results than I expected, but I also spend so much
-time going through the entire list that I need to check them later. I
-could bookmark everything and look at it later but the perfect
-solution would be to dump everything in a text file and
-<a href="http://gist.github.com">gist</a> it or then categorize it according to
-artist with Python or something else equally and needlessly nerdy.</p>
-<p>So anyway, turns out firefox welcomes this kind of thing if you are a
-core developer and have deep knowledge of it's inter-workings or if
-you have vimperator to abstract the interface/service
-inconvenience. And the matter is actually very simple.</p>
-<div class="highlight"><pre><span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span> <span class="p">});</span>
-<span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
+    <p>If for some reason you don't want to use your distribution's package
+manager (eg because it provides an outdated version of GHC), run the
+following:</p>
+<div class="highlight"><pre>wget https://haskell.org/platform/download/8.0.1/haskell-platform-8.0.1-unknown-posix--minimal-i386.tar.gz -O /tmp/haskell.tar.gz
+cd /tmp
+tar xvzf /tmp/haskell.tar.gz
+sudo ./install-haskell-platform.sh
 </pre></div>
 
 
-<p>If you haven't got any better way of running more than one line of
-code on firefox you can use vimperator's <code>:js</code> which should go like</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span> <span class="p">});</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
-</pre></div>
-
-
-<p>So in brief what does this code do, it uses vimperator's interface to
-tabs to get a list of all tabs (basically tuples) and then you
-concatenate those tuples together and dump them into a string (line
-2). Then vimperator provides a simple way of file io with <code>io.File</code> to
-throw everything into a file. And there you have it</p>
-<p>If for example I were looking up bands going through a list and run
-the above I would come up with something like</p>
-<div class="highlight"><pre><span class="k">[...]</span>
-
-<span class="na">23 ~~~ kyuss at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">kyuss</span>
-<span class="na">24 ~~~ 311 at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">311</span>
-<span class="na">25 ~~~ high on fire at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">high+on+fire</span>
-<span class="na">26 ~~~ sleep at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">sleep</span>
-<span class="na">27 ~~~ cottonmouth kings at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">cottonmouth+kings</span>
-
-<span class="k">[...]</span>
-</pre></div>
-
-
-<p><em>EDIT</em>: If you want to reopen some of those you can easily do it with</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">read</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">)</span>
-<span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">l</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">l</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]}).</span><span class="nx">slice</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">23</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span><span class="nx">liberator</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span><span class="nx">where</span><span class="o">:</span> <span class="nx">liberator</span><span class="p">.</span><span class="nx">NEW_TAB</span><span class="p">})})</span>
-</pre></div>
-
-
-<p>Which should open again tabs 7 to 22.</p>
+<p>And restart your shell. The above is just a copy-paste-able format of
+the instructions in
+<a href="https://www.haskell.org/platform/linux.html#linux-generic">haskell.org</a></p>
   </article>
 
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
 <p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=./dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=./dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=./dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=./dumping-tab-information-with-vimperator.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./dumping-tab-information-with-vimperator.html&title=Dumping tab information with vimperator&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=./installing-haskell-on-linux.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=./installing-haskell-on-linux.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=./installing-haskell-on-linux.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=./installing-haskell-on-linux.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./installing-haskell-on-linux.html&title=Installing haskell on linux&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-        <a href="/tag/firefox.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> firefox</a>
-        <a href="/tag/javascript.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> javascript</a>
-        <a href="/tag/vimperator.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> vimperator</a>
-        <a href="/tag/tabs.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> tabs</a>
+        <a href="/tag/linux.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> linux</a>
+        <a href="/tag/haskell.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> haskell</a>
   </p>
 
   <hr /><!-- divider -->
@@ -198,9 +156,9 @@ the above I would come up with something like</p>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "dumping-tab-information-with-vimperator.html";
-        var disqus_title = "Dumping tab information with vimperator";
-        var disqus_url = "https://fakedrake.github.io/dumping-tab-information-with-vimperator.html";
+        var disqus_identifier = "installing-haskell-on-linux.html";
+        var disqus_title = "Installing haskell on linux";
+        var disqus_url = "https://fakedrake.github.io/installing-haskell-on-linux.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
