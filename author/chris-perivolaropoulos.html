@@ -121,17 +121,15 @@
       <!-- blog short preview -->
       <p>
 	  <p>Just run the following that will setup everything for you:</p>
-<div class="highlight"><pre>wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
+<div class="highlight"><pre><span class="x">wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash</span>
+<span class="x">export NVM_DIR=&quot;</span><span class="p">$</span><span class="nv">HOME</span><span class="x">/.nvm&quot;</span>
+<span class="x">[ -s &quot;</span><span class="p">$</span><span class="nv">NVM_DIR</span><span class="x">/nvm.sh&quot; ] &amp;&amp; . &quot;</span><span class="p">$</span><span class="nv">NVM_DIR</span><span class="x">/nvm.sh&quot; </span><span class="err">#</span><span class="x"> This loads nvm</span>
+<span class="x">nvm install node</span>
+<span class="x">nvm use node</span>
 </pre></div>
 
 
-<p>This will run everything for you. Check the version:</p>
-<div class="highlight"><pre><span class="nv">$ </span>node --version
-v6.3.1
-</pre></div>
-
-
-<p>Your version may differ.</p>
+<p>This will run everything for you ...</p>
       </p>
 
       <!-- read more button -->
