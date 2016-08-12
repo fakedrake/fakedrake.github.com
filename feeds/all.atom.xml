@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/all.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-06-14T11:30:00+03:00</updated><entry><title>Installing haskell on linux</title><link href="https://fakedrake.github.io/installing-haskell-on-linux.html" rel="alternate"></link><updated>2016-06-14T11:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-06-14:installing-haskell-on-linux.html</id><summary type="html">&lt;p&gt;If for some reason you don't want to use your distribution's package
+<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/all.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-08-12T11:51:00+03:00</updated><entry><title>Intstalling NVM and node-js on unix</title><link href="https://fakedrake.github.io/intstalling-nvm-and-nodejs.html" rel="alternate"></link><updated>2016-08-12T11:51:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-08-12:intstalling-nvm-and-nodejs.html</id><summary type="html">&lt;p&gt;Just run the following that will setup everything for you:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will run everything for you. Check the version:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;node --version
+v6.3.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Your version may differ.&lt;/p&gt;</summary><category term="nodejs"></category></entry><entry><title>Installing haskell on linux</title><link href="https://fakedrake.github.io/installing-haskell-on-linux.html" rel="alternate"></link><updated>2016-06-14T11:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-06-14:installing-haskell-on-linux.html</id><summary type="html">&lt;p&gt;If for some reason you don't want to use your distribution's package
 manager (eg because it provides an outdated version of GHC), you can
 install it manually. First you need to find out if you are on x64 or
 32bit architecture. You can do that by running:&lt;/p&gt;

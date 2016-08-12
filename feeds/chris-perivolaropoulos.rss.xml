@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>λα.mbdα</title><link>https://fakedrake.github.io/</link><description>Hacking my way out of the existential deadlock</description><atom:link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 14 Jun 2016 11:30:00 +0300</lastBuildDate><item><title>Installing haskell on linux</title><link>https://fakedrake.github.io/installing-haskell-on-linux.html</link><description>&lt;p&gt;If for some reason you don't want to use your distribution's package
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>λα.mbdα</title><link>https://fakedrake.github.io/</link><description>Hacking my way out of the existential deadlock</description><atom:link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 12 Aug 2016 11:51:00 +0300</lastBuildDate><item><title>Intstalling NVM and node-js on unix</title><link>https://fakedrake.github.io/intstalling-nvm-and-nodejs.html</link><description>&lt;p&gt;Just run the following that will setup everything for you:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will run everything for you. Check the version:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;node --version
+v6.3.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Your version may differ.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Fri, 12 Aug 2016 11:51:00 +0300</pubDate><guid>tag:fakedrake.github.io,2016-08-12:intstalling-nvm-and-nodejs.html</guid><category>nodejs</category></item><item><title>Installing haskell on linux</title><link>https://fakedrake.github.io/installing-haskell-on-linux.html</link><description>&lt;p&gt;If for some reason you don't want to use your distribution's package
 manager (eg because it provides an outdated version of GHC), you can
 install it manually. First you need to find out if you are on x64 or
 32bit architecture. You can do that by running:&lt;/p&gt;
