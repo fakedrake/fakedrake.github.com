@@ -5,12 +5,12 @@ in all major package managers. Also make sure you have python
 installed. On your phone install a QR code reader.&lt;/p&gt;
 &lt;p&gt;Open a terminal and navigate to the folder where your file is. Then
 run this on &lt;em&gt;OSX&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig en0 | awk &amp;#39;BEGIN{FS=&amp;quot; &amp;quot;} /^\t*inet /{print &amp;quot;http://&amp;quot;$2&amp;quot;:8000&amp;quot;}&amp;#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;amp;&amp;amp; open /tmp/url_local_qr.png
+&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig en0 | awk &amp;#39;BEGIN{FS=&amp;quot; &amp;quot;} /^\t*inet /{print &amp;quot;http://&amp;quot;$2&amp;quot;:8000&amp;quot;}&amp;#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;amp;&amp;amp; open /tmp/url_local_qr.png &amp;amp;&amp;amp; python -m SimpleHTTPServer
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;or this on &lt;em&gt;linux&lt;/em&gt; (didn't try it so comment if there was a problem):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig wlan0 | awk &amp;#39;BEGIN{FS=&amp;quot; &amp;quot;} /^\t*inet /{print &amp;quot;http://&amp;quot;$2&amp;quot;:8000&amp;quot;}&amp;#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;amp;&amp;amp; dispaly /tmp/url_local_qr.png
+&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig wlan0 | awk &amp;#39;BEGIN{FS=&amp;quot; &amp;quot;} /^\t*inet /{print &amp;quot;http://&amp;quot;$2&amp;quot;:8000&amp;quot;}&amp;#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;amp;&amp;amp; dispaly /tmp/url_local_qr.png &amp;amp;&amp;amp; python -m SimpleHTTPServer
 &lt;/pre&gt;&lt;/div&gt;
 
 

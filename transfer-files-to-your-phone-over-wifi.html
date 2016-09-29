@@ -124,12 +124,12 @@ in all major package managers. Also make sure you have python
 installed. On your phone install a QR code reader.</p>
 <p>Open a terminal and navigate to the folder where your file is. Then
 run this on <em>OSX</em>:</p>
-<div class="highlight"><pre>ifconfig en0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; open /tmp/url_local_qr.png
+<div class="highlight"><pre>ifconfig en0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; open /tmp/url_local_qr.png &amp;&amp; python -m SimpleHTTPServer
 </pre></div>
 
 
 <p>or this on <em>linux</em> (didn't try it so comment if there was a problem):</p>
-<div class="highlight"><pre>ifconfig wlan0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; dispaly /tmp/url_local_qr.png
+<div class="highlight"><pre>ifconfig wlan0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; dispaly /tmp/url_local_qr.png &amp;&amp; python -m SimpleHTTPServer
 </pre></div>
 
 
