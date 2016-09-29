@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="../theme/img/logo_og.png" />
     <title>
-Configuration management with makefiles - Chris Perivolaropoulos
+      λα.mbdα - Hacking my way out of the existential deadlock
     </title>
 
     <meta name="description" content="" />
@@ -108,122 +108,12 @@ Configuration management with makefiles - Chris Perivolaropoulos
 
         <div class="row">
           <div class="left col-md-9">
-  <header>
-      <h1>Configuration management with makefiles</h1>
-    <small class="fsize13">
-            <a href="../category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="6 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
-      <a href="../drafts/configuration-management-with-makefiles.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="drafts/configuration-management-with-makefiles.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Fri 15 May 2015</span>
-      <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
-    </small>
-  </header>
-  <article class='content'>
-    <p><em>This article is hidden. Remove status: hidden or make it status:
-published to be able to publish</em></p>
-<p>All the cool kids now use configuration managers like chef and
-ansible. Those are pretty cool for most dev ops jobs but I have found
-myself to be working against them rather than them helping me automate
-everyday stuff. So I prefer makefiles whenever I can. For other
-dependency management tools having tasks depend on the success or fail
-of a command rather than the existence of a file is trivial but here
-is a way to do it pretty easily with makefiles.</p>
-<p>Consider the following case, we have two repositories RepoA and
-RepoB. RepoB needs to know the most recent version of RepoA that we
-are developing so whenever we make a release we need to make a pull
-request for RepoB that is based on it's branch development. This task
-can be tedious and things can go wrong. Let's automate the whole
-process.</p>
-<p>Make the two repositories:</p>
-<div class="highlight"><pre>mkdir /tmp/RepoA
-mkdir /tmp/RepoB
-
-cd /tmp/RepoA
-echo &quot;version: 0.1&quot; &gt; manifest
-git init
-git add manifest
-git commit -a -m &quot;Initial commit&quot;
-
-cd /tmo/RepoB
-echo &quot;version: 0.1&quot;
-echo &quot;dependencies:&quot;
-echo &quot;\tRepoA: 0.0.1&quot; &gt; manifest
-git init
-git add manifest
-git commit -a -m &quot;Initial commit&quot;
-git checkout -b development
-echo &quot;\totherDep: 1.0&quot; &gt;&gt; manifest
-git commit -a -m &quot;Extra dependencies&quot;
-git checkout master
-</pre></div>
-
-
-<p>So now we have two repos with only manifest files and RepoB has a
-development branch.</p>
-<p>The cool part of Makefiles is that variables are constructed lazily
-and recursively. Let's abuse that to switch to development if we are
-not there and do nothing if we are not. Let's make some boilerplate</p>
-<div class="highlight"><pre>dep-ok:
-    touch dep-ok
-
-new-command-dep=$(shell ($1) &gt; /dev/null &amp;&amp; echo dep-ok || echo
-$2)
-</pre></div>
-
-
-<p>This make function will help us give two kinds of information</p>
-<ul>
-<li>The command that we need to make succeed</li>
-<li>A target that when run will actually do the work</li>
-</ul>
-<p>Here we will use it for our example</p>
-<div class="highlight"><pre>bgit=git -C /tmp/RepoB
-b-on-branch=$(call new-command-dep,$(bgit) branch|grep -F &quot;* $1&quot;,b-on-branch-$1)
-b-on-branch-%:
-    $(bgit) checkout $*
-</pre></div>
-
-
-<p>Now we can run</p>
-<div class="highlight"><pre>make b-on-branch-master
-</pre></div>
-
-
-<p>And it will switch to master if we are not on master, or do nothing
-(run target <code>dep-ok</code>) if we already are..</p>
-  </article>
-
-  <div class="divider"><!-- lines divider --></div>
-
-  <!-- SOCIAL -->
-<p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=../drafts/configuration-management-with-makefiles.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=../drafts/configuration-management-with-makefiles.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=../drafts/configuration-management-with-makefiles.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=../drafts/configuration-management-with-makefiles.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=../drafts/configuration-management-with-makefiles.html&title=Configuration management with makefiles&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
-</p>
-
-  <!-- TAGS -->
-  <p class="fsize16"> Tags:
-  </p>
-
-  <hr /><!-- divider -->
-
-    <div id="comments" class="comments">
-      <div id="disqus_thread"></div>
-      <script type="text/javascript">
-        var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "drafts/configuration-management-with-makefiles.html";
-        var disqus_title = "Configuration management with makefiles";
-        var disqus_url = "https://fakedrake.github.io/drafts/configuration-management-with-makefiles.html";
-        (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
-    </div>
+  <div class="item">
+      <div class="item-title">
+        <h2>category-theory</h2>
+      </div>
+          <p><a href="../category-theory-terminology.html"><span class="label label-default light">Sat 03 September 2016</span> Category theory terminology</a></p>
+  </div>
           </div>
 
           <!-- SIDEBAR -->
@@ -283,23 +173,6 @@ b-on-branch-%:
               <!-- hide this part -->
               <div class="hidden">
                 None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
               </div>
 
               <ul class="tree">
@@ -309,59 +182,7 @@ b-on-branch-%:
                     <li>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
-                        <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>
                         <li><a href=""><small>Sat 03 September 2016</small>Category theory terminology</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>08</span>
-                      <ul>
-                        <li><a href=""><small>Fri 12 August 2016</small>Intstalling NVM and node-js on unix</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
-                      <ul>
-                        <li><a href=""><small>Tue 14 June 2016</small>Installing haskell on linux</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
-                      <ul>
-                        <li><a href=""><small>Thu 12 May 2016</small>Teaching emacs to copy utf-8 on Mac OS X</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
-                      <ul>
-                        <li><a href=""><small>Sat 30 April 2016</small>Streaming Data through HTTP with Haskell</a></li>
-                        <li><a href=""><small>Fri 29 April 2016</small>Limiting simultaneous threads in Haskell</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>01</span>
-                      <ul>
-                        <li><a href=""><small>Fri 29 January 2016</small>Automated insights with org mode</a></li>
-                        <li><a href=""><small>Wed 20 January 2016</small>Killing mysql queries</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <span><i class="fa fa-minus-square-o"></i>2014</span>
-                  <ul>
-                    <li>
-                      <span><i class="fa fa-minus-square-o"></i>07</span>
-                      <ul>
-                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
-                        <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
-                      <ul>
-                        <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
-                      <ul>
-                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
-                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
-                        <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
-                      <ul>
-                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
-                      <ul>
-                        <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
-                        <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
                       </ul>
                     </li>
                   </ul>

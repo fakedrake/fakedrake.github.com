@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="./theme/img/logo_og.png" />
     <title>
-      λα.mbdα - Hacking my way out of the existential deadlock
+Category theory terminology - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -108,14 +108,91 @@
 
         <div class="row">
           <div class="left col-md-9">
-<div class="item-title">
-    <h2>Contact</h2>
-</div>
-<div class="item">
-    <p><span>e-mail:</span> <a href="mailto:cperivol@csail.mit.edu"></span>cperivol@csail.mit.edu</a></p>
-    <p><span>github:</span> <a href="https://github.com/fakedrake"></span>fakedrake</a></p>
-    <p><span>twitter:</span> <a href="https://twitter.com/drninjabatman"></span>@drninjabatman</a></p>
-</div>
+  <header>
+      <h1>Category theory terminology</h1>
+    <small class="fsize13">
+            <a href="./category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="6 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
+      <a href="./category-theory-terminology.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="category-theory-terminology.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Sat 03 September 2016</span>
+      <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
+    </small>
+  </header>
+  <article class='content'>
+    <p>I am not very good with terminology. I have found myself looking up
+the same terminology again and again so here is a list of terms that
+are quite common.</p>
+<h1>Morphisms</h1>
+<h2>Epimorphism</h2>
+<h2>Monomorphism</h2>
+<h2>Homomorphism</h2>
+<h3>Isomorphism</h3>
+<h3>Endomorphism</h3>
+<h3>Automorphism</h3>
+<h2>Hom-Set / Hom(A,B)</h2>
+<p>Set of all homomorphisms <code>A -&gt; B</code></p>
+<h1>Functors</h1>
+<p>Mapping of all objects <em>and</em> all morphisms of a category to another
+cateogry (the functor).</p>
+<h2>Hom(-,A)</h2>
+<p>A functor that has objects <code>foral x . Hom(x,A)</code> and morphisms <code>forall
+x,y . Hom(x,A) -&gt; Hom(y,A)</code></p>
+<h2>Covariant/Contravariant functor</h2>
+<p>A functor that preserves/reverses the direction of a category.</p>
+<h2>Bifunctor</h2>
+<p>A functor whose domain is a product category.</p>
+<h1>Misc</h1>
+<p>Some other stuff</p>
+<h2>Terminal object</h2>
+<p>An object in a category to which we have only inbound arrows.</p>
+<h2>Initial object</h2>
+<p>An object in a categor from which there exist only outbound arrows</p>
+<h2>Small category</h2>
+<p>A category with a set (not proper class) of objects and a set of
+homomorphisms. Locally small if only the morphisms are a set.</p>
+<h2>Class</h2>
+<p>I couldn't find any concrete definition for a class. Basically it's
+all the sets plus all paradoxical sets (proper classes).</p>
+<h2>Burali-Forti Paradox</h2>
+<p>A variant of the Russell Paradox whereby since Von Neuman numbers are
+a representation of ordinals the notion of a set of ordinals is
+paradoxical.</p>
+<h2>Thin Category</h2>
+<p>A category where <code>| Hom(A,B) | &lt;= 1</code>.</p>
+  </article>
+
+  <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+<p class="socials">
+  <a href="http://www.facebook.com/sharer/sharer.php?u=./category-theory-terminology.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=./category-theory-terminology.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=./category-theory-terminology.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=./category-theory-terminology.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./category-theory-terminology.html&title=Category theory terminology&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+        <a href="/tag/category-theory.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> category-theory</a>
+  </p>
+
+  <hr /><!-- divider -->
+
+    <div id="comments" class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'drninjabatman-blog';
+        var disqus_identifier = "category-theory-terminology.html";
+        var disqus_title = "Category theory terminology";
+        var disqus_url = "https://fakedrake.github.io/category-theory-terminology.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
           </div>
 
           <!-- SIDEBAR -->

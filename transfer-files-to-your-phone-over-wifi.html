@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="./theme/img/logo_og.png" />
     <title>
-      λα.mbdα - Hacking my way out of the existential deadlock
+Transfer files to your phone over wifi - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -108,14 +108,68 @@
 
         <div class="row">
           <div class="left col-md-9">
-<div class="item-title">
-    <h2>Contact</h2>
-</div>
-<div class="item">
-    <p><span>e-mail:</span> <a href="mailto:cperivol@csail.mit.edu"></span>cperivol@csail.mit.edu</a></p>
-    <p><span>github:</span> <a href="https://github.com/fakedrake"></span>fakedrake</a></p>
-    <p><span>twitter:</span> <a href="https://twitter.com/drninjabatman"></span>@drninjabatman</a></p>
-</div>
+  <header>
+      <h1>Transfer files to your phone over wifi</h1>
+    <small class="fsize13">
+            <a href="./category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="6 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
+      <a href="./transfer-files-to-your-phone-over-wifi.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="transfer-files-to-your-phone-over-wifi.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Thu 29 September 2016</span>
+      <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
+    </small>
+  </header>
+  <article class='content'>
+    <p>So here is a neat trick to very quickly transfer files to your phone
+over wifi (http). On your computer download <code>qrencode</code>. It should be
+in all major package managers. Also make sure you have python
+installed. On your phone install a QR code reader.</p>
+<p>Open a terminal and navigate to the folder where your file is. Then
+run this on <em>OSX</em>:</p>
+<div class="highlight"><pre>ifconfig en0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; open /tmp/url_local_qr.png
+</pre></div>
+
+
+<p>or this on <em>linux</em> (didn't try it so comment if there was a problem):</p>
+<div class="highlight"><pre>ifconfig wlan0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; dispaly /tmp/url_local_qr.png
+</pre></div>
+
+
+<p>You should be presented with a QR code. Scan it with your phone and
+you should have access to your computer's files!</p>
+  </article>
+
+  <div class="divider"><!-- lines divider --></div>
+
+  <!-- SOCIAL -->
+<p class="socials">
+  <a href="http://www.facebook.com/sharer/sharer.php?u=./transfer-files-to-your-phone-over-wifi.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=./transfer-files-to-your-phone-over-wifi.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=./transfer-files-to-your-phone-over-wifi.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=./transfer-files-to-your-phone-over-wifi.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./transfer-files-to-your-phone-over-wifi.html&title=Transfer files to your phone over wifi&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+</p>
+
+  <!-- TAGS -->
+  <p class="fsize16"> Tags:
+        <a href="/tag/unix.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> unix</a>
+  </p>
+
+  <hr /><!-- divider -->
+
+    <div id="comments" class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'drninjabatman-blog';
+        var disqus_identifier = "transfer-files-to-your-phone-over-wifi.html";
+        var disqus_title = "Transfer files to your phone over wifi";
+        var disqus_url = "https://fakedrake.github.io/transfer-files-to-your-phone-over-wifi.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
           </div>
 
           <!-- SIDEBAR -->

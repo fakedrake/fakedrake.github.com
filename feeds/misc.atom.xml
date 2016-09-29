@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/misc.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-04-30T03:33:00+03:00</updated><entry><title>Streaming Data through HTTP with Haskell</title><link href="https://fakedrake.github.io/streaming-data-through-http-with-haskell.html" rel="alternate"></link><updated>2016-04-30T03:33:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-04-30:streaming-data-through-http-with-haskell.html</id><summary type="html">&lt;p&gt;So I wanted to do some processing on wikipedia articles but I don't
+<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/misc.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-09-29T03:54:00+03:00</updated><entry><title>Transfer files to your phone over wifi</title><link href="https://fakedrake.github.io/transfer-files-to-your-phone-over-wifi.html" rel="alternate"></link><updated>2016-09-29T03:54:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-29:transfer-files-to-your-phone-over-wifi.html</id><summary type="html">&lt;p&gt;So here is a neat trick to very quickly transfer files to your phone
+over wifi (http). On your computer download &lt;code&gt;qrencode&lt;/code&gt;. It should be
+in all major package managers. Also make sure you have python
+installed. On your phone install a QR code reader.&lt;/p&gt;
+&lt;p&gt;Open a terminal and navigate to the folder where your file is. Then
+run this on &lt;em&gt;OSX&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig en0 | awk &amp;#39;BEGIN{FS=&amp;quot; &amp;quot;} /^\t*inet /{print &amp;quot;http://&amp;quot;$2&amp;quot;:8000&amp;quot;}&amp;#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;amp;&amp;amp; open /tmp/url_local_qr.png
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;or this on &lt;em&gt;linux&lt;/em&gt; (didn't try it so comment if there was a problem):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig wlan0 | awk &amp;#39;BEGIN{FS=&amp;quot; &amp;quot;} /^\t*inet /{print &amp;quot;http://&amp;quot;$2&amp;quot;:8000&amp;quot;}&amp;#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;amp;&amp;amp; dispaly /tmp/url_local_qr.png
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You should be presented with a QR code. Scan it with your phone and
+you should have access to your computer's files!&lt;/p&gt;</summary><category term="unix"></category></entry><entry><title>Category theory terminology</title><link href="https://fakedrake.github.io/category-theory-terminology.html" rel="alternate"></link><updated>2016-09-03T13:13:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-03:category-theory-terminology.html</id><summary type="html">&lt;p&gt;I am not very good with terminology. I have found myself looking up
+the same terminology again and again so here is a list of terms that
+are quite common.&lt;/p&gt;
+&lt;h1&gt;Morphisms&lt;/h1&gt;
+&lt;h2&gt;Epimorphism&lt;/h2&gt;
+&lt;h2&gt;Monomorphism&lt;/h2&gt;
+&lt;h2&gt;Homomorphism&lt;/h2&gt;
+&lt;h3&gt;Isomorphism&lt;/h3&gt;
+&lt;h3&gt;Endomorphism&lt;/h3&gt;
+&lt;h3&gt;Automorphism&lt;/h3&gt;
+&lt;h2&gt;Hom-Set / Hom(A,B)&lt;/h2&gt;
+&lt;p&gt;Set of all homomorphisms &lt;code&gt;A -&amp;gt; B&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;Functors&lt;/h1&gt;
+&lt;p&gt;Mapping of all objects &lt;em&gt;and&lt;/em&gt; all morphisms of a category to another
+cateogry (the functor).&lt;/p&gt;
+&lt;h2&gt;Hom(-,A)&lt;/h2&gt;
+&lt;p&gt;A functor that has objects &lt;code&gt;foral x . Hom(x,A)&lt;/code&gt; and morphisms &lt;code&gt;forall
+x,y . Hom(x,A) -&amp;gt; Hom(y,A)&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;Covariant/Contravariant functor&lt;/h2&gt;
+&lt;p&gt;A functor that preserves/reverses the direction of a category.&lt;/p&gt;
+&lt;h2&gt;Bifunctor&lt;/h2&gt;
+&lt;p&gt;A functor whose domain is a product category.&lt;/p&gt;
+&lt;h1&gt;Misc&lt;/h1&gt;
+&lt;p&gt;Some other stuff&lt;/p&gt;
+&lt;h2&gt;Terminal object&lt;/h2&gt;
+&lt;p&gt;An object in a category to which we have only inbound arrows.&lt;/p&gt;
+&lt;h2&gt;Initial object&lt;/h2&gt;
+&lt;p&gt;An object in a categor from which there exist only outbound arrows&lt;/p&gt;
+&lt;h2&gt;Small category&lt;/h2&gt;
+&lt;p&gt;A category with a set (not proper class) of objects and a set of
+homomorphisms. Locally small if only the morphisms are a set.&lt;/p&gt;
+&lt;h2&gt;Class&lt;/h2&gt;
+&lt;p&gt;I couldn't find any concrete definition for a class. Basically it's
+all the sets plus all paradoxical sets (proper classes).&lt;/p&gt;
+&lt;h2&gt;Burali-Forti Paradox&lt;/h2&gt;
+&lt;p&gt;A variant of the Russell Paradox whereby since Von Neuman numbers are
+a representation of ordinals the notion of a set of ordinals is
+paradoxical.&lt;/p&gt;
+&lt;h2&gt;Thin Category&lt;/h2&gt;
+&lt;p&gt;A category where &lt;code&gt;| Hom(A,B) | &amp;lt;= 1&lt;/code&gt;.&lt;/p&gt;</summary><category term="category-theory"></category></entry><entry><title>Streaming Data through HTTP with Haskell</title><link href="https://fakedrake.github.io/streaming-data-through-http-with-haskell.html" rel="alternate"></link><updated>2016-04-30T03:33:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-04-30:streaming-data-through-http-with-haskell.html</id><summary type="html">&lt;p&gt;So I wanted to do some processing on wikipedia articles but I don't
 have enough disk space to download them first and process them later,
 it needs to be on-the-fly. Fortunately they are stored bziped which
 means they are compressed at the block level and I don't need the last
