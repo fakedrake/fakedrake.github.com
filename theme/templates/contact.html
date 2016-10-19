@@ -1,0 +1,15 @@
+{% extends "blog_base.html" %}
+
+{% block title %}
+<div class="item-title">
+    <h2>Contact</h2>
+</div>
+{%endblock%}
+
+{% block content_area %}
+<div class="item">
+    {% for c in CONTACT %}
+    <p><span>{{ c.label }}:</span> <a href="{{ c.link }}"></span>{{c.name}}</a></p>
+    {% endfor %}
+</div>
+{% endblock %}
