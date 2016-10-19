@@ -23,11 +23,7 @@ when it comes to notmuch so after 2 or 3 attempts:&lt;/p&gt;
 the last 3 months. They are about 500 in my case so i can skim through
 them or add extra search criteria.&lt;/p&gt;
 &lt;p&gt;Just to give some well deserved credit all the above commands were
-completed almost instantaneously.&lt;/p&gt;</summary><category term="notmuch"></category><category term="bash"></category><category term="python"></category></entry><entry><title>Generic programming with ghc generics</title><link href="https://fakedrake.github.io/generic-programming-with-ghc-generics.html" rel="alternate"></link><published>2016-10-18T14:08:00+03:00</published><updated>2016-10-18T14:08:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-10-18:generic-programming-with-ghc-generics.html</id><summary type="html">&lt;ul&gt;
-&lt;li&gt;Generics answer the dilemma "I don't care what the particular type
-  is as long as it looks  like &lt;code&gt;C t_1 t_2 t_3&lt;/code&gt;"
--&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="haskell"></category><category term="generic-programming"></category></entry><entry><title>Transfer files to your phone over wifi</title><link href="https://fakedrake.github.io/transfer-files-to-your-phone-over-wifi.html" rel="alternate"></link><published>2016-09-29T03:54:00+03:00</published><updated>2016-09-29T03:54:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-29:transfer-files-to-your-phone-over-wifi.html</id><summary type="html">&lt;p&gt;So here is a neat trick to very quickly transfer files to your phone
+completed almost instantaneously.&lt;/p&gt;</summary><category term="notmuch"></category><category term="bash"></category><category term="python"></category></entry><entry><title>Transfer files to your phone over wifi</title><link href="https://fakedrake.github.io/transfer-files-to-your-phone-over-wifi.html" rel="alternate"></link><published>2016-09-29T03:54:00+03:00</published><updated>2016-09-29T03:54:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-29:transfer-files-to-your-phone-over-wifi.html</id><summary type="html">&lt;p&gt;So here is a neat trick to very quickly transfer files to your phone
 over wifi (http). On your computer download &lt;code&gt;qrencode&lt;/code&gt;. It should be
 in all major package managers. Also make sure you have python
 installed. On your phone install a QR code reader.&lt;/p&gt;
