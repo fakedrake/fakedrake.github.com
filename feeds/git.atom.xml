@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/git.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2014-05-11T21:37:00+03:00</updated><entry><title>Remote testing with git and ssh</title><link href="https://fakedrake.github.io/remote-testing-with-git-and-ssh.html" rel="alternate"></link><updated>2014-05-11T21:37:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-11:remote-testing-with-git-and-ssh.html</id><summary type="html">&lt;p&gt;Running tests is an important part of the development workflow. You
+<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/git.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2014-05-11T21:37:00+03:00</updated><entry><title>Remote testing with git and ssh</title><link href="https://fakedrake.github.io/remote-testing-with-git-and-ssh.html" rel="alternate"></link><published>2014-05-11T21:37:00+03:00</published><updated>2014-05-11T21:37:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-11:remote-testing-with-git-and-ssh.html</id><summary type="html">&lt;p&gt;Running tests is an important part of the development workflow. You
 want to do it often and you want it to be quick. Yet at times tests
 are not quick. Tests can be slow and they can be fat. This means that
 you probably prefer to run them on a powerful server rather than your
@@ -31,12 +31,12 @@ but I would prefer absolute paths to work as well so I decided i would
 pipe the output through sed and translate the paths to somthing
 compilation-mode would be able to deal with. I came up with
 &lt;em&gt;remote_test.sh&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/sh&lt;/span&gt;
 
 &lt;span class="nv"&gt;REMOTE_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/path/to/remote-test&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;LOCAL_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/path/to/test&amp;quot;&lt;/span&gt;
 
-&lt;span class="nv"&gt;REMOTE_SRV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;localhost &lt;span class="c"&gt;# for testing&lt;/span&gt;
+&lt;span class="nv"&gt;REMOTE_SRV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;localhost &lt;span class="c1"&gt;# for testing&lt;/span&gt;
 &lt;span class="nv"&gt;REMOTE_USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;whoami&lt;span class="sb"&gt;`&lt;/span&gt;
 
 &lt;span class="nv"&gt;SED_REMOTE_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$REMOTE_ROOT&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sed &lt;span class="s1"&gt;&amp;#39;s/[\/&amp;amp;]/\\&amp;amp;/g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
@@ -54,7 +54,7 @@ compilation-mode would be able to deal with. I came up with
 &lt;span class="nv"&gt;REMOTE_CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$ARGS&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; remote_paths &lt;span class="k"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;REMOTE_PWD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; remote_paths &lt;span class="k"&gt;)&lt;/span&gt;
 
-&lt;span class="nb"&gt;echo &lt;/span&gt;Running: &lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; Running: &lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;
 
 ssh &lt;span class="nv"&gt;$REMOTE_USER&lt;/span&gt;@&lt;span class="nv"&gt;$REMOTE_SRV&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cd &lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_PWD&lt;/span&gt;&lt;span class="s2"&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&amp;amp;&lt;/span&gt; local_paths
 &lt;/pre&gt;&lt;/div&gt;
@@ -63,7 +63,7 @@ ssh &lt;span class="nv"&gt;$REMOTE_USER&lt;/span&gt;@&lt;span class="nv"&gt;$REM
 &lt;p&gt;Notice the escaping of the paths so that characters in the paths dong
 get confused for parts of the sed command. So let's test it.&lt;/p&gt;
 &lt;p&gt;Run the tests again like this now:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;(workstation)$&lt;/span&gt; ./remote_test.sh &lt;span class="s1"&gt;&amp;#39;echo Path is: /path/to/test &amp;gt;&amp;amp;2&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;(workstation)$&lt;/span&gt; ./remote_test.sh &lt;span class="s1"&gt;&amp;#39;echo Path is: /path/to/test &amp;gt;&amp;amp;2&amp;#39;&lt;/span&gt;
 &lt;span class="go"&gt;Running: echo Path is: /path/to/remote-test&lt;/span&gt;
 &lt;span class="go"&gt;fakedrake@localhost&amp;#39;s password:&lt;/span&gt;
 &lt;span class="go"&gt;Path is: /path/to/test&lt;/span&gt;
@@ -95,7 +95,7 @@ benefit of not putting every little failing commit of &lt;code&gt;bench&lt;/code
 github (and having Travis check it for errors and who knows what
 else).&lt;/p&gt;
 &lt;p&gt;So to make a bare repository in &lt;em&gt;~/.testing&lt;/em&gt; on the server&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;(remote)$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; ~
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;(remote)$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; ~
 &lt;span class="gp"&gt;(remote)$&lt;/span&gt; mkdir .testing
 &lt;span class="gp"&gt;(remote)$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; .testing
 &lt;span class="gp"&gt;(remote)$&lt;/span&gt; git clone --bare &amp;lt;some mirror of the project&amp;gt;
@@ -106,14 +106,14 @@ else).&lt;/p&gt;
 
 
 &lt;p&gt;On the local workstation add that as remote:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;(workstation)$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/local/project
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;(workstation)$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/local/project
 &lt;span class="gp"&gt;(workstation)$&lt;/span&gt; git remote add testing /home/remote-user/.testing/project.git
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Then have &lt;em&gt;test_remote.sh&lt;/em&gt; push there before doing anything else by
 throwing in there something like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;BRANCH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;git branch &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;/\*/{print $2}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;BRANCH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;git branch &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;/\*/{print $2}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;GIT_REMOTE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;server&amp;gt;
 
 &lt;span class="k"&gt;function&lt;/span&gt; git_draft_sync &lt;span class="o"&gt;{&lt;/span&gt;
@@ -121,26 +121,26 @@ throwing in there something like this:&lt;/p&gt;
 
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Will now commit a dumb commit to current branch.&amp;quot;&lt;/span&gt;
 
-    &lt;span class="nb"&gt;echo &lt;/span&gt;Commiting: &lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; Commiting: &lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;
     git commit -a -m &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 
-    &lt;span class="nb"&gt;echo &lt;/span&gt;Pushing branch: &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; Pushing branch: &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
     git push &lt;span class="nv"&gt;$GIT_REMOTE&lt;/span&gt; &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And have the server pill the updates on the branch before testing:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;REMOTE_CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;(git pull testing &lt;/span&gt;&lt;span class="nv"&gt;$BRANCH&lt;/span&gt;&lt;span class="s2"&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$ARGS&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; remote_paths&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;REMOTE_CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;(git pull testing &lt;/span&gt;&lt;span class="nv"&gt;$BRANCH&lt;/span&gt;&lt;span class="s2"&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$ARGS&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; remote_paths&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;(and dont forget to run &lt;code&gt;git_draft_sync&lt;/code&gt; before ssh)&lt;/p&gt;
 &lt;p&gt;And you are all set! My real world script for running python tests on
 a remote server at CSAIL looks much like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/sh&lt;/span&gt;
 
-&lt;span class="c"&gt;# Paths (don&amp;#39;t use / at the end)&lt;/span&gt;
+&lt;span class="c1"&gt;# Paths (don&amp;#39;t use / at the end)&lt;/span&gt;
 &lt;span class="nv"&gt;REMOTE_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/path/to/remote/home/Projects&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;LOCAL_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/home/fakedrake/Projects/CSAIL/Python&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;REMOTE_SRV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;remote-server&amp;gt;
@@ -155,14 +155,14 @@ a remote server at CSAIL looks much like this:&lt;/p&gt;
 
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Will now commit a dumb commit to current branch.&amp;quot;&lt;/span&gt;
 
-    &lt;span class="nb"&gt;echo &lt;/span&gt;Commiting: &lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; Commiting: &lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;
     git commit -a -m &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 
-    &lt;span class="nb"&gt;echo &lt;/span&gt;Pushing branch: &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; Pushing branch: &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
     git push &lt;span class="nv"&gt;$GIT_REMOTE&lt;/span&gt; &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="c"&gt;## -- No need to edit from here on --&lt;/span&gt;
+&lt;span class="c1"&gt;## -- No need to edit from here on --&lt;/span&gt;
 &lt;span class="nv"&gt;SED_REMOTE_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$REMOTE_ROOT&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sed &lt;span class="s1"&gt;&amp;#39;s/[\/&amp;amp;]/\\&amp;amp;/g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;SED_LOCAL_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$LOCAL_ROOT&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sed &lt;span class="s1"&gt;&amp;#39;s/[\/&amp;amp;]/\\&amp;amp;/g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 
@@ -180,10 +180,10 @@ a remote server at CSAIL looks much like this:&lt;/p&gt;
 
 &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Running perliminaries:&amp;quot;&lt;/span&gt;
 
-&lt;span class="nb"&gt;echo &lt;/span&gt;ARGS: &lt;span class="nv"&gt;$ARGS&lt;/span&gt;
-&lt;span class="nb"&gt;echo &lt;/span&gt;Running: &lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;
-&lt;span class="nb"&gt;echo &lt;/span&gt;Directory: &lt;span class="nv"&gt;$REMOTE_PWD&lt;/span&gt;
-&lt;span class="nb"&gt;echo &lt;/span&gt;At: &lt;span class="nv"&gt;$REMOTE_USER&lt;/span&gt;@&lt;span class="nv"&gt;$REMOTE_SRV&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; ARGS: &lt;span class="nv"&gt;$ARGS&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; Running: &lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; Directory: &lt;span class="nv"&gt;$REMOTE_PWD&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; At: &lt;span class="nv"&gt;$REMOTE_USER&lt;/span&gt;@&lt;span class="nv"&gt;$REMOTE_SRV&lt;/span&gt;
 
 git_draft_sync
 ssh &lt;span class="nv"&gt;$REMOTE_USER&lt;/span&gt;@&lt;span class="nv"&gt;$REMOTE_SRV&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cd &lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_PWD&lt;/span&gt;&lt;span class="s2"&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&amp;amp;&lt;/span&gt; local_paths
@@ -194,7 +194,7 @@ ssh &lt;span class="nv"&gt;$REMOTE_USER&lt;/span&gt;@&lt;span class="nv"&gt;$REM
 the top of the script to something that makes sense for you. Then tell
 your editor to prepend &lt;code&gt;./remote_test.sh&lt;/code&gt; before the test
 command. Thus my emacs setup for example would do:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;-&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;mode&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;compilation&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;default-directory&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;~/Projects/CSAIL/Python/WikipediaBase/&amp;quot;&lt;/span&gt; &lt;span class="nt"&gt;-&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nt"&gt;-&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;-&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;mode&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;compilation&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;default-directory&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;~/Projects/CSAIL/Python/WikipediaBase/&amp;quot;&lt;/span&gt; &lt;span class="nt"&gt;-&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nt"&gt;-&lt;/span&gt;
 &lt;span class="nt"&gt;Comint&lt;/span&gt; &lt;span class="nt"&gt;started&lt;/span&gt; &lt;span class="nt"&gt;at&lt;/span&gt; &lt;span class="nt"&gt;Sun&lt;/span&gt; &lt;span class="nt"&gt;May&lt;/span&gt; &lt;span class="nt"&gt;11&lt;/span&gt; &lt;span class="nt"&gt;23&lt;/span&gt;&lt;span class="nd"&gt;:17:22&lt;/span&gt;
 
 &lt;span class="o"&gt;./&lt;/span&gt;&lt;span class="nt"&gt;remote_test&lt;/span&gt;&lt;span class="nc"&gt;.sh&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;fakedrake&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;Projects&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;CSAIL&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;py&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="nt"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;python&lt;/span&gt;  &lt;span class="nt"&gt;setup&lt;/span&gt;&lt;span class="nc"&gt;.py&lt;/span&gt; &lt;span class="nt"&gt;test&lt;/span&gt;
@@ -228,7 +228,7 @@ command. Thus my emacs setup for example would do:&lt;/p&gt;
 &lt;p&gt;And compilation-mode sees the paths that it expects so I can jump
 around the source based on the errors. If you haven't done already you
 may also want to setup password-less login to your server. Not only is
-it easier but it is much safer.&lt;/p&gt;</summary><category term="testin"></category><category term="git"></category><category term="ssh"></category><category term="remote"></category></entry><entry><title>Moving git branches across repositories</title><link href="https://fakedrake.github.io/moving-git-branches-across-repositories.html" rel="alternate"></link><updated>2014-05-07T15:49:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-07:moving-git-branches-across-repositories.html</id><summary type="html">&lt;p&gt;In a perfect world there is a one-to-one relationship between projects
+it easier but it is much safer.&lt;/p&gt;</summary><category term="testin"></category><category term="git"></category><category term="ssh"></category><category term="remote"></category></entry><entry><title>Moving git branches across repositories</title><link href="https://fakedrake.github.io/moving-git-branches-across-repositories.html" rel="alternate"></link><published>2014-05-07T15:49:00+03:00</published><updated>2014-05-07T15:49:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-07:moving-git-branches-across-repositories.html</id><summary type="html">&lt;p&gt;In a perfect world there is a one-to-one relationship between projects
 and git trees. As you are happily working on your local repo, and
 decide you want to get some commits from a different source you just
 &lt;code&gt;git remote add&lt;/code&gt; that source and you have full access to it's
@@ -236,7 +236,7 @@ commits. Well sometimes things do not go as smoothly and you may find
 yourself wanting to move your branch to a remote repo that may have a
 largely common codebase but few to no common commits. Well turns out
 git can handle that pretty easily. Here is how in one line:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;git log --reverse --cherry master...&amp;lt;your-branch&amp;gt; --pretty=email --patch-with-stat | (cd /path/to/new/repo &amp;amp;&amp;amp; git checkout -b &amp;lt;your-branch&amp;gt; &amp;amp;&amp;amp; git am)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="go"&gt;git log --reverse --cherry master...&amp;lt;your-branch&amp;gt; --pretty=email --patch-with-stat | (cd /path/to/new/repo &amp;amp;&amp;amp; git checkout -b &amp;lt;your-branch&amp;gt; &amp;amp;&amp;amp; git am)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

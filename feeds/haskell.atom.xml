@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/haskell.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-06-14T11:30:00+03:00</updated><entry><title>Installing haskell on linux</title><link href="https://fakedrake.github.io/installing-haskell-on-linux.html" rel="alternate"></link><updated>2016-06-14T11:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-06-14:installing-haskell-on-linux.html</id><summary type="html">&lt;p&gt;If for some reason you don't want to use your distribution's package
+<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/haskell.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-10-18T14:08:00+03:00</updated><entry><title>Generic programming with ghc generics</title><link href="https://fakedrake.github.io/generic-programming-with-ghc-generics.html" rel="alternate"></link><published>2016-10-18T14:08:00+03:00</published><updated>2016-10-18T14:08:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-10-18:generic-programming-with-ghc-generics.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;Generics answer the dilemma "I don't care what the particular type
+  is as long as it looks  like &lt;code&gt;C t_1 t_2 t_3&lt;/code&gt;"
+-&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="haskell"></category><category term="generic-programming"></category></entry><entry><title>Installing haskell on linux</title><link href="https://fakedrake.github.io/installing-haskell-on-linux.html" rel="alternate"></link><published>2016-06-14T11:30:00+03:00</published><updated>2016-06-14T11:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-06-14:installing-haskell-on-linux.html</id><summary type="html">&lt;p&gt;If for some reason you don't want to use your distribution's package
 manager (eg because it provides an outdated version of GHC), you can
 install it manually. First you need to find out if you are on x64 or
 32bit architecture. You can do that by running:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;uname -a
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;uname -a
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;If you are on 32bit run the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget https://haskell.org/platform/download/8.0.1/haskell-platform-8.0.1-unknown-posix--minimal-i386.tar.gz -O /tmp/haskell.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget https://haskell.org/platform/download/8.0.1/haskell-platform-8.0.1-unknown-posix--minimal-i386.tar.gz -O /tmp/haskell.tar.gz
 cd /tmp
 tar xvzf /tmp/haskell.tar.gz
 sudo ./install-haskell-platform.sh
@@ -16,7 +20,7 @@ sudo ./install-haskell-platform.sh
 
 
 &lt;p&gt;If you are on x64:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget https://haskell.org/platform/download/8.0.1/haskell-platform-8.0.1-unknown-posix--full-x86_64.tar.gz -O /tmp/haskell.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget https://haskell.org/platform/download/8.0.1/haskell-platform-8.0.1-unknown-posix--full-x86_64.tar.gz -O /tmp/haskell.tar.gz
 cd /tmp
 tar xvzf /tmp/haskell.tar.gz
 sudo ./install-haskell-platform.sh
@@ -25,7 +29,7 @@ sudo ./install-haskell-platform.sh
 
 &lt;p&gt;Then restart your shell. Check that you have the correct version
 (8.0.1) by running:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ghc --version
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ghc --version
 The Glorious Glasgow Haskell Compilation System, version 8.0.1
 &lt;/pre&gt;&lt;/div&gt;
 

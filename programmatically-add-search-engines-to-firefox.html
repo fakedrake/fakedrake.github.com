@@ -122,7 +122,7 @@ Programmatically add search engines to firefox - Chris Perivolaropoulos
 men ie programmatically. This is nice because you can then write
 scripts to do interesting stuff with them. First of all let's see what
 we can find out without looking at code.</p>
-<div class="highlight"><pre><span class="go">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ find -name &quot;*search*&quot;</span>
+<div class="highlight"><pre><span></span><span class="gp">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $</span> find -name <span class="s2">&quot;*search*&quot;</span>
 <span class="go">./search-metadata.json</span>
 <span class="go">./search.json</span>
 <span class="go">./searchplugins</span>
@@ -131,13 +131,13 @@ we can find out without looking at code.</p>
 
 <p><em>search.json</em> has some general info about the engines and seems to be
  pointing firefox to <em>searchplugins/</em> for more details.</p>
-<div class="highlight"><pre><span class="go">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ ls searchplugins</span>
+<div class="highlight"><pre><span></span><span class="gp">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $</span> ls searchplugins
 <span class="go">duckduckgo.xml  imdb.xml  spotify1.xml  youtube.xml</span>
 </pre></div>
 
 
 <p>Right what I was looking for. Let's take a look inside one of them</p>
-<div class="highlight"><pre><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;os:ShortName&gt;</span>DuckDuckGo<span class="nt">&lt;/os:ShortName&gt;</span>
 <span class="nt">&lt;os:Description&gt;</span>Search DuckDuckGo<span class="nt">&lt;/os:Description&gt;</span>
 <span class="nt">&lt;os:InputEncoding&gt;</span>UTF-8<span class="nt">&lt;/os:InputEncoding&gt;</span>
@@ -155,7 +155,7 @@ we can find out without looking at code.</p>
 <p>Awesome, now lets see what interfaces we can get to loading this
 code. We will need access to the
 <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIBrowserSearchService">search service</a>, so</p>
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">bss</span> <span class="o">=</span> <span class="nx">Cc</span><span class="p">[</span><span class="s2">&quot;@mozilla.org/browser/search-service;1&quot;</span><span class="p">].</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIBrowserSearchService</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">bss</span> <span class="o">=</span> <span class="nx">Cc</span><span class="p">[</span><span class="s2">&quot;@mozilla.org/browser/search-service;1&quot;</span><span class="p">].</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIBrowserSearchService</span><span class="p">)</span>
 </pre></div>
 
 
@@ -164,12 +164,12 @@ had to check out the
 <a href="https://github.com/mozilla/gecko-dev/blob/master/toolkit/components/search/nsSearchService.js">implementation</a>
 which I encourage you to take a look at but it wont be really
 necessary. After snooping around a bit I came up with.</p>
-<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngine</span><span class="p">(</span><span class="s2">&quot;file:///home/fakedrake/Projects/Javascript/spotify.xml&quot;</span><span class="p">,</span> <span class="nx">Ci</span><span class="p">.</span><span class="nx">nsISearchEngine</span><span class="p">.</span><span class="nx">DATA_XML</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngine</span><span class="p">(</span><span class="s2">&quot;file:///home/fakedrake/Projects/Javascript/spotify.xml&quot;</span><span class="p">,</span> <span class="nx">Ci</span><span class="p">.</span><span class="nx">nsISearchEngine</span><span class="p">.</span><span class="nx">DATA_XML</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Where the contents of <em>spotify.xml</em> are</p>
-<div class="highlight"><pre><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;os:ShortName&gt;</span>Spotify<span class="nt">&lt;/os:ShortName&gt;</span>
 <span class="nt">&lt;os:Description&gt;</span>Search Spotify<span class="nt">&lt;/os:Description&gt;</span>
 <span class="nt">&lt;os:InputEncoding&gt;</span>UTF-8<span class="nt">&lt;/os:InputEncoding&gt;</span>
@@ -182,14 +182,14 @@ necessary. After snooping around a bit I came up with.</p>
 <p><img alt="Spoify search engine" src="http://i.imgur.com/yukAwWr.png" /></p>
 <p>And not only that, but firefox was kind enough to add my xml to the
 right place so it is permanent.</p>
-<div class="highlight"><pre><span class="go">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default/searchplugins $ ls</span>
+<div class="highlight"><pre><span></span><span class="gp">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default/searchplugins $</span> ls
 <span class="go">duckduckgo.xml  imdb.xml  spotify.xml  youtube.xml</span>
 </pre></div>
 
 
 <p>Now if you need more direct control over this. An equivalent to the
 above would be:</p>
-<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngineWithDetails</span><span class="p">(</span><span class="s2">&quot;Spotify&quot;</span><span class="p">,</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;Search spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;https://play.spotify.com/search/{searchTerms}&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngineWithDetails</span><span class="p">(</span><span class="s2">&quot;Spotify&quot;</span><span class="p">,</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;Search spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;https://play.spotify.com/search/{searchTerms}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -198,7 +198,7 @@ above would be:</p>
 <p>This does exactly the same thing as having the data in an XML file and
 loading it with <code>addEngine()</code>. If you want to remove an engine you
 can do it with:</p>
-<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">removeEngine</span><span class="p">(</span><span class="nx">bss</span><span class="p">.</span><span class="nx">getEngineByAlias</span><span class="p">(</span><span class="s2">&quot;spotify&quot;</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><span class="nx">bss</span><span class="p">.</span><span class="nx">removeEngine</span><span class="p">(</span><span class="nx">bss</span><span class="p">.</span><span class="nx">getEngineByAlias</span><span class="p">(</span><span class="s2">&quot;spotify&quot;</span><span class="p">))</span>
 </pre></div>
 
 
@@ -279,6 +279,7 @@ a good example to get you started.</p>
               <h3>Categories</h3>
 
               <ul>
+                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -316,6 +317,8 @@ a good example to get you started.</p>
                 None
                 None
                 None
+                None
+                None
               </div>
 
               <ul class="tree">
@@ -323,6 +326,11 @@ a good example to get you started.</p>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
+                      <span><i class="fa fa-minus-square-o"></i>10</span>
+                      <ul>
+                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
+                        <li><a href=""><small>Tue 18 October 2016</small>Generic programming with ghc generics</a></li>
+                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

@@ -123,8 +123,8 @@ Enabling python virtualenvs dumb and fast - Chris Perivolaropoulos
 or something else fancy that the cool kids like these days a common
 series of commands to run python tests is. I also annotated my
 thinking process for dramatic purposes.</p>
-<div class="highlight"><pre><span class="gp">#</span> Let<span class="err">&#39;</span>s work on awesome-project a bit
-<span class="gp">$</span> <span class="nb">cd </span>python/project/path/awesome-project
+<div class="highlight"><pre><span></span><span class="gp">#</span> Let<span class="err">&#39;</span>s work on awesome-project a bit
+<span class="gp">$</span> <span class="nb">cd</span> python/project/path/awesome-project
 <span class="gp">#</span> That went well, good job, you deserve eternal love and
 <span class="gp">#</span> admiration, running some tes- crap, I need the virtualenv...
 <span class="gp">$</span> ls ..
@@ -140,13 +140,13 @@ hard time context switching like that. Thankfully shell scripting can
 help out with this. I recently added this stupid little function in my
 <em>.zshrc</em> and my life has been a wonderful journey in unicorn rainbow
 land ever since</p>
-<div class="highlight"><pre><span class="c"># find the first venv backwards and activate it.</span>
+<div class="highlight"><pre><span></span><span class="c1"># find the first venv backwards and activate it.</span>
 pv<span class="o">()</span> <span class="o">{</span>
     <span class="nv">A</span><span class="o">=</span>./*/bin/activate<span class="p">;</span>
     <span class="k">for</span> i in <span class="o">{</span>1..<span class="k">$(</span><span class="nb">pwd</span> <span class="p">|</span> grep -o / <span class="p">|</span> wc -l<span class="k">)</span><span class="o">}</span><span class="p">;</span> <span class="k">do</span>
     <span class="k">if</span> bash -c <span class="s2">&quot;ls </span><span class="nv">$A</span><span class="s2">&quot;</span> 2&gt; /dev/null<span class="p">;</span> <span class="k">then</span>
         <span class="nb">source</span> <span class="k">$(</span>bash -c <span class="s2">&quot;ls </span><span class="nv">$A</span><span class="s2"> | head -1&quot;</span><span class="k">)</span><span class="p">;</span>
-        <span class="nb">break</span><span class="p">;</span>
+        break<span class="p">;</span>
     <span class="k">fi</span><span class="p">;</span>
     <span class="nv">A</span><span class="o">=</span>../<span class="nv">$A</span><span class="p">;</span>
     <span class="k">done</span>
@@ -155,8 +155,8 @@ pv<span class="o">()</span> <span class="o">{</span>
 
 
 <p>Now it's all like</p>
-<div class="highlight"><pre><span class="gp">#</span> Work on awesome-project
-<span class="gp">$</span> <span class="nb">cd </span>python/project/path/awesome-project
+<div class="highlight"><pre><span></span><span class="gp">#</span> Work on awesome-project
+<span class="gp">$</span> <span class="nb">cd</span> python/project/path/awesome-project
 <span class="gp">#</span> Women and glory are just around the corner, Oh, virtualenv
 <span class="gp">$</span> pv
 <span class="gp">#</span> Set!
@@ -178,8 +178,8 @@ pv<span class="o">()</span> <span class="o">{</span>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
+        <a href="/tag/python.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> python</a>
         <a href="/tag/shell.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> shell</a>
-        <a href="/tag/python.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> python</a>
         <a href="/tag/virtualenv.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> virtualenv</a>
   </p>
 
@@ -238,6 +238,7 @@ pv<span class="o">()</span> <span class="o">{</span>
               <h3>Categories</h3>
 
               <ul>
+                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -275,6 +276,8 @@ pv<span class="o">()</span> <span class="o">{</span>
                 None
                 None
                 None
+                None
+                None
               </div>
 
               <ul class="tree">
@@ -282,6 +285,11 @@ pv<span class="o">()</span> <span class="o">{</span>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
+                      <span><i class="fa fa-minus-square-o"></i>10</span>
+                      <ul>
+                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
+                        <li><a href=""><small>Tue 18 October 2016</small>Generic programming with ghc generics</a></li>
+                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

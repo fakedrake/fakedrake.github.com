@@ -121,7 +121,7 @@ Killing mysql queries - Chris Perivolaropoulos
     <p>MySQL queries are many times painfully slow. So slow that it is not
 worth waiting. Here is how to kill a running query.</p>
 <p>First of all you need to know what is running to choose what to kill.</p>
-<div class="highlight"><pre>&gt; show processlist
+<div class="highlight"><pre><span></span>&gt; show processlist
 |       Id | User | Host | db      | Command | Time | State        | Info                      |
 |----------+------+------+---------+---------+------+--------------+---------------------------|
 | 35162105 | me   | host | db_name | Query   |  183 | Sending data | SELECT * FROM `HugeTable` |
@@ -133,7 +133,7 @@ worth waiting. Here is how to kill a running query.</p>
 <p>The last process we don't care about and the one before that is the
 one we just ran to get the process list itself. The first one is the
 one to kill. So now that we have the id, we can kill it by running</p>
-<div class="highlight"><pre>&gt; kill 35162105
+<div class="highlight"><pre><span></span>&gt; kill 35162105
 </pre></div>
 
 
@@ -210,6 +210,7 @@ one to kill. So now that we have the id, we can kill it by running</p>
               <h3>Categories</h3>
 
               <ul>
+                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -247,6 +248,8 @@ one to kill. So now that we have the id, we can kill it by running</p>
                 None
                 None
                 None
+                None
+                None
               </div>
 
               <ul class="tree">
@@ -254,6 +257,11 @@ one to kill. So now that we have the id, we can kill it by running</p>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
+                      <span><i class="fa fa-minus-square-o"></i>10</span>
+                      <ul>
+                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
+                        <li><a href=""><small>Tue 18 October 2016</small>Generic programming with ghc generics</a></li>
+                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

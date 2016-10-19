@@ -157,7 +157,7 @@ the means of creating instances of M T and creating M T values from T
 values but no way of making use these M Ts. You can however draw
 direct parallels of how to manipulate M T based on how you can
 manipulate T. To also be formal:</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="n">Monad</span> <span class="o">m</span> <span class="k">where</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="n">Monad</span> <span class="o">m</span> <span class="k">where</span>
   <span class="k">return</span> :: <span class="n">a</span> -&gt; <span class="o">m</span> <span class="n">a</span>
   (&gt;&gt;=) :: <span class="o">m</span> <span class="n">a</span> -&gt; (<span class="n">a</span> -&gt; <span class="o">m</span> <span class="n">b</span>) -&gt; <span class="o">m</span> <span class="n">b</span>
 </pre></div>
@@ -182,7 +182,7 @@ from another set in that bag the functor can trasform that
 trasformation too! (inception).</p>
 <p>To put it another way a functor can transform a category into another
 category. More formally</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="n">Functor</span> <span class="n">f</span> <span class="k">where</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="n">Functor</span> <span class="n">f</span> <span class="k">where</span>
     <span class="n">fmap</span> :: (<span class="n">a</span> -&gt; <span class="n">b</span>) -&gt; <span class="n">f</span> <span class="n">a</span> -&gt; <span class="n">f</span> <span class="n">b</span>
 </pre></div>
 
@@ -192,7 +192,7 @@ section.</p>
 <h1>Applicative</h1>
 <p>Applicative functors are the part of a monad that allows it to be used
 just like the underlying type.</p>
-<div class="highlight"><pre><span class="k">class</span> (<span class="n">Functor</span> <span class="n">f</span>) =&gt; <span class="n">Applicative</span> <span class="n">f</span> <span class="k">where</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> (<span class="n">Functor</span> <span class="n">f</span>) =&gt; <span class="n">Applicative</span> <span class="n">f</span> <span class="k">where</span>
     <span class="n">pure</span>  :: <span class="n">a</span> -&gt; <span class="n">f</span> <span class="n">a</span>
     (<span class="s">&lt;*&gt;) :: f (a -&gt;</span> <span class="n">b</span>) -&gt; <span class="n">f</span> <span class="n">a</span> -&gt; <span class="n">f</span> <span class="n">b</span>
 </pre></div>
@@ -209,7 +209,7 @@ function that takes more than one arguments to an argument you get a
 wrapped function. Applicatives are then the right tool. Use <code>&lt;*&gt;</code> make
 the wrapped function into a wrapped value.</p>
 <p>For example</p>
-<div class="highlight"><pre>Prelude&gt; :t (+) -- Takes two arguments
+<div class="highlight"><pre><span></span>Prelude&gt; :t (+) -- Takes two arguments
 (+) -- Takes two arguments :: Num a =&gt; a -&gt; a -&gt; a
 
 Prelude&gt; :t fmap (+) (Just 1)  -- Curry it to one, but now it&#39;s wrapped
@@ -318,6 +318,7 @@ manipulating the underlying type.
               <h3>Categories</h3>
 
               <ul>
+                <li><a href="../category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="../category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="../category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="../category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -355,6 +356,8 @@ manipulating the underlying type.
                 None
                 None
                 None
+                None
+                None
               </div>
 
               <ul class="tree">
@@ -362,6 +365,11 @@ manipulating the underlying type.
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
+                      <span><i class="fa fa-minus-square-o"></i>10</span>
+                      <ul>
+                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
+                        <li><a href=""><small>Tue 18 October 2016</small>Generic programming with ghc generics</a></li>
+                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

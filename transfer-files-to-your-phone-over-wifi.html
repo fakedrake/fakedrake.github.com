@@ -124,12 +124,12 @@ in all major package managers. Also make sure you have python
 installed. On your phone install a QR code reader.</p>
 <p>Open a terminal and navigate to the folder where your file is. Then
 run this on <em>OSX</em>:</p>
-<div class="highlight"><pre>ifconfig en0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; open /tmp/url_local_qr.png &amp;&amp; python -m SimpleHTTPServer
+<div class="highlight"><pre><span></span>ifconfig en0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; open /tmp/url_local_qr.png &amp;&amp; python -m SimpleHTTPServer
 </pre></div>
 
 
 <p>or this on <em>linux</em> (didn't try it so comment if there was a problem):</p>
-<div class="highlight"><pre>ifconfig wlan0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; dispaly /tmp/url_local_qr.png &amp;&amp; python -m SimpleHTTPServer
+<div class="highlight"><pre><span></span>ifconfig wlan0 | awk &#39;BEGIN{FS=&quot; &quot;} /^\t*inet /{print &quot;http://&quot;$2&quot;:8000&quot;}&#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;&amp; dispaly /tmp/url_local_qr.png &amp;&amp; python -m SimpleHTTPServer
 </pre></div>
 
 
@@ -208,6 +208,7 @@ you should have access to your computer's files!</p>
               <h3>Categories</h3>
 
               <ul>
+                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -245,6 +246,8 @@ you should have access to your computer's files!</p>
                 None
                 None
                 None
+                None
+                None
               </div>
 
               <ul class="tree">
@@ -252,6 +255,11 @@ you should have access to your computer's files!</p>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
+                      <span><i class="fa fa-minus-square-o"></i>10</span>
+                      <ul>
+                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
+                        <li><a href=""><small>Tue 18 October 2016</small>Generic programming with ghc generics</a></li>
+                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

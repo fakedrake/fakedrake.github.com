@@ -133,7 +133,7 @@ artist with Python or something else equally and needlessly nerdy.</p>
 core developer and have deep knowledge of it's inter-workings or if
 you have vimperator to abstract the interface/service
 inconvenience. And the matter is actually very simple.</p>
-<div class="highlight"><pre><span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
 <span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span> <span class="p">});</span>
 <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
 </pre></div>
@@ -141,7 +141,7 @@ inconvenience. And the matter is actually very simple.</p>
 
 <p>If you haven't got any better way of running more than one line of
 code on firefox you can use vimperator's <code>:js</code> which should go like</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span> <span class="p">});</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="o">:</span><span class="nx">js</span> <span class="nx">tabdump</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="nx">tabs</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="nx">tabdump</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">;</span> <span class="p">});</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">write</span><span class="p">(</span><span class="nx">tabdump</span><span class="p">)</span>
 </pre></div>
 
 
@@ -152,7 +152,7 @@ concatenate those tuples together and dump them into a string (line
 throw everything into a file. And there you have it</p>
 <p>If for example I were looking up bands going through a list and run
 the above I would come up with something like</p>
-<div class="highlight"><pre><span class="k">[...]</span>
+<div class="highlight"><pre><span></span><span class="k">[...]</span>
 
 <span class="na">23 ~~~ kyuss at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">kyuss</span>
 <span class="na">24 ~~~ 311 at DuckDuckGo ~~~ https://duckduckgo.com/?q</span><span class="o">=</span><span class="s">311</span>
@@ -165,7 +165,7 @@ the above I would come up with something like</p>
 
 
 <p><em>EDIT</em>: If you want to reopen some of those you can easily do it with</p>
-<div class="highlight"><pre><span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">read</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s2">&quot;~/Documents/tabs&quot;</span><span class="p">).</span><span class="nx">read</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">)</span>
 <span class="o">:</span><span class="nx">js</span> <span class="nx">lines</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">l</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">l</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; ~~~ &quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]}).</span><span class="nx">slice</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">23</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span><span class="nx">liberator</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span><span class="nx">where</span><span class="o">:</span> <span class="nx">liberator</span><span class="p">.</span><span class="nx">NEW_TAB</span><span class="p">})})</span>
 </pre></div>
 
@@ -247,6 +247,7 @@ the above I would come up with something like</p>
               <h3>Categories</h3>
 
               <ul>
+                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -284,6 +285,8 @@ the above I would come up with something like</p>
                 None
                 None
                 None
+                None
+                None
               </div>
 
               <ul class="tree">
@@ -291,6 +294,11 @@ the above I would come up with something like</p>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
+                      <span><i class="fa fa-minus-square-o"></i>10</span>
+                      <ul>
+                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
+                        <li><a href=""><small>Tue 18 October 2016</small>Generic programming with ghc generics</a></li>
+                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

@@ -121,7 +121,7 @@ Multi-argument function composition - Chris Perivolaropoulos
     <p>Function composition is what functional programming is about. In
 haskell composition in general is the main theme. Function composition
 is in theory easy:</p>
-<div class="highlight"><pre>Prelude&gt; let f = (+1)
+<div class="highlight"><pre><span></span>Prelude&gt; let f = (+1)
 Prelude&gt; :t f
 f :: Num a =&gt; a -&gt; a
 Prelude&gt; let g = (+2)
@@ -132,7 +132,7 @@ g :: Num a =&gt; a -&gt; a
 
 <p>So <code>f</code> and <code>g</code> are composed with the <code>(.)</code> operator to make a new
 function <code>f ( g (x) )</code>.</p>
-<div class="highlight"><pre>Prelude&gt; :t f.g
+<div class="highlight"><pre><span></span>Prelude&gt; :t f.g
 f.g :: Num c =&gt; c -&gt; c
 Prelude&gt; (f.g) 1
 4
@@ -140,7 +140,7 @@ Prelude&gt; (f.g) 1
 
 
 <p>Which is simple. Enter a new function <code>h</code>.</p>
-<div class="highlight"><pre>Prelude&gt; let h = (-)
+<div class="highlight"><pre><span></span>Prelude&gt; let h = (-)
 Prelude&gt; :t h
 h :: Num a =&gt; a -&gt; a -&gt; a
 </pre></div>
@@ -148,7 +148,7 @@ h :: Num a =&gt; a -&gt; a -&gt; a
 
 <p>How would we compose <code>f</code> and <code>h</code> so that we get <code>l(x,y) = f(h(x,
 y))</code>. We will use the operator <code>((.).(.))</code>.</p>
-<div class="highlight"><pre>Prelude&gt; let (&lt;.&gt;) = ((.).(.))
+<div class="highlight"><pre><span></span>Prelude&gt; let (&lt;.&gt;) = ((.).(.))
 Prelude&gt; :t f &lt;.&gt; h
 f &lt;.&gt; h :: Num c =&gt; c -&gt; c -&gt; c
 Prelude&gt; (f &lt;.&gt; h) 1 2
@@ -175,7 +175,7 @@ happened. Let's look at what happens on a lambda calculus level.</p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-        <a href="/tag/haskell.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> haskell</a>
+        <a href="/tag/haskell.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> haskell</a>
   </p>
 
   <hr /><!-- divider -->
@@ -233,6 +233,7 @@ happened. Let's look at what happens on a lambda calculus level.</p>
               <h3>Categories</h3>
 
               <ul>
+                <li><a href="../category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="../category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="../category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="../category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -270,6 +271,8 @@ happened. Let's look at what happens on a lambda calculus level.</p>
                 None
                 None
                 None
+                None
+                None
               </div>
 
               <ul class="tree">
@@ -277,6 +280,11 @@ happened. Let's look at what happens on a lambda calculus level.</p>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
+                      <span><i class="fa fa-minus-square-o"></i>10</span>
+                      <ul>
+                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
+                        <li><a href=""><small>Tue 18 October 2016</small>Generic programming with ghc generics</a></li>
+                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

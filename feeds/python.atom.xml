@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/python.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-09-18T11:59:00+03:00</updated><entry><title>Subclassing function types in python</title><link href="https://fakedrake.github.io/subclassing-function-types.html" rel="alternate"></link><updated>2016-09-18T11:59:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-18:subclassing-function-types.html</id><summary type="html">&lt;p&gt;Disclaimer: The following is based on cpython.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; class A(object):
+<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/python.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-09-18T11:59:00+03:00</updated><entry><title>Subclassing function types in python</title><link href="https://fakedrake.github.io/subclassing-function-types.html" rel="alternate"></link><published>2016-09-18T11:59:00+03:00</published><updated>2016-09-18T11:59:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-18:subclassing-function-types.html</id><summary type="html">&lt;p&gt;Disclaimer: The following is based on cpython.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt;&amp;gt;&amp;gt; class A(object):
 ...     @classmethod
 ...     def clsmeth(cls): pass
 ...     @staticmethod
@@ -15,14 +15,14 @@
 
 &lt;p&gt;And let's define a way of finding out the corresponding type in the
 types module&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;types&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;types&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;typenames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;types&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__dict__&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;code&gt;typenames&lt;/code&gt; is now a function that will evaluate to a list of names of
 the types of the instance we give it. Let's check that it works&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; typenames(1)
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt;&amp;gt;&amp;gt; typenames(1)
 [&amp;#39;IntType&amp;#39;]
 &amp;gt;&amp;gt;&amp;gt; typenames(&amp;#39;1&amp;#39;)
 [&amp;#39;StringType&amp;#39;]
@@ -32,7 +32,7 @@ the types of the instance we give it. Let's check that it works&lt;/p&gt;
 
 
 &lt;p&gt;Let's take a look at the types of different built in callable types:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; typenames(func)
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt;&amp;gt;&amp;gt; typenames(func)
 [&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
 &amp;gt;&amp;gt;&amp;gt; typenames(labd)
 [&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
@@ -62,7 +62,7 @@ the types of the instance we give it. Let's check that it works&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;MethodType&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Calling them we can see the various:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; A.stemeth()
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt;&amp;gt;&amp;gt; A.stemeth()
 &amp;gt;&amp;gt;&amp;gt; A().stemeth()
 &amp;gt;&amp;gt;&amp;gt; A.clsmeth()
 (&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;,)
@@ -81,13 +81,13 @@ TypeError: unbound method method() must be called with A instance as first argum
 &lt;a href="https://github.com/python/cpython/blob/master/Lib/types.py"&gt;types.py&lt;/a&gt;
 does pretty much the same thing to get hold of the types themselves
 but for educational reasons let's pretend that what we just did is not
-stupid.&lt;/p&gt;</summary><category term="python"></category></entry><entry><title>Enabling python virtualenvs dumb and fast</title><link href="https://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" rel="alternate"></link><updated>2014-07-16T19:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:enabling-python-virtualenvs-dumb-and-fast.html</id><summary type="html">&lt;p&gt;Unless you are using
+stupid.&lt;/p&gt;</summary><category term="python"></category></entry><entry><title>Enabling python virtualenvs dumb and fast</title><link href="https://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" rel="alternate"></link><published>2014-07-16T19:27:00+03:00</published><updated>2014-07-16T19:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:enabling-python-virtualenvs-dumb-and-fast.html</id><summary type="html">&lt;p&gt;Unless you are using
 &lt;a href="https://bitbucket.org/dhellmann/virtualenvwrapper/"&gt;virtualenvwrapper&lt;/a&gt;
 or something else fancy that the cool kids like these days a common
 series of commands to run python tests is. I also annotated my
 thinking process for dramatic purposes.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; Let&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;s work on awesome-project a bit
-&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;python/project/path/awesome-project
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;#&lt;/span&gt; Let&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;s work on awesome-project a bit
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; python/project/path/awesome-project
 &lt;span class="gp"&gt;#&lt;/span&gt; That went well, good job, you deserve eternal love and
 &lt;span class="gp"&gt;#&lt;/span&gt; admiration, running some tes- crap, I need the virtualenv...
 &lt;span class="gp"&gt;$&lt;/span&gt; ls ..
@@ -103,13 +103,13 @@ hard time context switching like that. Thankfully shell scripting can
 help out with this. I recently added this stupid little function in my
 &lt;em&gt;.zshrc&lt;/em&gt; and my life has been a wonderful journey in unicorn rainbow
 land ever since&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# find the first venv backwards and activate it.&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# find the first venv backwards and activate it.&lt;/span&gt;
 pv&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nv"&gt;A&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;./*/bin/activate&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="o"&gt;{&lt;/span&gt;1..&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -o / &lt;span class="p"&gt;|&lt;/span&gt; wc -l&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; bash -c &lt;span class="s2"&gt;&amp;quot;ls &lt;/span&gt;&lt;span class="nv"&gt;$A&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; 2&amp;gt; /dev/null&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
         &lt;span class="nb"&gt;source&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;bash -c &lt;span class="s2"&gt;&amp;quot;ls &lt;/span&gt;&lt;span class="nv"&gt;$A&lt;/span&gt;&lt;span class="s2"&gt; | head -1&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="nb"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        break&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="k"&gt;fi&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="nv"&gt;A&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;../&lt;span class="nv"&gt;$A&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="k"&gt;done&lt;/span&gt;
@@ -118,8 +118,8 @@ pv&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;p&gt;Now it's all like&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; Work on awesome-project
-&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;python/project/path/awesome-project
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;#&lt;/span&gt; Work on awesome-project
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; python/project/path/awesome-project
 &lt;span class="gp"&gt;#&lt;/span&gt; Women and glory are just around the corner, Oh, virtualenv
 &lt;span class="gp"&gt;$&lt;/span&gt; pv
 &lt;span class="gp"&gt;#&lt;/span&gt; Set!

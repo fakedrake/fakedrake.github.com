@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/kernel.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2014-07-16T18:25:00+03:00</updated><entry><title>Ethernet deadlocks and forking the kernel</title><link href="https://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" rel="alternate"></link><updated>2014-07-16T18:25:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:ethernet-deadlocks-and-forking-the-kernel.html</id><summary type="html">&lt;p&gt;This is a bit specific but it is something I encountered more than
+<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/kernel.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2014-07-16T18:25:00+03:00</updated><entry><title>Ethernet deadlocks and forking the kernel</title><link href="https://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" rel="alternate"></link><published>2014-07-16T18:25:00+03:00</published><updated>2014-07-16T18:25:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:ethernet-deadlocks-and-forking-the-kernel.html</id><summary type="html">&lt;p&gt;This is a bit specific but it is something I encountered more than
 once and spent a couple of hours trying to fix. So here is the
 problem. I have a xilinx zynq zc702 board and I load a slightly
 customized 3.8 linux kernel on it. I boot it and it freezes at&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;loaded&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;loaded&lt;/span&gt;
 &lt;span class="n"&gt;xqspips&lt;/span&gt; &lt;span class="n"&gt;e000d000&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;spi&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;unqueued&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;deprecated&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -51,21 +51,21 @@ situation.&lt;/p&gt;
 trivial to just tell &lt;code&gt;xqspips_irq&lt;/code&gt; to not only check the status
 register to decide whether it should read or not, but also check with
 the xqspi struct. Essentially changing&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
 &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xqspips_read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xqspi&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;regs&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;XQSPIPS_STATUS_OFFSET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
     &lt;span class="n"&gt;XQSPIPS_IXR_RXNEMTY_MASK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;into&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
 &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;xqspips_read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xqspi&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;regs&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;XQSPIPS_STATUS_OFFSET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
     &lt;span class="n"&gt;XQSPIPS_IXR_RXNEMTY_MASK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
     &lt;span class="n"&gt;xqspi&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;bytes_to_receive&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;did the trick.&lt;/p&gt;</summary><category term="drivers"></category><category term="irq"></category><category term="linux"></category><category term="kernel"></category></entry><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="https://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
+&lt;p&gt;did the trick.&lt;/p&gt;</summary><category term="drivers"></category><category term="irq"></category><category term="linux"></category><category term="kernel"></category></entry><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="https://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><published>2014-03-31T22:30:00+03:00</published><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
 anything crucial. Make them small and mount the rest of the filesystem
 using the rootfs related boot commands and the &lt;code&gt;-hda&lt;/code&gt; option on qemu
 or use nfs or whatever.&lt;/p&gt;
@@ -76,7 +76,7 @@ may it be because I just want the kernel to do my bidding and load a
 ramdisk that is as big as half a Gigabyte. The point is, shoving such
 a big ramdisk down the kernel's throat will result in it choking into
 something like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;...
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;...
 
 RAMDISK: ext2 filesystem found at block 0
 RAMDISK: image too big! (500496KiB/16384KiB)
@@ -129,7 +129,7 @@ true. &lt;em&gt;Documentation/blockdev/ramdisk.txt&lt;/em&gt; told me and it bet
 once by mentioning that I can &lt;code&gt;ramdisk_blocksize=N&lt;/code&gt; which if you grep
 the source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
 &lt;p&gt;Anyway what I ended up doing is editing &lt;code&gt;ramdisk_size()&lt;/code&gt; from this&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
 &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;__init&lt;/span&gt; &lt;span class="nf"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="n"&gt;rd_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;simple_strtol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -139,7 +139,7 @@ the source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
 
 
 &lt;p&gt;to look more like this&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
 &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;__init&lt;/span&gt; &lt;span class="nf"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -164,7 +164,7 @@ the source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
 just one 500M disk, while having &lt;em&gt;ramdisk_size=500000&lt;/em&gt; behave as
 before. Noice!&lt;/p&gt;
 &lt;p&gt;So now we simply run qemu&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;qemu-system-arm -M xilinx-zynq-a9 -m 1024 -serial null -serial
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;qemu-system-arm -M xilinx-zynq-a9 -m 1024 -serial null -serial
     mon:stdio -dtb ./devtree.dtb -kernel path/to/zImage
     -initrd path/to/enormous-ramdisk.img -nographic
     -append &amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp \
@@ -175,7 +175,7 @@ before. Noice!&lt;/p&gt;
 &lt;p&gt;And everything boots correctly!!&lt;/p&gt;
 &lt;p&gt;I always run qemu from within a script so for completeness here is the
 relevan excerpt&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;...
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;...
 
 &lt;span class="nv"&gt;BOOTCMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;du --apparent-size &lt;span class="nv"&gt;$RAMDISK&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;,1&amp;#39;&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$QEMU&lt;/span&gt;&lt;span class="s2"&gt; -M xilinx-zynq-a9  -m 1024  -serial null -serial mon:stdio -dtb &lt;/span&gt;&lt;span class="nv"&gt;$DTB&lt;/span&gt;&lt;span class="s2"&gt; -kernel &lt;/span&gt;&lt;span class="nv"&gt;$KERNEL&lt;/span&gt;&lt;span class="s2"&gt; -initrd &lt;/span&gt;&lt;span class="nv"&gt;$RAMDISK&lt;/span&gt;&lt;span class="s2"&gt; -nographic&amp;quot;&lt;/span&gt;
@@ -186,7 +186,7 @@ relevan excerpt&lt;/p&gt;
 
 
 &lt;p&gt;As an extra benefit this will actually measure the ramdisk and make
-the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="https://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
+the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="https://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><published>2014-03-28T20:45:00+02:00</published><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
 proper debugging methods are is sometimes
 &lt;a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN"&gt;debateable&lt;/a&gt;),
 I always (over)use printks to debug the kernel. Now the problem with
@@ -203,7 +203,7 @@ the project root. For me there are usually some nasty device tree
 changes that I make to fit Qemu and also my .config is setup for
 debugging. I definitely dont want reverting any of that. Actually all
 I want to revert is the .c files I threw printks in.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git status | sed -n &amp;#39;s/.*modified: *\(.*\.c\)/\1/p&amp;#39; | xargs git checkout
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git status | sed -n &amp;#39;s/.*modified: *\(.*\.c\)/\1/p&amp;#39; | xargs git checkout
 &lt;/pre&gt;&lt;/div&gt;
 
 

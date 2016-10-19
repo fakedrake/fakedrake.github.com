@@ -134,7 +134,7 @@ request for RepoB that is based on it's branch development. This task
 can be tedious and things can go wrong. Let's automate the whole
 process.</p>
 <p>Make the two repositories:</p>
-<div class="highlight"><pre>mkdir /tmp/RepoA
+<div class="highlight"><pre><span></span>mkdir /tmp/RepoA
 mkdir /tmp/RepoB
 
 cd /tmp/RepoA
@@ -162,7 +162,7 @@ development branch.</p>
 <p>The cool part of Makefiles is that variables are constructed lazily
 and recursively. Let's abuse that to switch to development if we are
 not there and do nothing if we are not. Let's make some boilerplate</p>
-<div class="highlight"><pre>dep-ok:
+<div class="highlight"><pre><span></span>dep-ok:
     touch dep-ok
 
 new-command-dep=$(shell ($1) &gt; /dev/null &amp;&amp; echo dep-ok || echo
@@ -176,7 +176,7 @@ $2)
 <li>A target that when run will actually do the work</li>
 </ul>
 <p>Here we will use it for our example</p>
-<div class="highlight"><pre>bgit=git -C /tmp/RepoB
+<div class="highlight"><pre><span></span>bgit=git -C /tmp/RepoB
 b-on-branch=$(call new-command-dep,$(bgit) branch|grep -F &quot;* $1&quot;,b-on-branch-$1)
 b-on-branch-%:
     $(bgit) checkout $*
@@ -184,7 +184,7 @@ b-on-branch-%:
 
 
 <p>Now we can run</p>
-<div class="highlight"><pre>make b-on-branch-master
+<div class="highlight"><pre><span></span>make b-on-branch-master
 </pre></div>
 
 
@@ -262,6 +262,7 @@ b-on-branch-%:
               <h3>Categories</h3>
 
               <ul>
+                <li><a href="../category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="../category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="../category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="../category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -299,6 +300,8 @@ b-on-branch-%:
                 None
                 None
                 None
+                None
+                None
               </div>
 
               <ul class="tree">
@@ -306,6 +309,11 @@ b-on-branch-%:
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
+                      <span><i class="fa fa-minus-square-o"></i>10</span>
+                      <ul>
+                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
+                        <li><a href=""><small>Tue 18 October 2016</small>Generic programming with ghc generics</a></li>
+                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>
