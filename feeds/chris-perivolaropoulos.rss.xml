@@ -15,7 +15,89 @@ run this on &lt;em&gt;OSX&lt;/em&gt;:&lt;/p&gt;
 
 
 &lt;p&gt;You should be presented with a QR code. Scan it with your phone and
-you should have access to your computer's files!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Thu, 29 Sep 2016 03:54:00 +0300</pubDate><guid>tag:fakedrake.github.io,2016-09-29:transfer-files-to-your-phone-over-wifi.html</guid><category>unix</category></item><item><title>Intstalling NVM and node-js on unix</title><link>https://fakedrake.github.io/intstalling-nvm-and-nodejs.html</link><description>&lt;p&gt;Just run the following that will setup everything for you:&lt;/p&gt;
+you should have access to your computer's files!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Thu, 29 Sep 2016 03:54:00 +0300</pubDate><guid>tag:fakedrake.github.io,2016-09-29:transfer-files-to-your-phone-over-wifi.html</guid><category>unix</category></item><item><title>Subclassing function types in python</title><link>https://fakedrake.github.io/subclassing-function-types.html</link><description>&lt;p&gt;Disclaimer: The following is based on cpython.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; class A(object):
+...     @classmethod
+...     def clsmeth(cls): pass
+...     @staticmethod
+...     def stemeth(): pass
+...     def method(self): pass
+...
+&amp;gt;&amp;gt;&amp;gt; def func(): pass
+...
+&amp;gt;&amp;gt;&amp;gt; labd = lambda x: x
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And let's define a way of finding out the corresponding type in the
+types module&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;types&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;typenames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;types&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__dict__&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;typenames&lt;/code&gt; is now a function that will evaluate to a list of names of
+the types of the instance we give it. Let's check that it works&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; typenames(1)
+[&amp;#39;IntType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(&amp;#39;1&amp;#39;)
+[&amp;#39;StringType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(True)
+[&amp;#39;BooleanType&amp;#39;]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Let's take a look at the types of different built in callable types:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; typenames(func)
+[&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(labd)
+[&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; # Ordinary methods
+&amp;gt;&amp;gt;&amp;gt; typenames(A.method)
+[&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(A().method)
+[&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; # Static methods
+&amp;gt;&amp;gt;&amp;gt; typenames(A().stemeth)
+[&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(A.stemeth)
+&amp;gt;&amp;gt;&amp;gt;
+[&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(A.clsmeth)
+[&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(A().clsmeth)
+[&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So there are (at least) four built in callable types.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;FunctionType&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LambdaType&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UnboundMethodType&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MethodType&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Calling them we can see the various:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; A.stemeth()
+&amp;gt;&amp;gt;&amp;gt; A().stemeth()
+&amp;gt;&amp;gt;&amp;gt; A.clsmeth()
+(&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;,)
+&amp;gt;&amp;gt;&amp;gt; A().clsmeth()
+(&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;,)
+&amp;gt;&amp;gt;&amp;gt; A.method()
+Traceback (most recent call last):
+  File &amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+TypeError: unbound method method() must be called with A instance as first argument (got nothing instead)
+&amp;gt;&amp;gt;&amp;gt; A().method()
+&amp;gt;&amp;gt;&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note:
+&lt;a href="https://github.com/python/cpython/blob/master/Lib/types.py"&gt;types.py&lt;/a&gt;
+does pretty much the same thing to get hold of the types themselves
+but for educational reasons let's pretend that what we just did is not
+stupid.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Sun, 18 Sep 2016 11:59:00 +0300</pubDate><guid>tag:fakedrake.github.io,2016-09-18:subclassing-function-types.html</guid><category>python</category></item><item><title>Intstalling NVM and node-js on unix</title><link>https://fakedrake.github.io/intstalling-nvm-and-nodejs.html</link><description>&lt;p&gt;Just run the following that will setup everything for you:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash&lt;/span&gt;
 &lt;span class="x"&gt;export NVM_DIR=&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/.nvm&amp;quot;&lt;/span&gt;
 &lt;span class="x"&gt;[ -s &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;NVM_DIR&lt;/span&gt;&lt;span class="x"&gt;/nvm.sh&amp;quot; ] &amp;amp;&amp;amp; . &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;NVM_DIR&lt;/span&gt;&lt;span class="x"&gt;/nvm.sh&amp;quot; &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt; This loads nvm&lt;/span&gt;
@@ -198,29 +280,7 @@ finish.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;And &lt;code&gt;getUrl&lt;/code&gt; will run at most 5 times simultaneously.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Fri, 29 Apr 2016 02:23:00 +0300</pubDate><guid>tag:fakedrake.github.io,2016-04-29:limiting-parallel-thread-in-haskell.html</guid></item><item><title>Automated insights with org mode</title><link>https://fakedrake.github.io/automated-insights-with-org-mode.html</link><description>&lt;p&gt;title:
-date: 2016-01-29 15:22
-tags: org-mode,emacs
-category:
-slug: automated-insights-with-org-mode
-author: Chris PerivolaropoulosYY&lt;/p&gt;
-&lt;p&gt;title: Automated insights with org mode
-date: 2016-05-12 16:10
-title: Automated insights with org mode
-date: 2016-01-29 15:22
-tags: org-mode,emacs
-category:
-slug: automated-insights-with-org-mode
-author: Chris Perivolaropoulos&lt;/p&gt;
-&lt;p&gt;The other day I trying to evaluate various roadmaps that a projact
-could continue into and try to compare the cost and the duration of
-each solution. I started off writing a an org mode document describing
-each scenario separately and putting each task in it's separate
-heading. Soon I made the following observation:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Some tasks had unknown duration&lt;/li&gt;
-&lt;li&gt;Many tasks were common for more than one solution&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Fri, 29 Jan 2016 15:22:00 +0200</pubDate><guid>tag:fakedrake.github.io,2016-01-29:automated-insights-with-org-mode.html</guid><category>org-mode</category><category>emacs</category></item><item><title>Killing mysql queries</title><link>https://fakedrake.github.io/killing-mysql-queries.html</link><description>&lt;p&gt;MySQL queries are many times painfully slow. So slow that it is not
+&lt;p&gt;And &lt;code&gt;getUrl&lt;/code&gt; will run at most 5 times simultaneously.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Chris Perivolaropoulos</dc:creator><pubDate>Fri, 29 Apr 2016 02:23:00 +0300</pubDate><guid>tag:fakedrake.github.io,2016-04-29:limiting-parallel-thread-in-haskell.html</guid></item><item><title>Killing mysql queries</title><link>https://fakedrake.github.io/killing-mysql-queries.html</link><description>&lt;p&gt;MySQL queries are many times painfully slow. So slow that it is not
 worth waiting. Here is how to kill a running query.&lt;/p&gt;
 &lt;p&gt;First of all you need to know what is running to choose what to kill.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt; show processlist

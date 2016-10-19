@@ -118,29 +118,7 @@ finish.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;And &lt;code&gt;getUrl&lt;/code&gt; will run at most 5 times simultaneously.&lt;/p&gt;</summary></entry><entry><title>Automated insights with org mode</title><link href="https://fakedrake.github.io/automated-insights-with-org-mode.html" rel="alternate"></link><updated>2016-01-29T15:22:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-01-29:automated-insights-with-org-mode.html</id><summary type="html">&lt;p&gt;title:
-date: 2016-01-29 15:22
-tags: org-mode,emacs
-category:
-slug: automated-insights-with-org-mode
-author: Chris PerivolaropoulosYY&lt;/p&gt;
-&lt;p&gt;title: Automated insights with org mode
-date: 2016-05-12 16:10
-title: Automated insights with org mode
-date: 2016-01-29 15:22
-tags: org-mode,emacs
-category:
-slug: automated-insights-with-org-mode
-author: Chris Perivolaropoulos&lt;/p&gt;
-&lt;p&gt;The other day I trying to evaluate various roadmaps that a projact
-could continue into and try to compare the cost and the duration of
-each solution. I started off writing a an org mode document describing
-each scenario separately and putting each task in it's separate
-heading. Soon I made the following observation:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Some tasks had unknown duration&lt;/li&gt;
-&lt;li&gt;Many tasks were common for more than one solution&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="org-mode"></category><category term="emacs"></category></entry><entry><title>Killing mysql queries</title><link href="https://fakedrake.github.io/killing-mysql-queries.html" rel="alternate"></link><updated>2016-01-20T13:07:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-01-20:killing-mysql-queries.html</id><summary type="html">&lt;p&gt;MySQL queries are many times painfully slow. So slow that it is not
+&lt;p&gt;And &lt;code&gt;getUrl&lt;/code&gt; will run at most 5 times simultaneously.&lt;/p&gt;</summary></entry><entry><title>Killing mysql queries</title><link href="https://fakedrake.github.io/killing-mysql-queries.html" rel="alternate"></link><updated>2016-01-20T13:07:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-01-20:killing-mysql-queries.html</id><summary type="html">&lt;p&gt;MySQL queries are many times painfully slow. So slow that it is not
 worth waiting. Here is how to kill a running query.&lt;/p&gt;
 &lt;p&gt;First of all you need to know what is running to choose what to kill.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt; show processlist

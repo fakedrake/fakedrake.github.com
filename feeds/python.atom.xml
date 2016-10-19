@@ -1,5 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/python.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2014-07-16T19:27:00+03:00</updated><entry><title>Enabling python virtualenvs dumb and fast</title><link href="https://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" rel="alternate"></link><updated>2014-07-16T19:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:enabling-python-virtualenvs-dumb-and-fast.html</id><summary type="html">&lt;p&gt;Unless you are using
+<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/python.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-09-18T11:59:00+03:00</updated><entry><title>Subclassing function types in python</title><link href="https://fakedrake.github.io/subclassing-function-types.html" rel="alternate"></link><updated>2016-09-18T11:59:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-18:subclassing-function-types.html</id><summary type="html">&lt;p&gt;Disclaimer: The following is based on cpython.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; class A(object):
+...     @classmethod
+...     def clsmeth(cls): pass
+...     @staticmethod
+...     def stemeth(): pass
+...     def method(self): pass
+...
+&amp;gt;&amp;gt;&amp;gt; def func(): pass
+...
+&amp;gt;&amp;gt;&amp;gt; labd = lambda x: x
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And let's define a way of finding out the corresponding type in the
+types module&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;types&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;typenames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;types&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__dict__&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;typenames&lt;/code&gt; is now a function that will evaluate to a list of names of
+the types of the instance we give it. Let's check that it works&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; typenames(1)
+[&amp;#39;IntType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(&amp;#39;1&amp;#39;)
+[&amp;#39;StringType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(True)
+[&amp;#39;BooleanType&amp;#39;]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Let's take a look at the types of different built in callable types:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; typenames(func)
+[&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(labd)
+[&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; # Ordinary methods
+&amp;gt;&amp;gt;&amp;gt; typenames(A.method)
+[&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(A().method)
+[&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; # Static methods
+&amp;gt;&amp;gt;&amp;gt; typenames(A().stemeth)
+[&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(A.stemeth)
+&amp;gt;&amp;gt;&amp;gt;
+[&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(A.clsmeth)
+[&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
+&amp;gt;&amp;gt;&amp;gt; typenames(A().clsmeth)
+[&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So there are (at least) four built in callable types.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;FunctionType&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LambdaType&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UnboundMethodType&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MethodType&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Calling them we can see the various:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; A.stemeth()
+&amp;gt;&amp;gt;&amp;gt; A().stemeth()
+&amp;gt;&amp;gt;&amp;gt; A.clsmeth()
+(&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;,)
+&amp;gt;&amp;gt;&amp;gt; A().clsmeth()
+(&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;,)
+&amp;gt;&amp;gt;&amp;gt; A.method()
+Traceback (most recent call last):
+  File &amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+TypeError: unbound method method() must be called with A instance as first argument (got nothing instead)
+&amp;gt;&amp;gt;&amp;gt; A().method()
+&amp;gt;&amp;gt;&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note:
+&lt;a href="https://github.com/python/cpython/blob/master/Lib/types.py"&gt;types.py&lt;/a&gt;
+does pretty much the same thing to get hold of the types themselves
+but for educational reasons let's pretend that what we just did is not
+stupid.&lt;/p&gt;</summary><category term="python"></category></entry><entry><title>Enabling python virtualenvs dumb and fast</title><link href="https://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" rel="alternate"></link><updated>2014-07-16T19:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:enabling-python-virtualenvs-dumb-and-fast.html</id><summary type="html">&lt;p&gt;Unless you are using
 &lt;a href="https://bitbucket.org/dhellmann/virtualenvwrapper/"&gt;virtualenvwrapper&lt;/a&gt;
 or something else fancy that the cool kids like these days a common
 series of commands to run python tests is. I also annotated my
