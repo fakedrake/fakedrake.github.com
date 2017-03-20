@@ -5,7 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta property="og:image" content="./theme/img/logo_og.png" />
     <title>
-Getting all senders with notmuch - Chris Perivolaropoulos
+Saving links in a file with vimperator - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
@@ -109,58 +109,49 @@ Getting all senders with notmuch - Chris Perivolaropoulos
         <div class="row">
           <div class="left col-md-9">
   <header>
-      <h1>Getting all senders with notmuch</h1>
+      <h1>Saving links in a file with vimperator</h1>
     <small class="fsize13">
-            <a href="./category/bash.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> bash</a>
-      <a href="./getting-all-senders-with-notmuch.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="getting-all-senders-with-notmuch.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
-      <span class="label label-default light">Wed 19 October 2016</span>
+            <a href="./category/vimperator.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> vimperator</a>
+      <a href="./saving-links-in-a-file-with-vimperator.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="saving-links-in-a-file-with-vimperator.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <span class="label label-default light">Mon 20 March 2017</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
     </small>
   </header>
   <article class='content'>
-    <p>The problem we are trying to solve is this: I am
-using <a href="https://notmuchmail.org/">notmuch</a> and I got a mail within the
-last 3 months from someone that i remember nothing about but when I
-see their email I will know it were them. So let's use notmuch, python
-and awk to solve this.</p>
-<p>First let's find out how to tell notmuch to search within that
-periond. Experimenting is usually faster than looking up documentation
-when it comes to notmuch so after 2 or 3 attempts:</p>
-<div class="highlight"><pre><span></span>$ notmuch count <span class="s2">&quot;date:3M..&quot;</span>
-1817
+    <p>I am quite lazy with bibliography. I never keep track of papers and
+end up searching for them in google scholar over and over again based
+on my (not great) memory. For that I wrote this snippet that helps me
+at least keep them around:</p>
+<div class="highlight"><pre>hints.addMode(&#39;l&#39;, &quot;Save paper link.&quot;, function (e) {
+  var title = e.innerHTML.replace(&#39;<span class="nt">&lt;b&gt;</span>&#39;, &#39;&#39;).replace(&#39;<span class="nt">&lt;/b&gt;</span>&#39;, &#39;&#39;);
+  new io.File(&#39;~/Documents/papers.org&#39;).write(
+    &#39;- [[&#39; + e.href + &#39;][&#39; + title + &#39;]]\n&#39;,
+    &#39;&gt;&gt;&#39;);
+}, function () {
+  return util.makeXPath([&quot;h3//a&quot;]);
+});
 </pre></div>
 
 
-<p>Which sounds about right.</p>
-<p>The following command assumes just vanilla python and notmuch:</p>
-<div class="highlight"><pre><span></span>$ notmuch show --body<span class="o">=</span><span class="nb">false</span> --format<span class="o">=</span>json <span class="s2">&quot;data:3M..&quot;</span> <span class="p">|</span> python -mjson.tool <span class="p">|</span> awk <span class="s1">&#39;/&quot;From&quot;:/{$1=&quot;&quot;; print $0}&#39;</span> <span class="p">|</span> sort <span class="p">|</span> uniq
-...
-</pre></div>
-
-
-<p>And it will return a list of all the unique senders of emails within
-the last 3 months. They are about 500 in my case so i can skim through
-them or add extra search criteria.</p>
-<p>Just to give some well deserved credit all the above commands were
-completed almost instantaneously.</p>
+<p>Put this in a file under <code>~/.vimperator/plugins/</code> and in a google
+scholar page hit <code>;l</code> to activate the hint mode. A link to the paper
+you select will be saved in <code>~/Documents/papers.org</code>.</p>
   </article>
 
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
 <p class="socials">
-  <a href="http://www.facebook.com/sharer/sharer.php?u=./getting-all-senders-with-notmuch.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=./getting-all-senders-with-notmuch.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=./getting-all-senders-with-notmuch.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url=./getting-all-senders-with-notmuch.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./getting-all-senders-with-notmuch.html&title=Getting all senders with notmuch&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+  <a href="http://www.facebook.com/sharer/sharer.php?u=./saving-links-in-a-file-with-vimperator.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=./saving-links-in-a-file-with-vimperator.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=./saving-links-in-a-file-with-vimperator.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url=./saving-links-in-a-file-with-vimperator.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=./saving-links-in-a-file-with-vimperator.html&title=Saving links in a file with vimperator&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-        <a href="/tag/python.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> python</a>
-        <a href="/tag/notmuch.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> notmuch</a>
-        <a href="/tag/bash.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> bash</a>
+        <a href="/tag/vimperator.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> vimperator</a>
   </p>
 
   <hr /><!-- divider -->
@@ -169,9 +160,9 @@ completed almost instantaneously.</p>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'drninjabatman-blog';
-        var disqus_identifier = "getting-all-senders-with-notmuch.html";
-        var disqus_title = "Getting all senders with notmuch";
-        var disqus_url = "https://fakedrake.github.io/getting-all-senders-with-notmuch.html";
+        var disqus_identifier = "saving-links-in-a-file-with-vimperator.html";
+        var disqus_title = "Saving links in a file with vimperator";
+        var disqus_url = "https://fakedrake.github.io/saving-links-in-a-file-with-vimperator.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -218,7 +209,6 @@ completed almost instantaneously.</p>
               <h3>Categories</h3>
 
               <ul>
-                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -228,6 +218,7 @@ completed almost instantaneously.</p>
                 <li><a href="./category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="./category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
                 <li><a href="./category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
+                <li><a href="./category/vimperator.html"><i class="fa fa-dot-circle-o"></i> vimperator</a></li>
               </ul>
 
             </div>
@@ -261,13 +252,18 @@ completed almost instantaneously.</p>
 
               <ul class="tree">
                 <li>
+                  <span><i class="fa fa-minus-square-o"></i>2017</span>
+                  <ul>
+                    <li>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
+                      </ul>
+                    </li>
+                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>10</span>
-                      <ul>
-                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
-                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

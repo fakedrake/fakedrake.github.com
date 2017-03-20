@@ -150,12 +150,12 @@ but I would prefer absolute paths to work as well so I decided i would
 pipe the output through sed and translate the paths to somthing
 compilation-mode would be able to deal with. I came up with
 <em>remote_test.sh</em>:</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<div class="highlight"><pre><span class="c">#!/bin/sh</span>
 
 <span class="nv">REMOTE_ROOT</span><span class="o">=</span><span class="s2">&quot;/path/to/remote-test&quot;</span>
 <span class="nv">LOCAL_ROOT</span><span class="o">=</span><span class="s2">&quot;/path/to/test&quot;</span>
 
-<span class="nv">REMOTE_SRV</span><span class="o">=</span>localhost <span class="c1"># for testing</span>
+<span class="nv">REMOTE_SRV</span><span class="o">=</span>localhost <span class="c"># for testing</span>
 <span class="nv">REMOTE_USER</span><span class="o">=</span><span class="sb">`</span>whoami<span class="sb">`</span>
 
 <span class="nv">SED_REMOTE_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$REMOTE_ROOT</span> <span class="p">|</span> sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
@@ -173,7 +173,7 @@ compilation-mode would be able to deal with. I came up with
 <span class="nv">REMOTE_CMD</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ARGS</span> <span class="p">|</span> remote_paths <span class="k">)</span>
 <span class="nv">REMOTE_PWD</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span> <span class="p">|</span> remote_paths <span class="k">)</span>
 
-<span class="nb">echo</span> Running: <span class="nv">$REMOTE_CMD</span>
+<span class="nb">echo </span>Running: <span class="nv">$REMOTE_CMD</span>
 
 ssh <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span> <span class="s2">&quot;cd </span><span class="nv">$REMOTE_PWD</span><span class="s2"> &amp;&amp; </span><span class="nv">$REMOTE_CMD</span><span class="s2">&quot;</span> <span class="p">|&amp;</span> local_paths
 </pre></div>
@@ -182,7 +182,7 @@ ssh <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span> <sp
 <p>Notice the escaping of the paths so that characters in the paths dong
 get confused for parts of the sed command. So let's test it.</p>
 <p>Run the tests again like this now:</p>
-<div class="highlight"><pre><span></span><span class="gp">(workstation)$</span> ./remote_test.sh <span class="s1">&#39;echo Path is: /path/to/test &gt;&amp;2&#39;</span>
+<div class="highlight"><pre><span class="gp">(workstation)$</span> ./remote_test.sh <span class="s1">&#39;echo Path is: /path/to/test &gt;&amp;2&#39;</span>
 <span class="go">Running: echo Path is: /path/to/remote-test</span>
 <span class="go">fakedrake@localhost&#39;s password:</span>
 <span class="go">Path is: /path/to/test</span>
@@ -214,7 +214,7 @@ benefit of not putting every little failing commit of <code>bench</code> on
 github (and having Travis check it for errors and who knows what
 else).</p>
 <p>So to make a bare repository in <em>~/.testing</em> on the server</p>
-<div class="highlight"><pre><span></span><span class="gp">(remote)$</span> <span class="nb">cd</span> ~
+<div class="highlight"><pre><span class="gp">(remote)$</span> <span class="nb">cd</span> ~
 <span class="gp">(remote)$</span> mkdir .testing
 <span class="gp">(remote)$</span> <span class="nb">cd</span> .testing
 <span class="gp">(remote)$</span> git clone --bare &lt;some mirror of the project&gt;
@@ -225,14 +225,14 @@ else).</p>
 
 
 <p>On the local workstation add that as remote:</p>
-<div class="highlight"><pre><span></span><span class="gp">(workstation)$</span> <span class="nb">cd</span> /path/to/local/project
+<div class="highlight"><pre><span class="gp">(workstation)$</span> <span class="nb">cd</span> /path/to/local/project
 <span class="gp">(workstation)$</span> git remote add testing /home/remote-user/.testing/project.git
 </pre></div>
 
 
 <p>Then have <em>test_remote.sh</em> push there before doing anything else by
 throwing in there something like this:</p>
-<div class="highlight"><pre><span></span><span class="nv">BRANCH</span><span class="o">=</span><span class="k">$(</span>git branch <span class="p">|</span> awk <span class="s1">&#39;/\*/{print $2}&#39;</span><span class="k">)</span>
+<div class="highlight"><pre><span class="nv">BRANCH</span><span class="o">=</span><span class="k">$(</span>git branch <span class="p">|</span> awk <span class="s1">&#39;/\*/{print $2}&#39;</span><span class="k">)</span>
 <span class="nv">GIT_REMOTE</span><span class="o">=</span>&lt;server&gt;
 
 <span class="k">function</span> git_draft_sync <span class="o">{</span>
@@ -240,26 +240,26 @@ throwing in there something like this:</p>
 
     <span class="nb">echo</span> <span class="s2">&quot;Will now commit a dumb commit to current branch.&quot;</span>
 
-    <span class="nb">echo</span> Commiting: <span class="nv">$COMMIT_MSG</span>
+    <span class="nb">echo </span>Commiting: <span class="nv">$COMMIT_MSG</span>
     git commit -a -m <span class="s2">&quot;</span><span class="nv">$COMMIT_MSG</span><span class="s2">&quot;</span>
 
-    <span class="nb">echo</span> Pushing branch: <span class="nv">$BRANCH</span>
+    <span class="nb">echo </span>Pushing branch: <span class="nv">$BRANCH</span>
     git push <span class="nv">$GIT_REMOTE</span> <span class="nv">$BRANCH</span>
 <span class="o">}</span>
 </pre></div>
 
 
 <p>And have the server pill the updates on the branch before testing:</p>
-<div class="highlight"><pre><span></span><span class="nv">REMOTE_CMD</span><span class="o">=</span><span class="s2">&quot;(git pull testing </span><span class="nv">$BRANCH</span><span class="s2"> &amp;&amp; </span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ARGS</span> <span class="p">|</span> remote_paths<span class="k">)</span><span class="s2">)&quot;</span>
+<div class="highlight"><pre><span class="nv">REMOTE_CMD</span><span class="o">=</span><span class="s2">&quot;(git pull testing </span><span class="nv">$BRANCH</span><span class="s2"> &amp;&amp; </span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ARGS</span> <span class="p">|</span> remote_paths<span class="k">)</span><span class="s2">)&quot;</span>
 </pre></div>
 
 
 <p>(and dont forget to run <code>git_draft_sync</code> before ssh)</p>
 <p>And you are all set! My real world script for running python tests on
 a remote server at CSAIL looks much like this:</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<div class="highlight"><pre><span class="c">#!/bin/sh</span>
 
-<span class="c1"># Paths (don&#39;t use / at the end)</span>
+<span class="c"># Paths (don&#39;t use / at the end)</span>
 <span class="nv">REMOTE_ROOT</span><span class="o">=</span><span class="s2">&quot;/path/to/remote/home/Projects&quot;</span>
 <span class="nv">LOCAL_ROOT</span><span class="o">=</span><span class="s2">&quot;/home/fakedrake/Projects/CSAIL/Python&quot;</span>
 <span class="nv">REMOTE_SRV</span><span class="o">=</span>&lt;remote-server&gt;
@@ -274,14 +274,14 @@ a remote server at CSAIL looks much like this:</p>
 
     <span class="nb">echo</span> <span class="s2">&quot;Will now commit a dumb commit to current branch.&quot;</span>
 
-    <span class="nb">echo</span> Commiting: <span class="nv">$COMMIT_MSG</span>
+    <span class="nb">echo </span>Commiting: <span class="nv">$COMMIT_MSG</span>
     git commit -a -m <span class="s2">&quot;</span><span class="nv">$COMMIT_MSG</span><span class="s2">&quot;</span>
 
-    <span class="nb">echo</span> Pushing branch: <span class="nv">$BRANCH</span>
+    <span class="nb">echo </span>Pushing branch: <span class="nv">$BRANCH</span>
     git push <span class="nv">$GIT_REMOTE</span> <span class="nv">$BRANCH</span>
 <span class="o">}</span>
 
-<span class="c1">## -- No need to edit from here on --</span>
+<span class="c">## -- No need to edit from here on --</span>
 <span class="nv">SED_REMOTE_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$REMOTE_ROOT</span> <span class="p">|</span> sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
 <span class="nv">SED_LOCAL_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$LOCAL_ROOT</span> <span class="p">|</span> sed <span class="s1">&#39;s/[\/&amp;]/\\&amp;/g&#39;</span><span class="k">)</span>
 
@@ -299,10 +299,10 @@ a remote server at CSAIL looks much like this:</p>
 
 <span class="nb">echo</span> <span class="s2">&quot;Running perliminaries:&quot;</span>
 
-<span class="nb">echo</span> ARGS: <span class="nv">$ARGS</span>
-<span class="nb">echo</span> Running: <span class="nv">$REMOTE_CMD</span>
-<span class="nb">echo</span> Directory: <span class="nv">$REMOTE_PWD</span>
-<span class="nb">echo</span> At: <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span>
+<span class="nb">echo </span>ARGS: <span class="nv">$ARGS</span>
+<span class="nb">echo </span>Running: <span class="nv">$REMOTE_CMD</span>
+<span class="nb">echo </span>Directory: <span class="nv">$REMOTE_PWD</span>
+<span class="nb">echo </span>At: <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span>
 
 git_draft_sync
 ssh <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span> <span class="s2">&quot;cd </span><span class="nv">$REMOTE_PWD</span><span class="s2"> &amp;&amp; </span><span class="nv">$REMOTE_CMD</span><span class="s2">&quot;</span> <span class="p">|&amp;</span> local_paths
@@ -313,7 +313,7 @@ ssh <span class="nv">$REMOTE_USER</span>@<span class="nv">$REMOTE_SRV</span> <sp
 the top of the script to something that makes sense for you. Then tell
 your editor to prepend <code>./remote_test.sh</code> before the test
 command. Thus my emacs setup for example would do:</p>
-<div class="highlight"><pre><span></span><span class="nt">-</span><span class="o">*</span><span class="nt">-</span> <span class="nt">mode</span><span class="o">:</span> <span class="nt">compilation</span><span class="o">;</span> <span class="nt">default-directory</span><span class="o">:</span> <span class="s2">&quot;~/Projects/CSAIL/Python/WikipediaBase/&quot;</span> <span class="nt">-</span><span class="o">*</span><span class="nt">-</span>
+<div class="highlight"><pre><span class="nt">-</span><span class="o">*</span><span class="nt">-</span> <span class="nt">mode</span><span class="o">:</span> <span class="nt">compilation</span><span class="o">;</span> <span class="nt">default-directory</span><span class="o">:</span> <span class="s2">&quot;~/Projects/CSAIL/Python/WikipediaBase/&quot;</span> <span class="nt">-</span><span class="o">*</span><span class="nt">-</span>
 <span class="nt">Comint</span> <span class="nt">started</span> <span class="nt">at</span> <span class="nt">Sun</span> <span class="nt">May</span> <span class="nt">11</span> <span class="nt">23</span><span class="nd">:17:22</span>
 
 <span class="o">./</span><span class="nt">remote_test</span><span class="nc">.sh</span> <span class="o">/</span><span class="nt">home</span><span class="o">/</span><span class="nt">fakedrake</span><span class="o">/</span><span class="nt">Projects</span><span class="o">/</span><span class="nt">CSAIL</span><span class="o">/</span><span class="nt">Python</span><span class="o">/</span><span class="nt">py</span><span class="o">//</span><span class="nt">bin</span><span class="o">/</span><span class="nt">python</span>  <span class="nt">setup</span><span class="nc">.py</span> <span class="nt">test</span>
@@ -424,7 +424,6 @@ it easier but it is much safer.</p>
               <h3>Categories</h3>
 
               <ul>
-                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -434,6 +433,7 @@ it easier but it is much safer.</p>
                 <li><a href="./category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="./category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
                 <li><a href="./category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
+                <li><a href="./category/vimperator.html"><i class="fa fa-dot-circle-o"></i> vimperator</a></li>
               </ul>
 
             </div>
@@ -467,13 +467,18 @@ it easier but it is much safer.</p>
 
               <ul class="tree">
                 <li>
+                  <span><i class="fa fa-minus-square-o"></i>2017</span>
+                  <ul>
+                    <li>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
+                      </ul>
+                    </li>
+                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>10</span>
-                      <ul>
-                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
-                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

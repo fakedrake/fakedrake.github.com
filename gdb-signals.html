@@ -121,7 +121,7 @@ Gdb signals - Chris Perivolaropoulos
     <p>So unless you are debugging your own program and you know what you are
 doing this is probably not what you expect to happen while a program
 runs under GDB.</p>
-<div class="highlight"><pre><span></span>Program received signal SIGUSR1, User defined signal 1.
+<div class="highlight"><pre>Program received signal SIGUSR1, User defined signal 1.
 [Switching to Thread 0x7fffcff2c700 (LWP 3296)]
 ...
 (gdb)
@@ -164,7 +164,7 @@ Use the "handle" command to change these tables.
 be passed to the program. The other thing we notice here is that
 <code>SIGTRAP</code> is not passed to the program.</p>
 <p>To have <code>SIGUSR1</code> be ignored by GDB</p>
-<div class="highlight"><pre><span></span>(gdb) handle SIGUSR1 nostop noprint
+<div class="highlight"><pre>(gdb) handle SIGUSR1 nostop noprint
 Signal        Stop  Print   Pass to program Description
 SIGUSR1       No    No  Yes     User defined signal 1
 </pre></div>
@@ -177,12 +177,12 @@ the process will catch the key and will not stop. Instead of
 despairing you can try sending it a <code>SIGTRAP</code>. That will stop the
 program as if gdb had encountered a breakpoint. From another terminal
 run.</p>
-<div class="highlight"><pre><span></span><span class="gp">$</span> pkill -TRAP &lt;process-name&gt;
+<div class="highlight"><pre><span class="gp">$</span> pkill -TRAP &lt;process-name&gt;
 </pre></div>
 
 
 <p>If you are using <em>emacs</em> and <em>gud</em> like me you can automate this with:</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">my:gud-trap-process</span> <span class="p">(</span><span class="k">&amp;optional</span> <span class="nv">wrapping-script</span><span class="p">)</span>
+<div class="highlight"><pre><span class="p">(</span><span class="nb">defun</span> <span class="nv">my:gud-trap-process</span> <span class="p">(</span><span class="k">&amp;optional</span> <span class="nv">wrapping-script</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">interactive</span> <span class="s">&quot;*P&quot;</span><span class="p">)</span>
   <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">child-pid</span> <span class="s">&quot;xargs pgrep -P | head -1 |&quot;</span><span class="p">))</span>
     <span class="p">(</span><span class="nv">async-shell-command</span>
@@ -197,7 +197,7 @@ my:gud-trap-process</code> to give control to gdb. If you are running gdb
 from within a shell script like I usually do provide a prefix
 argument, ie. <code>C-u M-x my:gud-trap-process</code> to handle child processes
 correctly. I also have it bound to <code>C-x C-a t</code> for brevity:</p>
-<div class="highlight"><pre><span></span>(global-set-key (kbd &quot;C-x C-a t&quot;) `my:gud-trap-process)
+<div class="highlight"><pre>(global-set-key (kbd &quot;C-x C-a t&quot;) `my:gud-trap-process)
 </pre></div>
 
 
@@ -205,7 +205,7 @@ correctly. I also have it bound to <code>C-x C-a t</code> for brevity:</p>
 earlier but rather it will find the pid of gdb and send <code>SIGTRAP</code> to it's
 first child process. So if you want to automate the process in another
 way here is the main idea:</p>
-<div class="highlight"><pre><span></span>$ pgrep -P &lt;gdb pid&gt; <span class="p">|</span> head -1 <span class="p">|</span> xargs <span class="nb">kill</span> -TRAP
+<div class="highlight"><pre><span class="nv">$ </span>pgrep -P &lt;gdb pid&gt; <span class="p">|</span> head -1 <span class="p">|</span> xargs <span class="nb">kill</span> -TRAP
 </pre></div>
   </article>
 
@@ -282,7 +282,6 @@ way here is the main idea:</p>
               <h3>Categories</h3>
 
               <ul>
-                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -292,6 +291,7 @@ way here is the main idea:</p>
                 <li><a href="./category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="./category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
                 <li><a href="./category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
+                <li><a href="./category/vimperator.html"><i class="fa fa-dot-circle-o"></i> vimperator</a></li>
               </ul>
 
             </div>
@@ -325,13 +325,18 @@ way here is the main idea:</p>
 
               <ul class="tree">
                 <li>
+                  <span><i class="fa fa-minus-square-o"></i>2017</span>
+                  <ul>
+                    <li>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
+                      </ul>
+                    </li>
+                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>10</span>
-                      <ul>
-                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
-                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

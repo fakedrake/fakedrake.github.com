@@ -119,7 +119,7 @@ Subclassing function types in python - Chris Perivolaropoulos
   </header>
   <article class='content'>
     <p>Disclaimer: The following is based on cpython.</p>
-<div class="highlight"><pre><span></span>&gt;&gt;&gt; class A(object):
+<div class="highlight"><pre>&gt;&gt;&gt; class A(object):
 ...     @classmethod
 ...     def clsmeth(cls): pass
 ...     @staticmethod
@@ -134,14 +134,14 @@ Subclassing function types in python - Chris Perivolaropoulos
 
 <p>And let's define a way of finding out the corresponding type in the
 types module</p>
-<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">types</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">types</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">typenames</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">inst</span><span class="p">:</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">t</span> <span class="ow">in</span> <span class="n">types</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="n">inst</span><span class="p">)]</span>
 </pre></div>
 
 
 <p><code>typenames</code> is now a function that will evaluate to a list of names of
 the types of the instance we give it. Let's check that it works</p>
-<div class="highlight"><pre><span></span>&gt;&gt;&gt; typenames(1)
+<div class="highlight"><pre>&gt;&gt;&gt; typenames(1)
 [&#39;IntType&#39;]
 &gt;&gt;&gt; typenames(&#39;1&#39;)
 [&#39;StringType&#39;]
@@ -151,7 +151,7 @@ the types of the instance we give it. Let's check that it works</p>
 
 
 <p>Let's take a look at the types of different built in callable types:</p>
-<div class="highlight"><pre><span></span>&gt;&gt;&gt; typenames(func)
+<div class="highlight"><pre>&gt;&gt;&gt; typenames(func)
 [&#39;LambdaType&#39;, &#39;FunctionType&#39;]
 &gt;&gt;&gt; typenames(labd)
 [&#39;LambdaType&#39;, &#39;FunctionType&#39;]
@@ -181,7 +181,7 @@ the types of the instance we give it. Let's check that it works</p>
 <li><code>MethodType</code></li>
 </ul>
 <p>Calling them we can see the various:</p>
-<div class="highlight"><pre><span></span>&gt;&gt;&gt; A.stemeth()
+<div class="highlight"><pre>&gt;&gt;&gt; A.stemeth()
 &gt;&gt;&gt; A().stemeth()
 &gt;&gt;&gt; A.clsmeth()
 (&lt;class &#39;__main__.A&#39;&gt;,)
@@ -216,7 +216,7 @@ stupid.</p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-        <a href="/tag/python.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> python</a>
+        <a href="/tag/python.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> python</a>
   </p>
 
   <hr /><!-- divider -->
@@ -274,7 +274,6 @@ stupid.</p>
               <h3>Categories</h3>
 
               <ul>
-                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -284,6 +283,7 @@ stupid.</p>
                 <li><a href="./category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="./category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
                 <li><a href="./category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
+                <li><a href="./category/vimperator.html"><i class="fa fa-dot-circle-o"></i> vimperator</a></li>
               </ul>
 
             </div>
@@ -317,13 +317,18 @@ stupid.</p>
 
               <ul class="tree">
                 <li>
+                  <span><i class="fa fa-minus-square-o"></i>2017</span>
+                  <ul>
+                    <li>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
+                      </ul>
+                    </li>
+                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>10</span>
-                      <ul>
-                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
-                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

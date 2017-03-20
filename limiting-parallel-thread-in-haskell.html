@@ -125,7 +125,7 @@ slightly harder is to download just a couple in parallel.</p>
 <p>I will start with an introduction it <code>MVar</code>. Let's say we want a
 safer <code>putStrLn</code> that does not interleave it's output with other
 <code>putStrLn</code>s but rather waits for it's turn:</p>
-<div class="highlight"><pre><span></span><span class="kr">import</span> <span class="nn">Control.Concurrent.MVar</span>
+<div class="highlight"><pre><span class="kr">import</span> <span class="nn">Control.Concurrent.MVar</span>
 
 <span class="nf">putStrLn&#39;</span> <span class="n">lock</span> <span class="n">x</span> <span class="ow">=</span> <span class="kr">do</span>
   <span class="n">putMVar</span> <span class="n">lock</span> <span class="nb">()</span>
@@ -135,7 +135,7 @@ safer <code>putStrLn</code> that does not interleave it's output with other
 
 
 <p>Then we call it like this:</p>
-<div class="highlight"><pre><span></span>main <span class="o">=</span> do
+<div class="highlight"><pre>main <span class="o">=</span> do
   ioLock <span class="o">&lt;-</span> newEmptyMVar
   <span class="kc">...</span>
   putStrLn<span class="s">&#39;</span><span class="err"> ioLock $ &quot;Found talks: &quot; ++ (show $ length urls)</span>
@@ -145,7 +145,7 @@ safer <code>putStrLn</code> that does not interleave it's output with other
 <p>Now that was fairly easy. What about the case where we want a few
 simultaneous threads and the rest should wait for any of them to
 finish.</p>
-<div class="highlight"><pre><span></span><span class="c1">-- | There is no 0 state for MVar. 0 means taken. So check if it is</span>
+<div class="highlight"><pre><span class="c1">-- | There is no 0 state for MVar. 0 means taken. So check if it is</span>
 <span class="c1">-- taken and if so treat it as 0 by putting 1, otherwise take,</span>
 <span class="c1">-- increment, put</span>
 <span class="nf">increment</span> <span class="ow">::</span> <span class="kt">MVar</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">IO</span> <span class="kt">Int</span>
@@ -175,7 +175,7 @@ finish.</p>
 
 
 <p>You can call it like this:</p>
-<div class="highlight"><pre><span></span><span class="kr">import</span> <span class="nn">Control.Monad.Parallel</span>
+<div class="highlight"><pre><span class="kr">import</span> <span class="nn">Control.Monad.Parallel</span>
 
 <span class="nf">main</span> <span class="ow">=</span> <span class="kr">do</span>
   <span class="n">procs</span> <span class="ow">&lt;-</span> <span class="n">newMVar</span> <span class="mi">5</span>
@@ -257,7 +257,6 @@ finish.</p>
               <h3>Categories</h3>
 
               <ul>
-                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -267,6 +266,7 @@ finish.</p>
                 <li><a href="./category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="./category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
                 <li><a href="./category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
+                <li><a href="./category/vimperator.html"><i class="fa fa-dot-circle-o"></i> vimperator</a></li>
               </ul>
 
             </div>
@@ -300,13 +300,18 @@ finish.</p>
 
               <ul class="tree">
                 <li>
+                  <span><i class="fa fa-minus-square-o"></i>2017</span>
+                  <ul>
+                    <li>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
+                      </ul>
+                    </li>
+                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>10</span>
-                      <ul>
-                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
-                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>

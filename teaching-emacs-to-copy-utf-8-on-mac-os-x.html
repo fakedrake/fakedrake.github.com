@@ -122,7 +122,7 @@ Teaching emacs to copy utf-8 on Mac OS X - Chris Perivolaropoulos
 called <code>pbcopy</code>. It's usage is simple: you throw stuff in it's stdin
 and that stuff is copied to the clipboard. This way we can teach emacs
 to copy stuff to the clipboard with this function</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">paste-to-osx</span> <span class="p">(</span><span class="nv">text</span> <span class="k">&amp;optional</span> <span class="nb">push</span><span class="p">)</span>
+<div class="highlight"><pre><span class="p">(</span><span class="nb">defun</span> <span class="nv">paste-to-osx</span> <span class="p">(</span><span class="nv">text</span> <span class="k">&amp;optional</span> <span class="nb">push</span><span class="p">)</span>
   <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">process-connection-type</span> <span class="no">nil</span><span class="p">)</span>
         <span class="p">(</span><span class="nv">default-directory</span> <span class="s">&quot;~&quot;</span><span class="p">))</span>
     <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">proc</span> <span class="p">(</span><span class="nv">start-process</span> <span class="s">&quot;pbcopy&quot;</span> <span class="s">&quot;*Messages*&quot;</span> <span class="s">&quot;pbcopy&quot;</span><span class="p">)))</span>
@@ -138,7 +138,7 @@ to copy stuff to the clipboard with this function</p>
 in other languages. For example copying the string <code>λογος, αιμα,
 νοημα</code> from an emacs buffer will paste as random unicode characeters.</p>
 <p>Setting the <code>LANG</code> env var fixes the problem.</p>
-<div class="highlight"><pre><span></span>(defun paste-to-osx (text &amp;optional push)
+<div class="highlight"><pre>(defun paste-to-osx (text &amp;optional push)
   (let ((process-connection-type nil)
         (lang (getenv &quot;LANG&quot;))
         (default-directory &quot;~&quot;))
@@ -222,7 +222,6 @@ in other languages. For example copying the string <code>λογος, αιμα,
               <h3>Categories</h3>
 
               <ul>
-                <li><a href="./category/bash.html"><i class="fa fa-dot-circle-o"></i> bash</a></li>
                 <li><a href="./category/eacs.html"><i class="fa fa-dot-circle-o"></i> eacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
@@ -232,6 +231,7 @@ in other languages. For example copying the string <code>λογος, αιμα,
                 <li><a href="./category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="./category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
                 <li><a href="./category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
+                <li><a href="./category/vimperator.html"><i class="fa fa-dot-circle-o"></i> vimperator</a></li>
               </ul>
 
             </div>
@@ -265,13 +265,18 @@ in other languages. For example copying the string <code>λογος, αιμα,
 
               <ul class="tree">
                 <li>
+                  <span><i class="fa fa-minus-square-o"></i>2017</span>
+                  <ul>
+                    <li>
+                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <ul>
+                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
+                      </ul>
+                    </li>
+                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>10</span>
-                      <ul>
-                        <li><a href=""><small>Wed 19 October 2016</small>Getting all senders with notmuch</a></li>
-                      </ul>
                       <span><i class="fa fa-minus-square-o"></i>09</span>
                       <ul>
                         <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>
