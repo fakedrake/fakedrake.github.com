@@ -1,7 +1,7 @@
 title: Saving links in a file with vimperator
 date: 2017-03-20 11:01
-tags: vimperator
-category: vimperator
+tags: vimperator, firefox
+category: firefox
 slug: saving-links-in-a-file-with-vimperator
 author: Chris Perivolaropoulos
 

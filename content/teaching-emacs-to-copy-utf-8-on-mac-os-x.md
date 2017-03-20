@@ -1,7 +1,7 @@
 title: Teaching emacs to copy utf-8 on Mac OS X
 date: 2016-05-12 16:48
 tags: emacs, macosx
-category: eacs
+category: emacs
 slug: teaching-emacs-to-copy-utf-8-on-mac-os-x
 author: Chris Perivolaropoulos
 
