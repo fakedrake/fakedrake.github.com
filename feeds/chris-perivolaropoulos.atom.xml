@@ -16,7 +16,7 @@ at least keep them around:&lt;/p&gt;
 
 &lt;p&gt;Put this in a file under &lt;code&gt;~/.vimperator/plugins/&lt;/code&gt; and in a google
 scholar page hit &lt;code&gt;;l&lt;/code&gt; to activate the hint mode. A link to the paper
-you select will be saved in &lt;code&gt;~/Documents/papers.org&lt;/code&gt;.&lt;/p&gt;</summary><category term="vimperator"></category></entry><entry><title>Transfer files to your phone over wifi</title><link href="https://fakedrake.github.io/transfer-files-to-your-phone-over-wifi.html" rel="alternate"></link><updated>2016-09-29T03:54:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-29:transfer-files-to-your-phone-over-wifi.html</id><summary type="html">&lt;p&gt;So here is a neat trick to very quickly transfer files to your phone
+you select will be saved in &lt;code&gt;~/Documents/papers.org&lt;/code&gt;.&lt;/p&gt;</summary><category term="vimperator"></category><category term="firefox"></category></entry><entry><title>Transfer files to your phone over wifi</title><link href="https://fakedrake.github.io/transfer-files-to-your-phone-over-wifi.html" rel="alternate"></link><updated>2016-09-29T03:54:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-29:transfer-files-to-your-phone-over-wifi.html</id><summary type="html">&lt;p&gt;So here is a neat trick to very quickly transfer files to your phone
 over wifi (http). On your computer download &lt;code&gt;qrencode&lt;/code&gt;. It should be
 in all major package managers. Also make sure you have python
 installed. On your phone install a QR code reader.&lt;/p&gt;
