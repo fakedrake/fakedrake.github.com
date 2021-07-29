@@ -9,7 +9,7 @@ Programmatically add search engines to firefox - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
-    <meta name="Author" content="Chris Perivolaropoulos" />
+    <meta name="Author" content="Christos Perivolaropoulos" />
 
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://stepofweb.gweb.io/.templates/IsisOne/HTML/assets/plugins/lt-ie9/html5.js"></script>
@@ -70,7 +70,7 @@ Programmatically add search engines to firefox - Chris Perivolaropoulos
       <div class="navbar-header">
         <a class="navbar-brand" href="./">
           <img src="http://imgur.com/KyLzuoW.png" alt="" width="50" height="50" />
-          <span class="hidden-xs">λα.mbdα</span>
+          <span class="hidden-xs">Christos Perivolaropoulos</span>
         </a>
       </div>
 
@@ -111,7 +111,7 @@ Programmatically add search engines to firefox - Chris Perivolaropoulos
   <header>
       <h1>Programmatically add search engines to firefox</h1>
     <small class="fsize13">
-            <a href="./category/firefox.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles in this category"><i class="fa fa-dot-circle-o"></i> firefox</a>
+            <a href="./category/firefox.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> firefox</a>
       <a href="./programmatically-add-search-engines-to-firefox.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="programmatically-add-search-engines-to-firefox.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       <span class="label label-default light">Sat 07 June 2014</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
@@ -122,22 +122,20 @@ Programmatically add search engines to firefox - Chris Perivolaropoulos
 men ie programmatically. This is nice because you can then write
 scripts to do interesting stuff with them. First of all let's see what
 we can find out without looking at code.</p>
-<div class="highlight"><pre><span class="go">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ find -name &quot;*search*&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp gp-VirtualEnv">(py)</span><span class="gp">fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ </span>find -name <span class="s2">&quot;*search*&quot;</span>
 <span class="go">./search-metadata.json</span>
 <span class="go">./search.json</span>
 <span class="go">./searchplugins</span>
-</pre></div>
-
+</code></pre></div>
 
 <p><em>search.json</em> has some general info about the engines and seems to be
  pointing firefox to <em>searchplugins/</em> for more details.</p>
-<div class="highlight"><pre><span class="go">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ ls searchplugins</span>
+<div class="highlight"><pre><span></span><code><span class="gp gp-VirtualEnv">(py)</span><span class="gp">fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ </span>ls searchplugins
 <span class="go">duckduckgo.xml  imdb.xml  spotify1.xml  youtube.xml</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Right what I was looking for. Let's take a look inside one of them</p>
-<div class="highlight"><pre><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;os:ShortName&gt;</span>DuckDuckGo<span class="nt">&lt;/os:ShortName&gt;</span>
 <span class="nt">&lt;os:Description&gt;</span>Search DuckDuckGo<span class="nt">&lt;/os:Description&gt;</span>
 <span class="nt">&lt;os:InputEncoding&gt;</span>UTF-8<span class="nt">&lt;/os:InputEncoding&gt;</span>
@@ -149,58 +147,51 @@ we can find out without looking at code.</p>
   <span class="nt">&lt;os:Param</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span> <span class="na">value=</span><span class="s">&quot;list&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/os:Url&gt;</span>
 <span class="nt">&lt;/SearchPlugin&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Awesome, now lets see what interfaces we can get to loading this
 code. We will need access to the
 <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIBrowserSearchService">search service</a>, so</p>
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">bss</span> <span class="o">=</span> <span class="nx">Cc</span><span class="p">[</span><span class="s2">&quot;@mozilla.org/browser/search-service;1&quot;</span><span class="p">].</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIBrowserSearchService</span><span class="p">)</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">bss</span> <span class="o">=</span> <span class="nx">Cc</span><span class="p">[</span><span class="s2">&quot;@mozilla.org/browser/search-service;1&quot;</span><span class="p">].</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIBrowserSearchService</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Now to me at least the documentation was not extremely obvious so I
 had to check out the
 <a href="https://github.com/mozilla/gecko-dev/blob/master/toolkit/components/search/nsSearchService.js">implementation</a>
 which I encourage you to take a look at but it wont be really
 necessary. After snooping around a bit I came up with.</p>
-<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngine</span><span class="p">(</span><span class="s2">&quot;file:///home/fakedrake/Projects/Javascript/spotify.xml&quot;</span><span class="p">,</span> <span class="nx">Ci</span><span class="p">.</span><span class="nx">nsISearchEngine</span><span class="p">.</span><span class="nx">DATA_XML</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">)</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngine</span><span class="p">(</span><span class="s2">&quot;file:///home/fakedrake/Projects/Javascript/spotify.xml&quot;</span><span class="p">,</span> <span class="nx">Ci</span><span class="p">.</span><span class="nx">nsISearchEngine</span><span class="p">.</span><span class="nx">DATA_XML</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Where the contents of <em>spotify.xml</em> are</p>
-<div class="highlight"><pre><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;SearchPlugin</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.mozilla.org/2006/browser/search/&quot;</span> <span class="na">xmlns:os=</span><span class="s">&quot;http://a9.com/-/spec/opensearch/1.1/&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;os:ShortName&gt;</span>Spotify<span class="nt">&lt;/os:ShortName&gt;</span>
 <span class="nt">&lt;os:Description&gt;</span>Search Spotify<span class="nt">&lt;/os:Description&gt;</span>
 <span class="nt">&lt;os:InputEncoding&gt;</span>UTF-8<span class="nt">&lt;/os:InputEncoding&gt;</span>
 <span class="nt">&lt;os:Url</span> <span class="na">type=</span><span class="s">&quot;text/html&quot;</span> <span class="na">method=</span><span class="s">&quot;GET&quot;</span> <span class="na">template=</span><span class="s">&quot;https://play.spotify.com/search/{searchTerms}&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/SearchPlugin&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>And to my delight vimperator recognizes my custom spotify search engine!</p>
-<p><img alt="Spoify search engine" src="http://i.imgur.com/yukAwWr.png" /></p>
+<p><img alt="Spoify search engine" src="http://i.imgur.com/yukAwWr.png"></p>
 <p>And not only that, but firefox was kind enough to add my xml to the
 right place so it is permanent.</p>
-<div class="highlight"><pre><span class="go">(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default/searchplugins $ ls</span>
+<div class="highlight"><pre><span></span><code><span class="gp gp-VirtualEnv">(py)</span><span class="gp">fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default/searchplugins $ </span>ls
 <span class="go">duckduckgo.xml  imdb.xml  spotify.xml  youtube.xml</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Now if you need more direct control over this. An equivalent to the
 above would be:</p>
-<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngineWithDetails</span><span class="p">(</span><span class="s2">&quot;Spotify&quot;</span><span class="p">,</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;Search spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;https://play.spotify.com/search/{searchTerms}&quot;</span><span class="p">)</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="nx">bss</span><span class="p">.</span><span class="nx">addEngineWithDetails</span><span class="p">(</span><span class="s2">&quot;Spotify&quot;</span><span class="p">,</span><span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;Search spotify&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;https://play.spotify.com/search/{searchTerms}&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 <p><em>Note: this wont work if the aliases of the search engines conflict
  like they do here.</em></p>
 <p>This does exactly the same thing as having the data in an XML file and
 loading it with <code>addEngine()</code>. If you want to remove an engine you
 can do it with:</p>
-<div class="highlight"><pre><span class="nx">bss</span><span class="p">.</span><span class="nx">removeEngine</span><span class="p">(</span><span class="nx">bss</span><span class="p">.</span><span class="nx">getEngineByAlias</span><span class="p">(</span><span class="s2">&quot;spotify&quot;</span><span class="p">))</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="nx">bss</span><span class="p">.</span><span class="nx">removeEngine</span><span class="p">(</span><span class="nx">bss</span><span class="p">.</span><span class="nx">getEngineByAlias</span><span class="p">(</span><span class="s2">&quot;spotify&quot;</span><span class="p">))</span>
+</code></pre></div>
 
 <p>There's more you can do with the browser search service but I think I
 would just be repeating the documentation from now on, I hope this is
@@ -220,8 +211,8 @@ a good example to get you started.</p>
 
   <!-- TAGS -->
   <p class="fsize16"> Tags:
-        <a href="/tag/firefox.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> firefox</a>
-        <a href="/tag/javascript.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> javascript</a>
+        <a href="/tag/firefox.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> firefox</a>
+        <a href="/tag/javascript.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> javascript</a>
   </p>
 
   <hr /><!-- divider -->
@@ -282,12 +273,9 @@ a good example to get you started.</p>
                 <li><a href="./category/emacs.html"><i class="fa fa-dot-circle-o"></i> emacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
-                <li><a href="./category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
-                <li><a href="./category/haskell.html"><i class="fa fa-dot-circle-o"></i> haskell</a></li>
                 <li><a href="./category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
                 <li><a href="./category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="./category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
-                <li><a href="./category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
               </ul>
 
             </div>
@@ -308,82 +296,44 @@ a good example to get you started.</p>
                 None
                 None
                 None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
               </div>
 
               <ul class="tree">
                 <li>
-                  <span><i class="fa fa-minus-square-o"></i>2017</span>
-                  <ul>
-                    <li>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
-                      <ul>
-                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
-                      </ul>
-                    </li>
-                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>09</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-09</span>
                       <ul>
-                        <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>
                         <li><a href=""><small>Sun 18 September 2016</small>Subclassing function types in python</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>08</span>
-                      <ul>
-                        <li><a href=""><small>Fri 12 August 2016</small>Intstalling NVM and node-js on unix</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
-                      <ul>
-                        <li><a href=""><small>Tue 14 June 2016</small>Installing haskell on linux</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-05</span>
                       <ul>
                         <li><a href=""><small>Thu 12 May 2016</small>Teaching emacs to copy utf-8 on Mac OS X</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-04</span>
                       <ul>
                         <li><a href=""><small>Sat 30 April 2016</small>Streaming Data through HTTP with Haskell</a></li>
                         <li><a href=""><small>Fri 29 April 2016</small>Limiting simultaneous threads in Haskell</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>01</span>
-                      <ul>
-                        <li><a href=""><small>Wed 20 January 2016</small>Killing mysql queries</a></li>
                       </ul>
                     </li>
                   </ul>
                   <span><i class="fa fa-minus-square-o"></i>2014</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>07</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-07</span>
                       <ul>
-                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
                         <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-06</span>
                       <ul>
                         <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-05</span>
                       <ul>
-                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
-                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
                         <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
-                      <ul>
-                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-03</span>
                       <ul>
                         <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
                         <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
@@ -417,7 +367,7 @@ a good example to get you started.</p>
         <div class="col-md-6 copyright">
             Chris Perivolaroupoulos
             <br />2015 &copy; All Rights Reserved.
-	    <br/> Photos by <a href="https://marianasioti.exposure.so/">Maria Nasioti</a>
+	    <br/> 
         </div>
 
         <div class="col-md-6 text-right">
@@ -453,6 +403,10 @@ a good example to get you started.</p>
 
 <!-- js scripts -->
 <script async type="text/javascript" src="./theme/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
+<script src="https://github.com/mrdoob/three.js/blob/master/src/constants.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script async type="text/javascript" src="./theme/js/city.js"></script>
 
 <script type="text/javascript" src="./theme/js/application.js"></script>
 

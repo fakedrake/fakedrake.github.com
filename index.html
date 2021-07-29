@@ -5,10 +5,10 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta property="og:image" content="./theme/img/logo_og.png" />
 <title>
-    λα.mbdα - Hacking my way out of the existential deadlock
+    Christos Perivolaropoulos - Hacking my way out of the existential deadlock
 </title>
 <meta name="description" content="" />
-<meta name="Author" content="Chris Perivolaropoulos" />
+<meta name="Author" content="Christos Perivolaropoulos" />
 
 <!--[if lt IE 9]>
   <script type="text/javascript" src="http://stepofweb.gweb.io/.templates/IsisOne/HTML/assets/plugins/lt-ie9/html5.js"></script>
@@ -67,18 +67,19 @@
             <div class="image-caption">
               <hr /><hr />
               <div class="inner">
-                <h2 class="bigtext nomargin">λα.mbdα</h2>
+                <h2 class="bigtext nomargin">Christos Perivolaropoulos</h2>
               </div>
               <hr /><hr />
             </div>
             <span class="overlay"></span>
-            <div style="background-image: url('https://exposure-2.imgix.net/production/photos/z8ilyalf54su4n291ozw4xvep8s0dx6rgvdi/original.jpg');" class="fullscreen-img"></div>
+            <div style="background: -webkit-canvas(city);" class="fullscreen-img">
+              <canvas id="city" name="city"  ></canvas>
+            </div>
 
           </li>
         </ul>
 
       </div>
-
     </section>
     <!-- /HOME -->
 
@@ -96,8 +97,8 @@
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <a class="navbar-brand scrollTo" href="#home">
-              <img src="http://imgur.com/KyLzuoW.png" alt="" width="50" height="50" />
-              <span class="hidden-xs">λα.mbdα</span>
+              <img src="./theme/img/batman_logo.png" alt="" width="50" height="50" />
+              <span class="hidden-xs">Christos Perivolaropoulos</span>
             </a>
           </div>
 
@@ -199,31 +200,27 @@ procrastination sessions I may write some code too.</p>
 
                     <div class="col-md-4 quick-hover">
                         <div class="quick-item">
-                            <h4><a href="./saving-links-in-a-file-with-vimperator.html">Saving links in a file with vimperator</a></h4>
-                            <p><p>I am quite lazy with bibliography. I never keep track of papers and
-end up searching for them in google scholar over and over again based
-on my (not great) memory. For that I wrote this snippet that helps me
-at least keep them around:</p>
-<div class="highlight"><pre>hints.addMode(&#39;l&#39;, &quot;Save paper ...</pre></div></p>
-                            <a href="./saving-links-in-a-file-with-vimperator.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 quick-hover">
-                        <div class="quick-item">
-                            <h4><a href="./transfer-files-to-your-phone-over-wifi.html">Transfer files to your phone over wifi</a></h4>
-                            <p><p>So here is a neat trick to very quickly transfer files to your phone
-over wifi (http). On your computer download <code>qrencode</code>. It should be
-in all major package managers. Also make sure you have python
-installed. On your phone install a QR code reader.</p>
-<p>Open a terminal and navigate ...</p></p>
-                            <a href="./transfer-files-to-your-phone-over-wifi.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 quick-hover">
-                        <div class="quick-item">
                             <h4><a href="./subclassing-function-types.html">Subclassing function types in python</a></h4>
                             <p><p>The way callables work in python can be a bit strange.  You have methods that take an argument <code>self</code> but only when called from an object and classmethods and static methods etc. Let's take a more in-depth look at how cpython handles all this</p></p>
                             <a href="./subclassing-function-types.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 quick-hover">
+                        <div class="quick-item">
+                            <h4><a href="./teaching-emacs-to-copy-utf-8-on-mac-os-x.html">Teaching emacs to copy utf-8 on Mac OS X</a></h4>
+                            <p><p>Mac OS X comes with a command line tool for maniplating the clipboard
+called <code>pbcopy</code>. It's usage is simple: you throw stuff in it's stdin
+and that stuff is copied to the clipboard. This way we can teach emacs
+to copy stuff to the clipboard with this function</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span> <span class="nv">paste-to-osx …</span></code></pre></div></p>
+                            <a href="./teaching-emacs-to-copy-utf-8-on-mac-os-x.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 quick-hover">
+                        <div class="quick-item">
+                            <h4><a href="./streaming-data-through-http-with-haskell.html">Streaming Data through HTTP with Haskell</a></h4>
+                            <p><p>Download and process large files on the fly with haskell</p></p>
+                            <a href="./streaming-data-through-http-with-haskell.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
                         </div>
                     </div>
 
@@ -381,7 +378,7 @@ backend.</p>
         <div class="col-md-6 copyright">
             Chris Perivolaroupoulos
             <br />2015 &copy; All Rights Reserved.
-	    <br/> Photos by <a href="https://marianasioti.exposure.so/">Maria Nasioti</a>
+	    <br/> 
         </div>
 
         <div class="col-md-6 text-right">
@@ -417,6 +414,10 @@ backend.</p>
 
 <!-- js scripts -->
 <script async type="text/javascript" src="./theme/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
+<script src="https://github.com/mrdoob/three.js/blob/master/src/constants.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script async type="text/javascript" src="./theme/js/city.js"></script>
 
 <script type="text/javascript" src="./theme/js/application.js"></script>
 

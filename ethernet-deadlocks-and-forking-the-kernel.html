@@ -9,7 +9,7 @@ Ethernet deadlocks and forking the kernel - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
-    <meta name="Author" content="Chris Perivolaropoulos" />
+    <meta name="Author" content="Christos Perivolaropoulos" />
 
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://stepofweb.gweb.io/.templates/IsisOne/HTML/assets/plugins/lt-ie9/html5.js"></script>
@@ -70,7 +70,7 @@ Ethernet deadlocks and forking the kernel - Chris Perivolaropoulos
       <div class="navbar-header">
         <a class="navbar-brand" href="./">
           <img src="http://imgur.com/KyLzuoW.png" alt="" width="50" height="50" />
-          <span class="hidden-xs">λα.mbdα</span>
+          <span class="hidden-xs">Christos Perivolaropoulos</span>
         </a>
       </div>
 
@@ -122,10 +122,9 @@ Ethernet deadlocks and forking the kernel - Chris Perivolaropoulos
 once and spent a couple of hours trying to fix. So here is the
 problem. I have a xilinx zynq zc702 board and I load a slightly
 customized 3.8 linux kernel on it. I boot it and it freezes at</p>
-<div class="highlight"><pre><span class="n">loop</span><span class="o">:</span> <span class="n">module</span> <span class="n">loaded</span>
-<span class="n">xqspips</span> <span class="n">e000d000</span><span class="o">.</span><span class="na">spi</span><span class="o">:</span> <span class="n">master</span> <span class="k">is</span> <span class="n">unqueued</span><span class="o">,</span> <span class="k">this</span> <span class="k">is</span> <span class="n">deprecated</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">loop</span><span class="p">:</span> <span class="n">module</span> <span class="n">loaded</span>
+<span class="n">xqspips</span> <span class="n">e000d000</span><span class="o">.</span><span class="n">spi</span><span class="p">:</span> <span class="k">master</span> <span class="k">is</span> <span class="n">unqueued</span><span class="p">,</span> <span class="n">this</span> <span class="k">is</span> <span class="n">deprecated</span>
+</code></pre></div>
 
 <p>Now now you probably want to know what boot arguments I was using and
 what kind of modifications I have made to the kernel and the exact
@@ -170,19 +169,17 @@ situation.</p>
 trivial to just tell <code>xqspips_irq</code> to not only check the status
 register to decide whether it should read or not, but also check with
 the xqspi struct. Essentially changing</p>
-<div class="highlight"><pre><span class="cm">/* Read out the data from the RX FIFO */</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* Read out the data from the RX FIFO */</span>
 <span class="k">while</span> <span class="p">(</span><span class="n">xqspips_read</span><span class="p">(</span><span class="n">xqspi</span><span class="o">-&gt;</span><span class="n">regs</span> <span class="o">+</span> <span class="n">XQSPIPS_STATUS_OFFSET</span><span class="p">)</span> <span class="o">&amp;</span>
     <span class="n">XQSPIPS_IXR_RXNEMTY_MASK</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>into</p>
-<div class="highlight"><pre><span class="cm">/* Read out the data from the RX FIFO */</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* Read out the data from the RX FIFO */</span>
 <span class="k">while</span> <span class="p">((</span><span class="n">xqspips_read</span><span class="p">(</span><span class="n">xqspi</span><span class="o">-&gt;</span><span class="n">regs</span> <span class="o">+</span> <span class="n">XQSPIPS_STATUS_OFFSET</span><span class="p">)</span> <span class="o">&amp;</span>
     <span class="n">XQSPIPS_IXR_RXNEMTY_MASK</span><span class="p">)</span> <span class="o">||</span>
     <span class="n">xqspi</span><span class="o">-&gt;</span><span class="n">bytes_to_receive</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>did the trick.</p>
   </article>
@@ -201,9 +198,9 @@ the xqspi struct. Essentially changing</p>
   <!-- TAGS -->
   <p class="fsize16"> Tags:
         <a href="/tag/kernel.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="3 articles with this tag"><i class="fa fa-tags"></i> kernel</a>
-        <a href="/tag/linux.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles with this tag"><i class="fa fa-tags"></i> linux</a>
-        <a href="/tag/irq.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> irq</a>
         <a href="/tag/drivers.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> drivers</a>
+        <a href="/tag/irq.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> irq</a>
+        <a href="/tag/linux.html" rel="tooltip" class="label label-default light" data-placement="right" data-original-title="1 article with this tag"><i class="fa fa-tags"></i> linux</a>
   </p>
 
   <hr /><!-- divider -->
@@ -264,12 +261,9 @@ the xqspi struct. Essentially changing</p>
                 <li><a href="./category/emacs.html"><i class="fa fa-dot-circle-o"></i> emacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
-                <li><a href="./category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
-                <li><a href="./category/haskell.html"><i class="fa fa-dot-circle-o"></i> haskell</a></li>
                 <li><a href="./category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
                 <li><a href="./category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="./category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
-                <li><a href="./category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
               </ul>
 
             </div>
@@ -290,82 +284,44 @@ the xqspi struct. Essentially changing</p>
                 None
                 None
                 None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
               </div>
 
               <ul class="tree">
                 <li>
-                  <span><i class="fa fa-minus-square-o"></i>2017</span>
-                  <ul>
-                    <li>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
-                      <ul>
-                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
-                      </ul>
-                    </li>
-                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>09</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-09</span>
                       <ul>
-                        <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>
                         <li><a href=""><small>Sun 18 September 2016</small>Subclassing function types in python</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>08</span>
-                      <ul>
-                        <li><a href=""><small>Fri 12 August 2016</small>Intstalling NVM and node-js on unix</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
-                      <ul>
-                        <li><a href=""><small>Tue 14 June 2016</small>Installing haskell on linux</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-05</span>
                       <ul>
                         <li><a href=""><small>Thu 12 May 2016</small>Teaching emacs to copy utf-8 on Mac OS X</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-04</span>
                       <ul>
                         <li><a href=""><small>Sat 30 April 2016</small>Streaming Data through HTTP with Haskell</a></li>
                         <li><a href=""><small>Fri 29 April 2016</small>Limiting simultaneous threads in Haskell</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>01</span>
-                      <ul>
-                        <li><a href=""><small>Wed 20 January 2016</small>Killing mysql queries</a></li>
                       </ul>
                     </li>
                   </ul>
                   <span><i class="fa fa-minus-square-o"></i>2014</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>07</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-07</span>
                       <ul>
-                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
                         <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-06</span>
                       <ul>
                         <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-05</span>
                       <ul>
-                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
-                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
                         <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
-                      <ul>
-                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-03</span>
                       <ul>
                         <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
                         <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
@@ -399,7 +355,7 @@ the xqspi struct. Essentially changing</p>
         <div class="col-md-6 copyright">
             Chris Perivolaroupoulos
             <br />2015 &copy; All Rights Reserved.
-	    <br/> Photos by <a href="https://marianasioti.exposure.so/">Maria Nasioti</a>
+	    <br/> 
         </div>
 
         <div class="col-md-6 text-right">
@@ -435,6 +391,10 @@ the xqspi struct. Essentially changing</p>
 
 <!-- js scripts -->
 <script async type="text/javascript" src="./theme/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
+<script src="https://github.com/mrdoob/three.js/blob/master/src/constants.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script async type="text/javascript" src="./theme/js/city.js"></script>
 
 <script type="text/javascript" src="./theme/js/application.js"></script>
 

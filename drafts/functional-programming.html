@@ -9,7 +9,7 @@ Functional programming - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
-    <meta name="Author" content="Chris Perivolaropoulos" />
+    <meta name="Author" content="Christos Perivolaropoulos" />
 
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://stepofweb.gweb.io/.templates/IsisOne/HTML/assets/plugins/lt-ie9/html5.js"></script>
@@ -70,7 +70,7 @@ Functional programming - Chris Perivolaropoulos
       <div class="navbar-header">
         <a class="navbar-brand" href="../">
           <img src="http://imgur.com/KyLzuoW.png" alt="" width="50" height="50" />
-          <span class="hidden-xs">λα.mbdα</span>
+          <span class="hidden-xs">Christos Perivolaropoulos</span>
         </a>
       </div>
 
@@ -111,7 +111,7 @@ Functional programming - Chris Perivolaropoulos
   <header>
       <h1>Functional programming</h1>
     <small class="fsize13">
-            <a href="../category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="4 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
+            <a href="../category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
       <a href="../drafts/functional-programming.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="drafts/functional-programming.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       <span class="label label-default light">Sat 12 September 2015</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
@@ -157,11 +157,10 @@ the means of creating instances of M T and creating M T values from T
 values but no way of making use these M Ts. You can however draw
 direct parallels of how to manipulate M T based on how you can
 manipulate T. To also be formal:</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="n">Monad</span> <span class="o">m</span> <span class="k">where</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="n">Monad</span> <span class="o">m</span> <span class="n">where</span>
   <span class="k">return</span> :: <span class="n">a</span> -&gt; <span class="o">m</span> <span class="n">a</span>
   (&gt;&gt;=) :: <span class="o">m</span> <span class="n">a</span> -&gt; (<span class="n">a</span> -&gt; <span class="o">m</span> <span class="n">b</span>) -&gt; <span class="o">m</span> <span class="n">b</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>A usecase is that we can easily plumb together functions that from a
 value can produce a sort-of-value. Eg if we can send to a device a
@@ -182,21 +181,19 @@ from another set in that bag the functor can trasform that
 trasformation too! (inception).</p>
 <p>To put it another way a functor can transform a category into another
 category. More formally</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="n">Functor</span> <span class="n">f</span> <span class="k">where</span>
-    <span class="n">fmap</span> :: (<span class="n">a</span> -&gt; <span class="n">b</span>) -&gt; <span class="n">f</span> <span class="n">a</span> -&gt; <span class="n">f</span> <span class="n">b</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="n">Functor</span> <span class="nb">f</span> <span class="n">where</span>
+    <span class="n">fmap</span> :: (<span class="n">a</span> -&gt; <span class="n">b</span>) -&gt; <span class="nb">f</span> <span class="n">a</span> -&gt; <span class="nb">f</span> <span class="n">b</span>
+</code></pre></div>
 
 <p>An infix version of <code>fmap</code> is <code>&lt;$&gt;</code>. This will come up in the next
 section.</p>
 <h1>Applicative</h1>
 <p>Applicative functors are the part of a monad that allows it to be used
 just like the underlying type.</p>
-<div class="highlight"><pre><span class="k">class</span> (<span class="n">Functor</span> <span class="n">f</span>) =&gt; <span class="n">Applicative</span> <span class="n">f</span> <span class="k">where</span>
-    <span class="n">pure</span>  :: <span class="n">a</span> -&gt; <span class="n">f</span> <span class="n">a</span>
-    (<span class="s">&lt;*&gt;) :: f (a -&gt;</span> <span class="n">b</span>) -&gt; <span class="n">f</span> <span class="n">a</span> -&gt; <span class="n">f</span> <span class="n">b</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="k">class</span> (<span class="n">Functor</span> <span class="nb">f</span>) =&gt; <span class="n">Applicative</span> <span class="nb">f</span> <span class="n">where</span>
+    <span class="n">pure</span>  :: <span class="n">a</span> -&gt; <span class="nb">f</span> <span class="n">a</span>
+    (<span class="s">&lt;*&gt;) :: f (a -&gt;</span> <span class="n">b</span>) -&gt; <span class="nb">f</span> <span class="n">a</span> -&gt; <span class="nb">f</span> <span class="n">b</span>
+</code></pre></div>
 
 <p>I suggest you go over the
 <a href="https://en.wikibooks.org/wiki/Haskell/Applicative_functors">wikibok on applicatives</a>. To
@@ -209,21 +206,20 @@ function that takes more than one arguments to an argument you get a
 wrapped function. Applicatives are then the right tool. Use <code>&lt;*&gt;</code> make
 the wrapped function into a wrapped value.</p>
 <p>For example</p>
-<div class="highlight"><pre>Prelude&gt; :t (+) -- Takes two arguments
-(+) -- Takes two arguments :: Num a =&gt; a -&gt; a -&gt; a
+<div class="highlight"><pre><span></span><code><span class="n">Prelude</span><span class="o">&gt;</span> <span class="o">:</span><span class="n">t</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="o">--</span> <span class="n">Takes</span> <span class="n">two</span> <span class="n">arguments</span>
+<span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="o">--</span> <span class="n">Takes</span> <span class="n">two</span> <span class="n">arguments</span> <span class="o">::</span> <span class="n">Num</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
 
-Prelude&gt; :t fmap (+) (Just 1)  -- Curry it to one, but now it&#39;s wrapped
-fmap (+) (Just 1)  -- Curry it to one, but now it&#39;s wrapped
-  :: Num a =&gt; Maybe (a -&gt; a)
+<span class="n">Prelude</span><span class="o">&gt;</span> <span class="o">:</span><span class="n">t</span> <span class="n">fmap</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">(</span><span class="n">Just</span> <span class="mi">1</span><span class="p">)</span>  <span class="o">--</span> <span class="n">Curry</span> <span class="n">it</span> <span class="n">to</span> <span class="n">one</span><span class="p">,</span> <span class="n">but</span> <span class="n">now</span> <span class="n">it</span><span class="s">&#39;s wrapped</span>
+<span class="s">fmap (+) (Just 1)  -- Curry it to one, but now it&#39;</span><span class="n">s</span> <span class="n">wrapped</span>
+  <span class="o">::</span> <span class="n">Num</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="n">Maybe</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">)</span>
 
-Prelude&gt; :t (fmap (+) (Just 1)) &lt;*&gt; Just 2  -- Thankfully Maybe is an applicative and supports &lt;*&gt;
-(fmap (+) (Just 1)) &lt;*&gt; Just 2  -- Thankfully Maybe is an applicative and supports &lt;*&gt;
-  :: Num b =&gt; Maybe b
+<span class="n">Prelude</span><span class="o">&gt;</span> <span class="o">:</span><span class="n">t</span> <span class="p">(</span><span class="n">fmap</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">(</span><span class="n">Just</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&lt;*&gt;</span> <span class="n">Just</span> <span class="mi">2</span>  <span class="o">--</span> <span class="n">Thankfully</span> <span class="n">Maybe</span> <span class="n">is</span> <span class="n">an</span> <span class="n">applicative</span> <span class="kr">and</span> <span class="n">supports</span> <span class="o">&lt;*&gt;</span>
+<span class="p">(</span><span class="n">fmap</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">(</span><span class="n">Just</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&lt;*&gt;</span> <span class="n">Just</span> <span class="mi">2</span>  <span class="o">--</span> <span class="n">Thankfully</span> <span class="n">Maybe</span> <span class="n">is</span> <span class="n">an</span> <span class="n">applicative</span> <span class="kr">and</span> <span class="n">supports</span> <span class="o">&lt;*&gt;</span>
+  <span class="o">::</span> <span class="n">Num</span> <span class="n">b</span> <span class="o">=&gt;</span> <span class="n">Maybe</span> <span class="n">b</span>
 
-Prelude&gt; (fmap (+) (Just 1)) &lt;*&gt; Just 2  -- Thankfully Maybe is an applicative and supports &lt;*&gt;
-Just 3
-</pre></div>
-
+<span class="n">Prelude</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">fmap</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">(</span><span class="n">Just</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&lt;*&gt;</span> <span class="n">Just</span> <span class="mi">2</span>  <span class="o">--</span> <span class="n">Thankfully</span> <span class="n">Maybe</span> <span class="n">is</span> <span class="n">an</span> <span class="n">applicative</span> <span class="kr">and</span> <span class="n">supports</span> <span class="o">&lt;*&gt;</span>
+<span class="n">Just</span> <span class="mi">3</span>
+</code></pre></div>
 
 <h1>Monoids</h1>
 <p><em>TODO</em></p>
@@ -321,12 +317,9 @@ manipulating the underlying type.
                 <li><a href="../category/emacs.html"><i class="fa fa-dot-circle-o"></i> emacs</a></li>
                 <li><a href="../category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="../category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
-                <li><a href="../category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
-                <li><a href="../category/haskell.html"><i class="fa fa-dot-circle-o"></i> haskell</a></li>
                 <li><a href="../category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
                 <li><a href="../category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="../category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
-                <li><a href="../category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
               </ul>
 
             </div>
@@ -347,82 +340,44 @@ manipulating the underlying type.
                 None
                 None
                 None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
               </div>
 
               <ul class="tree">
                 <li>
-                  <span><i class="fa fa-minus-square-o"></i>2017</span>
-                  <ul>
-                    <li>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
-                      <ul>
-                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
-                      </ul>
-                    </li>
-                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>09</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-09</span>
                       <ul>
-                        <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>
                         <li><a href=""><small>Sun 18 September 2016</small>Subclassing function types in python</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>08</span>
-                      <ul>
-                        <li><a href=""><small>Fri 12 August 2016</small>Intstalling NVM and node-js on unix</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
-                      <ul>
-                        <li><a href=""><small>Tue 14 June 2016</small>Installing haskell on linux</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-05</span>
                       <ul>
                         <li><a href=""><small>Thu 12 May 2016</small>Teaching emacs to copy utf-8 on Mac OS X</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-04</span>
                       <ul>
                         <li><a href=""><small>Sat 30 April 2016</small>Streaming Data through HTTP with Haskell</a></li>
                         <li><a href=""><small>Fri 29 April 2016</small>Limiting simultaneous threads in Haskell</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>01</span>
-                      <ul>
-                        <li><a href=""><small>Wed 20 January 2016</small>Killing mysql queries</a></li>
                       </ul>
                     </li>
                   </ul>
                   <span><i class="fa fa-minus-square-o"></i>2014</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>07</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-07</span>
                       <ul>
-                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
                         <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-06</span>
                       <ul>
                         <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-05</span>
                       <ul>
-                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
-                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
                         <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
-                      <ul>
-                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-03</span>
                       <ul>
                         <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
                         <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
@@ -456,7 +411,7 @@ manipulating the underlying type.
         <div class="col-md-6 copyright">
             Chris Perivolaroupoulos
             <br />2015 &copy; All Rights Reserved.
-	    <br/> Photos by <a href="https://marianasioti.exposure.so/">Maria Nasioti</a>
+	    <br/> 
         </div>
 
         <div class="col-md-6 text-right">
@@ -492,6 +447,10 @@ manipulating the underlying type.
 
 <!-- js scripts -->
 <script async type="text/javascript" src="../theme/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
+<script src="https://github.com/mrdoob/three.js/blob/master/src/constants.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script async type="text/javascript" src="../theme/js/city.js"></script>
 
 <script type="text/javascript" src="../theme/js/application.js"></script>
 

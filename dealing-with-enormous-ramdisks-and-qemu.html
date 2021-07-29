@@ -9,7 +9,7 @@ Dealing with enormous ramdisks and Qemu - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
-    <meta name="Author" content="Chris Perivolaropoulos" />
+    <meta name="Author" content="Christos Perivolaropoulos" />
 
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://stepofweb.gweb.io/.templates/IsisOne/HTML/assets/plugins/lt-ie9/html5.js"></script>
@@ -70,7 +70,7 @@ Dealing with enormous ramdisks and Qemu - Chris Perivolaropoulos
       <div class="navbar-header">
         <a class="navbar-brand" href="./">
           <img src="http://imgur.com/KyLzuoW.png" alt="" width="50" height="50" />
-          <span class="hidden-xs">λα.mbdα</span>
+          <span class="hidden-xs">Christos Perivolaropoulos</span>
         </a>
       </div>
 
@@ -129,7 +129,7 @@ may it be because I just want the kernel to do my bidding and load a
 ramdisk that is as big as half a Gigabyte. The point is, shoving such
 a big ramdisk down the kernel's throat will result in it choking into
 something like this:</p>
-<div class="highlight"><pre>...
+<div class="highlight"><pre><span></span><code>...
 
 RAMDISK: ext2 filesystem found at block 0
 RAMDISK: image too big! (500496KiB/16384KiB)
@@ -143,8 +143,7 @@ List of all partitions:
 1f04            4096 mtdblock4  (driver?)
 No filesystem could mount root, tried:  ext3 ext2 ext4 vfat msdos
 Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(1,0)
-</pre></div>
-
+</code></pre></div>
 
 <p>Turns out you can do something about it, may it be hacky and
 horrible. This is the tale of a glorious journey through the mysts of
@@ -169,7 +168,7 @@ always tell the kernel in the boot commands <em>ramdisk_size=500000</em>,
 which will supposedly set things up so that we can just tell qemu
 <code>-initrd &lt;fucking-huge-ramdisk.img&gt;</code> and the next thing we know we are
 happily writing commands on busybox. Right?</p>
-<p><img alt="WRONG" src="http://www.themistermen.co.uk/images/MrWrong.jpg" /></p>
+<p><img alt="WRONG" src="http://www.themistermen.co.uk/images/MrWrong.jpg"></p>
 <p>The kernel tries to create 16 such 500M disks. Which sucks. They are
 virtual memory so it will actually boot but it is not something you
 want on your virtual machine. We need to change the number of disks
@@ -182,18 +181,17 @@ true. <em>Documentation/blockdev/ramdisk.txt</em> told me and it betrayed me
 once by mentioning that I can <code>ramdisk_blocksize=N</code> which if you grep
 the source is hard to believe, and trust is lost easier than earned.</p>
 <p>Anyway what I ended up doing is editing <code>ramdisk_size()</code> from this</p>
-<div class="highlight"><pre><span class="cm">/* Legacy boot options - nonmodular */</span>
-<span class="k">static</span> <span class="kt">int</span> <span class="n">__init</span> <span class="nf">ramdisk_size</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* Legacy boot options - nonmodular */</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">__init</span> <span class="n">ramdisk_size</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">rd_size</span> <span class="o">=</span> <span class="n">simple_strtol</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
     <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>to look more like this</p>
-<div class="highlight"><pre><span class="cm">/* Legacy boot options - nonmodular */</span>
-<span class="k">static</span> <span class="kt">int</span> <span class="n">__init</span> <span class="nf">ramdisk_size</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* Legacy boot options - nonmodular */</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">__init</span> <span class="n">ramdisk_size</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="kt">int</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
@@ -210,33 +208,30 @@ the source is hard to believe, and trust is lost easier than earned.</p>
 
     <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Now you can pass <em>ramdisk_size=500000,1</em> to tell the driver to make
 just one 500M disk, while having <em>ramdisk_size=500000</em> behave as
 before. Noice!</p>
 <p>So now we simply run qemu</p>
-<div class="highlight"><pre>qemu-system-arm -M xilinx-zynq-a9 -m 1024 -serial null -serial
+<div class="highlight"><pre><span></span><code>qemu-system-arm -M xilinx-zynq-a9 -m 1024 -serial null -serial
     mon:stdio -dtb ./devtree.dtb -kernel path/to/zImage
     -initrd path/to/enormous-ramdisk.img -nographic
     -append &quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp \
         loglevel=7 ramdisk_size=500496,1p&quot;
-</pre></div>
-
+</code></pre></div>
 
 <p>And everything boots correctly!!</p>
 <p>I always run qemu from within a script so for completeness here is the
 relevan excerpt</p>
-<div class="highlight"><pre>...
+<div class="highlight"><pre><span></span><code>...
 
 <span class="nv">BOOTCMD</span><span class="o">=</span><span class="s2">&quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=</span><span class="k">$(</span>du --apparent-size <span class="nv">$RAMDISK</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span><span class="s2">,1&#39;&quot;</span>
 <span class="nv">CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$QEMU</span><span class="s2"> -M xilinx-zynq-a9  -m 1024  -serial null -serial mon:stdio -dtb </span><span class="nv">$DTB</span><span class="s2"> -kernel </span><span class="nv">$KERNEL</span><span class="s2"> -initrd </span><span class="nv">$RAMDISK</span><span class="s2"> -nographic&quot;</span>
 
 <span class="nb">echo</span> -e <span class="s2">&quot;Running: </span><span class="nv">$CMD</span><span class="s2"> -append </span><span class="nv">$BOOTCMD</span><span class="s2">\nC-a x to kill...&quot;</span>
 <span class="nv">$CMD</span> -append <span class="s2">&quot;</span><span class="nv">$BOOTCMD</span><span class="s2">&quot;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>As an extra benefit this will actually measure the ramdisk and make
 the disk size only as big as it needs to be.</p>
@@ -317,12 +312,9 @@ the disk size only as big as it needs to be.</p>
                 <li><a href="./category/emacs.html"><i class="fa fa-dot-circle-o"></i> emacs</a></li>
                 <li><a href="./category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="./category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
-                <li><a href="./category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
-                <li><a href="./category/haskell.html"><i class="fa fa-dot-circle-o"></i> haskell</a></li>
                 <li><a href="./category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
                 <li><a href="./category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="./category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
-                <li><a href="./category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
               </ul>
 
             </div>
@@ -343,82 +335,44 @@ the disk size only as big as it needs to be.</p>
                 None
                 None
                 None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
               </div>
 
               <ul class="tree">
                 <li>
-                  <span><i class="fa fa-minus-square-o"></i>2017</span>
-                  <ul>
-                    <li>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
-                      <ul>
-                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
-                      </ul>
-                    </li>
-                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>09</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-09</span>
                       <ul>
-                        <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>
                         <li><a href=""><small>Sun 18 September 2016</small>Subclassing function types in python</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>08</span>
-                      <ul>
-                        <li><a href=""><small>Fri 12 August 2016</small>Intstalling NVM and node-js on unix</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
-                      <ul>
-                        <li><a href=""><small>Tue 14 June 2016</small>Installing haskell on linux</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-05</span>
                       <ul>
                         <li><a href=""><small>Thu 12 May 2016</small>Teaching emacs to copy utf-8 on Mac OS X</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-04</span>
                       <ul>
                         <li><a href=""><small>Sat 30 April 2016</small>Streaming Data through HTTP with Haskell</a></li>
                         <li><a href=""><small>Fri 29 April 2016</small>Limiting simultaneous threads in Haskell</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>01</span>
-                      <ul>
-                        <li><a href=""><small>Wed 20 January 2016</small>Killing mysql queries</a></li>
                       </ul>
                     </li>
                   </ul>
                   <span><i class="fa fa-minus-square-o"></i>2014</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>07</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-07</span>
                       <ul>
-                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
                         <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-06</span>
                       <ul>
                         <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-05</span>
                       <ul>
-                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
-                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
                         <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
-                      <ul>
-                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-03</span>
                       <ul>
                         <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
                         <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
@@ -452,7 +406,7 @@ the disk size only as big as it needs to be.</p>
         <div class="col-md-6 copyright">
             Chris Perivolaroupoulos
             <br />2015 &copy; All Rights Reserved.
-	    <br/> Photos by <a href="https://marianasioti.exposure.so/">Maria Nasioti</a>
+	    <br/> 
         </div>
 
         <div class="col-md-6 text-right">
@@ -488,6 +442,10 @@ the disk size only as big as it needs to be.</p>
 
 <!-- js scripts -->
 <script async type="text/javascript" src="./theme/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
+<script src="https://github.com/mrdoob/three.js/blob/master/src/constants.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script async type="text/javascript" src="./theme/js/city.js"></script>
 
 <script type="text/javascript" src="./theme/js/application.js"></script>
 

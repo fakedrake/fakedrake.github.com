@@ -1,71 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>λα.mbdα</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2017-03-20T11:01:00+02:00</updated><entry><title>Saving links in a file with vimperator</title><link href="https://fakedrake.github.io/saving-links-in-a-file-with-vimperator.html" rel="alternate"></link><updated>2017-03-20T11:01:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2017-03-20:saving-links-in-a-file-with-vimperator.html</id><summary type="html">&lt;p&gt;I am quite lazy with bibliography. I never keep track of papers and
-end up searching for them in google scholar over and over again based
-on my (not great) memory. For that I wrote this snippet that helps me
-at least keep them around:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;hints.addMode(&amp;#39;l&amp;#39;, &amp;quot;Save paper link.&amp;quot;, function (e) {
-  var title = e.innerHTML.replace(&amp;#39;&lt;span class="nt"&gt;&amp;lt;b&amp;gt;&lt;/span&gt;&amp;#39;, &amp;#39;&amp;#39;).replace(&amp;#39;&lt;span class="nt"&gt;&amp;lt;/b&amp;gt;&lt;/span&gt;&amp;#39;, &amp;#39;&amp;#39;);
-  new io.File(&amp;#39;~/Documents/papers.org&amp;#39;).write(
-    &amp;#39;- [[&amp;#39; + e.href + &amp;#39;][&amp;#39; + title + &amp;#39;]]\n&amp;#39;,
-    &amp;#39;&amp;gt;&amp;gt;&amp;#39;);
-}, function () {
-  return util.makeXPath([&amp;quot;h3//a&amp;quot;]);
-});
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Put this in a file under &lt;code&gt;~/.vimperator/plugins/&lt;/code&gt; and in a google
-scholar page hit &lt;code&gt;;l&lt;/code&gt; to activate the hint mode. A link to the paper
-you select will be saved in &lt;code&gt;~/Documents/papers.org&lt;/code&gt;.&lt;/p&gt;</summary><category term="vimperator"></category><category term="firefox"></category></entry><entry><title>Transfer files to your phone over wifi</title><link href="https://fakedrake.github.io/transfer-files-to-your-phone-over-wifi.html" rel="alternate"></link><updated>2016-09-29T03:54:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-29:transfer-files-to-your-phone-over-wifi.html</id><summary type="html">&lt;p&gt;So here is a neat trick to very quickly transfer files to your phone
-over wifi (http). On your computer download &lt;code&gt;qrencode&lt;/code&gt;. It should be
-in all major package managers. Also make sure you have python
-installed. On your phone install a QR code reader.&lt;/p&gt;
-&lt;p&gt;Open a terminal and navigate to the folder where your file is. Then
-run this on &lt;em&gt;OSX&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig en0 | awk &amp;#39;BEGIN{FS=&amp;quot; &amp;quot;} /^\t*inet /{print &amp;quot;http://&amp;quot;$2&amp;quot;:8000&amp;quot;}&amp;#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;amp;&amp;amp; open /tmp/url_local_qr.png &amp;amp;&amp;amp; python -m SimpleHTTPServer
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;or this on &lt;em&gt;linux&lt;/em&gt; (didn't try it so comment if there was a problem):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig wlan0 | awk &amp;#39;BEGIN{FS=&amp;quot; &amp;quot;} /^\t*inet /{print &amp;quot;http://&amp;quot;$2&amp;quot;:8000&amp;quot;}&amp;#39; | xargs qrencode -o /tmp/url_local_qr.png &amp;amp;&amp;amp; dispaly /tmp/url_local_qr.png &amp;amp;&amp;amp; python -m SimpleHTTPServer
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;You should be presented with a QR code. Scan it with your phone and
-you should have access to your computer's files!&lt;/p&gt;</summary><category term="unix"></category></entry><entry><title>Subclassing function types in python</title><link href="https://fakedrake.github.io/subclassing-function-types.html" rel="alternate"></link><updated>2016-09-18T11:59:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-18:subclassing-function-types.html</id><summary type="html">&lt;p&gt;Disclaimer: The following is based on cpython.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; class A(object):
-...     @classmethod
-...     def clsmeth(cls): pass
-...     @staticmethod
-...     def stemeth(): pass
-...     def method(self): pass
-...
-&amp;gt;&amp;gt;&amp;gt; def func(): pass
-...
-&amp;gt;&amp;gt;&amp;gt; labd = lambda x: x
-&lt;/pre&gt;&lt;/div&gt;
-
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Christos Perivolaropoulos - Chris Perivolaropoulos</title><link href="https://fakedrake.github.io/" rel="alternate"></link><link href="https://fakedrake.github.io/feeds/chris-perivolaropoulos.atom.xml" rel="self"></link><id>https://fakedrake.github.io/</id><updated>2016-09-18T11:59:00+01:00</updated><subtitle>Hacking my way out of the existential deadlock</subtitle><entry><title>Subclassing function types in python</title><link href="https://fakedrake.github.io/subclassing-function-types.html" rel="alternate"></link><published>2016-09-18T11:59:00+01:00</published><updated>2016-09-18T11:59:00+01:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-09-18:/subclassing-function-types.html</id><summary type="html">&lt;p&gt;The way callables work in python can be a bit strange.  You have methods that take an argument &lt;code&gt;self&lt;/code&gt; but only when called from an object and classmethods and static methods etc. Let's take a more in-depth look at how cpython handles all this&lt;/p&gt;</summary><content type="html">&lt;p&gt;Disclaimer: The following is based on cpython.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;object&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="nv"&gt;@classmethod&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;clsmeth&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pass&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="nv"&gt;@staticmethod&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stemeth&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pass&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;method&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pass&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pass&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;labd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;lambda&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And let's define a way of finding out the corresponding type in the
 types module&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;types&lt;/span&gt;
-&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;typenames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;types&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__dict__&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;types&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;typenames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;types&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="vm"&gt;__dict__&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inst&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;code&gt;typenames&lt;/code&gt; is now a function that will evaluate to a list of names of
 the types of the instance we give it. Let's check that it works&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; typenames(1)
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; typenames(1)
 [&amp;#39;IntType&amp;#39;]
 &amp;gt;&amp;gt;&amp;gt; typenames(&amp;#39;1&amp;#39;)
 [&amp;#39;StringType&amp;#39;]
 &amp;gt;&amp;gt;&amp;gt; typenames(True)
 [&amp;#39;BooleanType&amp;#39;]
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Let's take a look at the types of different built in callable types:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; typenames(func)
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; typenames(func)
 [&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
 &amp;gt;&amp;gt;&amp;gt; typenames(labd)
 [&amp;#39;LambdaType&amp;#39;, &amp;#39;FunctionType&amp;#39;]
@@ -84,8 +48,7 @@ the types of the instance we give it. Let's check that it works&lt;/p&gt;
 [&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
 &amp;gt;&amp;gt;&amp;gt; typenames(A().clsmeth)
 [&amp;#39;UnboundMethodType&amp;#39;, &amp;#39;MethodType&amp;#39;]
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;So there are (at least) four built in callable types.&lt;/p&gt;
 &lt;ul&gt;
@@ -95,7 +58,7 @@ the types of the instance we give it. Let's check that it works&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;MethodType&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Calling them we can see the various:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt;&amp;gt;&amp;gt; A.stemeth()
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A.stemeth()
 &amp;gt;&amp;gt;&amp;gt; A().stemeth()
 &amp;gt;&amp;gt;&amp;gt; A.clsmeth()
 (&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;,)
@@ -107,69 +70,21 @@ Traceback (most recent call last):
 TypeError: unbound method method() must be called with A instance as first argument (got nothing instead)
 &amp;gt;&amp;gt;&amp;gt; A().method()
 &amp;gt;&amp;gt;&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Note:
 &lt;a href="https://github.com/python/cpython/blob/master/Lib/types.py"&gt;types.py&lt;/a&gt;
 does pretty much the same thing to get hold of the types themselves
 but for educational reasons let's pretend that what we just did is not
-stupid.&lt;/p&gt;</summary><category term="python"></category></entry><entry><title>Intstalling NVM and node-js on unix</title><link href="https://fakedrake.github.io/intstalling-nvm-and-nodejs.html" rel="alternate"></link><updated>2016-08-12T11:51:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-08-12:intstalling-nvm-and-nodejs.html</id><summary type="html">&lt;p&gt;Just run the following that will setup everything for you:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash&lt;/span&gt;
-&lt;span class="x"&gt;export NVM_DIR=&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/.nvm&amp;quot;&lt;/span&gt;
-&lt;span class="x"&gt;[ -s &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;NVM_DIR&lt;/span&gt;&lt;span class="x"&gt;/nvm.sh&amp;quot; ] &amp;amp;&amp;amp; . &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;NVM_DIR&lt;/span&gt;&lt;span class="x"&gt;/nvm.sh&amp;quot; &lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt; This loads nvm&lt;/span&gt;
-&lt;span class="x"&gt;nvm install node&lt;/span&gt;
-&lt;span class="x"&gt;nvm use node&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;This will run everything for you. Check the version:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;node --version
-v6.3.1
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Your version may differ. This is a concise version of the
-&lt;a href="https://github.com/creationix/nvm#install-script"&gt;official instructions&lt;/a&gt;&lt;/p&gt;</summary><category term="nodejs"></category></entry><entry><title>Installing haskell on linux</title><link href="https://fakedrake.github.io/installing-haskell-on-linux.html" rel="alternate"></link><updated>2016-06-14T11:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-06-14:installing-haskell-on-linux.html</id><summary type="html">&lt;p&gt;If for some reason you don't want to use your distribution's package
-manager (eg because it provides an outdated version of GHC), you can
-install it manually. First you need to find out if you are on x64 or
-32bit architecture. You can do that by running:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;uname -a
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;If you are on 32bit run the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget https://haskell.org/platform/download/8.0.1/haskell-platform-8.0.1-unknown-posix--minimal-i386.tar.gz -O /tmp/haskell.tar.gz
-cd /tmp
-tar xvzf /tmp/haskell.tar.gz
-sudo ./install-haskell-platform.sh
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;If you are on x64:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;wget https://haskell.org/platform/download/8.0.1/haskell-platform-8.0.1-unknown-posix--full-x86_64.tar.gz -O /tmp/haskell.tar.gz
-cd /tmp
-tar xvzf /tmp/haskell.tar.gz
-sudo ./install-haskell-platform.sh
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Then restart your shell. Check that you have the correct version
-(8.0.1) by running:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ghc --version
-The Glorious Glasgow Haskell Compilation System, version 8.0.1
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;If you do not, you probably already had a version of the haskell
-platform installed. Uninstall that and you will be good to go.&lt;/p&gt;
-&lt;p&gt;The above is just a copy-paste-able format of
-the instructions in
-&lt;a href="https://www.haskell.org/platform/linux.html#linux-generic"&gt;haskell.org&lt;/a&gt;&lt;/p&gt;</summary><category term="haskell"></category><category term="linux"></category></entry><entry><title>Teaching emacs to copy utf-8 on Mac OS X</title><link href="https://fakedrake.github.io/teaching-emacs-to-copy-utf-8-on-mac-os-x.html" rel="alternate"></link><updated>2016-05-12T16:48:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-05-12:teaching-emacs-to-copy-utf-8-on-mac-os-x.html</id><summary type="html">&lt;p&gt;Mac OS X comes with a command line tool for maniplating the clipboard
+stupid.&lt;/p&gt;</content><category term="python"></category><category term="python"></category></entry><entry><title>Teaching emacs to copy utf-8 on Mac OS X</title><link href="https://fakedrake.github.io/teaching-emacs-to-copy-utf-8-on-mac-os-x.html" rel="alternate"></link><published>2016-05-12T16:48:00+01:00</published><updated>2016-05-12T16:48:00+01:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-05-12:/teaching-emacs-to-copy-utf-8-on-mac-os-x.html</id><summary type="html">&lt;p&gt;Mac OS X comes with a command line tool for maniplating the clipboard
 called &lt;code&gt;pbcopy&lt;/code&gt;. It's usage is simple: you throw stuff in it's stdin
 and that stuff is copied to the clipboard. This way we can teach emacs
 to copy stuff to the clipboard with this function&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;paste-to-osx&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt; &lt;span class="k"&gt;&amp;amp;optional&lt;/span&gt; &lt;span class="nb"&gt;push&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;paste-to-osx …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Mac OS X comes with a command line tool for maniplating the clipboard
+called &lt;code&gt;pbcopy&lt;/code&gt;. It's usage is simple: you throw stuff in it's stdin
+and that stuff is copied to the clipboard. This way we can teach emacs
+to copy stuff to the clipboard with this function&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;paste-to-osx&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt; &lt;span class="k"&gt;&amp;amp;optional&lt;/span&gt; &lt;span class="nb"&gt;push&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;process-connection-type&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;default-directory&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;proc&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;start-process&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;pbcopy&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*Messages*&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;pbcopy&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
@@ -178,30 +93,29 @@ to copy stuff to the clipboard with this function&lt;/p&gt;
 
 
 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;setq&lt;/span&gt; &lt;span class="nv"&gt;interprogram-cut-function&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;paste-to-osx&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And this will work pretty well for englshIf you. It will however fail
 in other languages. For example copying the string &lt;code&gt;λογος, αιμα,
 νοημα&lt;/code&gt; from an emacs buffer will paste as random unicode characeters.&lt;/p&gt;
 &lt;p&gt;Setting the &lt;code&gt;LANG&lt;/code&gt; env var fixes the problem.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;(defun paste-to-osx (text &amp;amp;optional push)
-  (let ((process-connection-type nil)
-        (lang (getenv &amp;quot;LANG&amp;quot;))
-        (default-directory &amp;quot;~&amp;quot;))
-    (setenv &amp;quot;LANG&amp;quot; &amp;quot;en_US.UTF-8&amp;quot;)
-    (let ((proc (start-process &amp;quot;pbcopy&amp;quot; &amp;quot;*Messages*&amp;quot; &amp;quot;pbcopy&amp;quot;)))
-      (process-send-string proc text)
-      (process-send-eof proc))
-    (setenv &amp;quot;LANG&amp;quot; lang)))
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="emacs"></category><category term="macosx"></category></entry><entry><title>Streaming Data through HTTP with Haskell</title><link href="https://fakedrake.github.io/streaming-data-through-http-with-haskell.html" rel="alternate"></link><updated>2016-04-30T03:33:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-04-30:streaming-data-through-http-with-haskell.html</id><summary type="html">&lt;p&gt;So I wanted to do some processing on wikipedia articles but I don't
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;paste&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;to&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;osx&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nv"&gt;optional&lt;/span&gt; &lt;span class="nv"&gt;push&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+  &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;let&lt;/span&gt; &lt;span class="ss"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;process&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;connection&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;type&lt;/span&gt; &lt;span class="nv"&gt;nil&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+        &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;lang&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="k"&gt;getenv&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;LANG&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="ss"&gt;))&lt;/span&gt;
+        &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;default&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;directory&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;~&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="ss"&gt;))&lt;/span&gt;
+    &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="k"&gt;setenv&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;LANG&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;en_US.UTF-8&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+    &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;let&lt;/span&gt; &lt;span class="ss"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;proc&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;start&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;process&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;pbcopy&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;*Messages*&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;pbcopy&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="ss"&gt;)))&lt;/span&gt;
+      &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;process&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;send&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;string&lt;/span&gt; &lt;span class="nv"&gt;proc&lt;/span&gt; &lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+      &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;process&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;send&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;eof&lt;/span&gt; &lt;span class="nv"&gt;proc&lt;/span&gt;&lt;span class="ss"&gt;))&lt;/span&gt;
+    &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="k"&gt;setenv&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;LANG&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;lang&lt;/span&gt;&lt;span class="ss"&gt;)))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="emacs"></category><category term="emacs"></category><category term="macosx"></category></entry><entry><title>Streaming Data through HTTP with Haskell</title><link href="https://fakedrake.github.io/streaming-data-through-http-with-haskell.html" rel="alternate"></link><published>2016-04-30T03:33:00+01:00</published><updated>2016-04-30T03:33:00+01:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-04-30:/streaming-data-through-http-with-haskell.html</id><summary type="html">&lt;p&gt;Download and process large files on the fly with haskell&lt;/p&gt;</summary><content type="html">&lt;p&gt;So I wanted to do some processing on wikipedia articles but I don't
 have enough disk space to download them first and process them later,
 it needs to be on-the-fly. Fortunately they are stored bziped which
 means they are compressed at the block level and I don't need the last
 byte to know what the first one means. So I begun by finding a way to
 stream data. I struggled with Conduit a bit but then I stumbled upon a
 much simpler solution:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Network.HTTP.Client&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Network.HTTP.Client&lt;/span&gt;
 &lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Network.HTTP.Client.TLS&lt;/span&gt;   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;tlsManagerSettings&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Control.Monad.Fix&lt;/span&gt;
 &lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Data.Conduit&lt;/span&gt;
@@ -225,40 +139,37 @@ much simpler solution:&lt;/p&gt;
 
 &lt;span class="nf"&gt;main&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
   &lt;span class="n"&gt;getResp&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This just downloads the data, I haven't yet looked into actually
 decompressing. My plan is to convert this fixpoint call into a conduit
 and pipe the data trhough uncompression -- the conduit xml parser that
-is quite neat -- whatever processing I want. Fingers crossed.&lt;/p&gt;</summary></entry><entry><title>Limiting simultaneous threads in Haskell</title><link href="https://fakedrake.github.io/limiting-parallel-thread-in-haskell.html" rel="alternate"></link><updated>2016-04-29T02:23:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-04-29:limiting-parallel-thread-in-haskell.html</id><summary type="html">&lt;p&gt;Iwas making a mini crawler to download all mp3s from a website in
+is quite neat -- whatever processing I want. Fingers crossed.&lt;/p&gt;</content><category term="misc"></category></entry><entry><title>Limiting simultaneous threads in Haskell</title><link href="https://fakedrake.github.io/limiting-parallel-thread-in-haskell.html" rel="alternate"></link><published>2016-04-29T02:23:00+01:00</published><updated>2016-04-29T02:23:00+01:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-04-29:/limiting-parallel-thread-in-haskell.html</id><summary type="html">&lt;p&gt;A simple way to lock the number of parallel threads with MVar.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Iwas making a mini crawler to download all mp3s from a website in
 Haskell and was confronted with the following problem: it is easy to
 download stuff serially or to download them all in parallel. What is
 slightly harder is to download just a couple in parallel.&lt;/p&gt;
 &lt;p&gt;I will start with an introduction it &lt;code&gt;MVar&lt;/code&gt;. Let's say we want a
 safer &lt;code&gt;putStrLn&lt;/code&gt; that does not interleave it's output with other
 &lt;code&gt;putStrLn&lt;/code&gt;s but rather waits for it's turn:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Control.Concurrent.MVar&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Control.Concurrent.MVar&lt;/span&gt;
 
 &lt;span class="nf"&gt;putStrLn&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;lock&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
   &lt;span class="n"&gt;putMVar&lt;/span&gt; &lt;span class="n"&gt;lock&lt;/span&gt; &lt;span class="nb"&gt;()&lt;/span&gt;
   &lt;span class="n"&gt;putStrLn&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;
   &lt;span class="n"&gt;takeMVar&lt;/span&gt; &lt;span class="n"&gt;lock&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then we call it like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;main &lt;span class="o"&gt;=&lt;/span&gt; do
-  ioLock &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; newEmptyMVar
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;main&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;ioLock&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;newEmptyMVar&lt;/span&gt;
   &lt;span class="kc"&gt;...&lt;/span&gt;
-  putStrLn&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="err"&gt; ioLock $ &amp;quot;Found talks: &amp;quot; ++ (show $ length urls)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+  &lt;span class="n"&gt;putStrLn&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="err"&gt; ioLock $ &amp;quot;Found talks: &amp;quot; ++ (show $ length urls)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now that was fairly easy. What about the case where we want a few
 simultaneous threads and the rest should wait for any of them to
 finish.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;-- | There is no 0 state for MVar. 0 means taken. So check if it is&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-- | There is no 0 state for MVar. 0 means taken. So check if it is&lt;/span&gt;
 &lt;span class="c1"&gt;-- taken and if so treat it as 0 by putting 1, otherwise take,&lt;/span&gt;
 &lt;span class="c1"&gt;-- increment, put&lt;/span&gt;
 &lt;span class="nf"&gt;increment&lt;/span&gt; &lt;span class="ow"&gt;::&lt;/span&gt; &lt;span class="kt"&gt;MVar&lt;/span&gt; &lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kt"&gt;IO&lt;/span&gt; &lt;span class="kt"&gt;Int&lt;/span&gt;
@@ -284,90 +195,24 @@ finish.&lt;/p&gt;
   &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;io&lt;/span&gt;
   &lt;span class="n"&gt;increment&lt;/span&gt; &lt;span class="n"&gt;procsLock&lt;/span&gt;
   &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;You can call it like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Control.Monad.Parallel&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Control.Monad.Parallel&lt;/span&gt;
 
 &lt;span class="nf"&gt;main&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;do&lt;/span&gt;
   &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;newMVar&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
   &lt;span class="o"&gt;...&lt;/span&gt;
   &lt;span class="n"&gt;data_&lt;/span&gt; &lt;span class="ow"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;mapM_&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;guarded&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt; &lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;getUrl&lt;/span&gt; &lt;span class="n"&gt;ioLock&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;urls&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;And &lt;code&gt;getUrl&lt;/code&gt; will run at most 5 times simultaneously.&lt;/p&gt;</summary></entry><entry><title>Killing mysql queries</title><link href="https://fakedrake.github.io/killing-mysql-queries.html" rel="alternate"></link><updated>2016-01-20T13:07:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2016-01-20:killing-mysql-queries.html</id><summary type="html">&lt;p&gt;MySQL queries are many times painfully slow. So slow that it is not
-worth waiting. Here is how to kill a running query.&lt;/p&gt;
-&lt;p&gt;First of all you need to know what is running to choose what to kill.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt; show processlist
-|       Id | User | Host | db      | Command | Time | State        | Info                      |
-|----------+------+------+---------+---------+------+--------------+---------------------------|
-| 35162105 | me   | host | db_name | Query   |  183 | Sending data | SELECT * FROM `HugeTable` |
-| 35162616 | me   | host | db_name | Query   |    0 | NULL         | show processlist          |
-| 35162617 | me   | host | db_name | Sleep   |    0 |              | NULL                      |
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The last process we don't care about and the one before that is the
-one we just ran to get the process list itself. The first one is the
-one to kill. So now that we have the id, we can kill it by running&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt; kill 35162105
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;And we freed up the server!&lt;/p&gt;</summary></entry><entry><title>Enabling python virtualenvs dumb and fast</title><link href="https://fakedrake.github.io/enabling-python-virtualenvs-dumb-and-fast.html" rel="alternate"></link><updated>2014-07-16T19:27:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:enabling-python-virtualenvs-dumb-and-fast.html</id><summary type="html">&lt;p&gt;Unless you are using
-&lt;a href="https://bitbucket.org/dhellmann/virtualenvwrapper/"&gt;virtualenvwrapper&lt;/a&gt;
-or something else fancy that the cool kids like these days a common
-series of commands to run python tests is. I also annotated my
-thinking process for dramatic purposes.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; Let&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;s work on awesome-project a bit
-&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;python/project/path/awesome-project
-&lt;span class="gp"&gt;#&lt;/span&gt; That went well, good job, you deserve eternal love and
-&lt;span class="gp"&gt;#&lt;/span&gt; admiration, running some tes- crap, I need the virtualenv...
-&lt;span class="gp"&gt;$&lt;/span&gt; ls ..
-&lt;span class="gp"&gt;#&lt;/span&gt; Pff ok which one of those looks like a virtualenv...
-&lt;span class="gp"&gt;$&lt;/span&gt; . ../py/bin/activate
-&lt;span class="gp"&gt;#&lt;/span&gt; Bingo! Where was I?
-&lt;span class="gp"&gt;$&lt;/span&gt; python setup.py &lt;span class="nb"&gt;test&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now besides being lazy I am also inconsistent, dumb and have a very
-hard time context switching like that. Thankfully shell scripting can
-help out with this. I recently added this stupid little function in my
-&lt;em&gt;.zshrc&lt;/em&gt; and my life has been a wonderful journey in unicorn rainbow
-land ever since&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# find the first venv backwards and activate it.&lt;/span&gt;
-pv&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nv"&gt;A&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;./*/bin/activate&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="o"&gt;{&lt;/span&gt;1..&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -o / &lt;span class="p"&gt;|&lt;/span&gt; wc -l&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; bash -c &lt;span class="s2"&gt;&amp;quot;ls &lt;/span&gt;&lt;span class="nv"&gt;$A&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; 2&amp;gt; /dev/null&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-        &lt;span class="nb"&gt;source&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;bash -c &lt;span class="s2"&gt;&amp;quot;ls &lt;/span&gt;&lt;span class="nv"&gt;$A&lt;/span&gt;&lt;span class="s2"&gt; | head -1&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="nb"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;fi&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="nv"&gt;A&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;../&lt;span class="nv"&gt;$A&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;done&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now it's all like&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; Work on awesome-project
-&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;python/project/path/awesome-project
-&lt;span class="gp"&gt;#&lt;/span&gt; Women and glory are just around the corner, Oh, virtualenv
-&lt;span class="gp"&gt;$&lt;/span&gt; pv
-&lt;span class="gp"&gt;#&lt;/span&gt; Set!
-&lt;span class="gp"&gt;$&lt;/span&gt; python setup.py &lt;span class="nb"&gt;test&lt;/span&gt;
-&lt;span class="go"&gt;[...]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category><category term="virtualenv"></category><category term="shell"></category></entry><entry><title>Ethernet deadlocks and forking the kernel</title><link href="https://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" rel="alternate"></link><updated>2014-07-16T18:25:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:ethernet-deadlocks-and-forking-the-kernel.html</id><summary type="html">&lt;p&gt;This is a bit specific but it is something I encountered more than
+&lt;p&gt;And &lt;code&gt;getUrl&lt;/code&gt; will run at most 5 times simultaneously.&lt;/p&gt;</content><category term="misc"></category></entry><entry><title>Ethernet deadlocks and forking the kernel</title><link href="https://fakedrake.github.io/ethernet-deadlocks-and-forking-the-kernel.html" rel="alternate"></link><published>2014-07-16T18:25:00+01:00</published><updated>2014-07-16T18:25:00+01:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-07-16:/ethernet-deadlocks-and-forking-the-kernel.html</id><summary type="html">&lt;p&gt;A case study of fixing an irq deadlock in the linux kernel.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This is a bit specific but it is something I encountered more than
 once and spent a couple of hours trying to fix. So here is the
 problem. I have a xilinx zynq zc702 board and I load a slightly
 customized 3.8 linux kernel on it. I boot it and it freezes at&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;loaded&lt;/span&gt;
-&lt;span class="n"&gt;xqspips&lt;/span&gt; &lt;span class="n"&gt;e000d000&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;spi&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;unqueued&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;deprecated&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;loop&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;loaded&lt;/span&gt;
+&lt;span class="n"&gt;xqspips&lt;/span&gt; &lt;span class="n"&gt;e000d000&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;spi&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;master&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;unqueued&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;deprecated&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now now you probably want to know what boot arguments I was using and
 what kind of modifications I have made to the kernel and the exact
@@ -412,40 +257,36 @@ situation.&lt;/p&gt;
 trivial to just tell &lt;code&gt;xqspips_irq&lt;/code&gt; to not only check the status
 register to decide whether it should read or not, but also check with
 the xqspi struct. Essentially changing&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
 &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xqspips_read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xqspi&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;regs&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;XQSPIPS_STATUS_OFFSET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
     &lt;span class="n"&gt;XQSPIPS_IXR_RXNEMTY_MASK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;into&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/* Read out the data from the RX FIFO */&lt;/span&gt;
 &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;xqspips_read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xqspi&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;regs&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;XQSPIPS_STATUS_OFFSET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
     &lt;span class="n"&gt;XQSPIPS_IXR_RXNEMTY_MASK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
     &lt;span class="n"&gt;xqspi&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;bytes_to_receive&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;did the trick.&lt;/p&gt;</summary><category term="drivers"></category><category term="irq"></category><category term="linux"></category><category term="kernel"></category></entry><entry><title>Programmatically add search engines to firefox</title><link href="https://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html" rel="alternate"></link><updated>2014-06-07T15:21:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-06-07:programmatically-add-search-engines-to-firefox.html</id><summary type="html">&lt;p&gt;What we are doing here is adding a search engine to firefox like real
+&lt;p&gt;did the trick.&lt;/p&gt;</content><category term="kernel"></category><category term="drivers"></category><category term="irq"></category><category term="linux"></category><category term="kernel"></category></entry><entry><title>Programmatically add search engines to firefox</title><link href="https://fakedrake.github.io/programmatically-add-search-engines-to-firefox.html" rel="alternate"></link><published>2014-06-07T15:21:00+01:00</published><updated>2014-06-07T15:21:00+01:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-06-07:/programmatically-add-search-engines-to-firefox.html</id><summary type="html">&lt;p&gt;What we are doing here is adding a search engine to firefox like real men ie programmatically. This is nice because you can then write scripts to do interesting stuff with them.&lt;/p&gt;</summary><content type="html">&lt;p&gt;What we are doing here is adding a search engine to firefox like real
 men ie programmatically. This is nice because you can then write
 scripts to do interesting stuff with them. First of all let's see what
 we can find out without looking at code.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ find -name &amp;quot;*search*&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp gp-VirtualEnv"&gt;(py)&lt;/span&gt;&lt;span class="gp"&gt;fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ &lt;/span&gt;find -name &lt;span class="s2"&gt;&amp;quot;*search*&amp;quot;&lt;/span&gt;
 &lt;span class="go"&gt;./search-metadata.json&lt;/span&gt;
 &lt;span class="go"&gt;./search.json&lt;/span&gt;
 &lt;span class="go"&gt;./searchplugins&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;search.json&lt;/em&gt; has some general info about the engines and seems to be
  pointing firefox to &lt;em&gt;searchplugins/&lt;/em&gt; for more details.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ ls searchplugins&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp gp-VirtualEnv"&gt;(py)&lt;/span&gt;&lt;span class="gp"&gt;fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default $ &lt;/span&gt;ls searchplugins
 &lt;span class="go"&gt;duckduckgo.xml  imdb.xml  spotify1.xml  youtube.xml&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Right what I was looking for. Let's take a look inside one of them&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;SearchPlugin&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.mozilla.org/2006/browser/search/&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;xmlns:os=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://a9.com/-/spec/opensearch/1.1/&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;&amp;lt;SearchPlugin&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.mozilla.org/2006/browser/search/&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;xmlns:os=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://a9.com/-/spec/opensearch/1.1/&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;os:ShortName&amp;gt;&lt;/span&gt;DuckDuckGo&lt;span class="nt"&gt;&amp;lt;/os:ShortName&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;os:Description&amp;gt;&lt;/span&gt;Search DuckDuckGo&lt;span class="nt"&gt;&amp;lt;/os:Description&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;os:InputEncoding&amp;gt;&lt;/span&gt;UTF-8&lt;span class="nt"&gt;&amp;lt;/os:InputEncoding&amp;gt;&lt;/span&gt;
@@ -457,317 +298,62 @@ we can find out without looking at code.&lt;/p&gt;
   &lt;span class="nt"&gt;&amp;lt;os:Param&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;type&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;value=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;list&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;/os:Url&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;/SearchPlugin&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Awesome, now lets see what interfaces we can get to loading this
 code. We will need access to the
 &lt;a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIBrowserSearchService"&gt;search service&lt;/a&gt;, so&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;bss&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Cc&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;@mozilla.org/browser/search-service;1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getService&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Ci&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;nsIBrowserSearchService&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;bss&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Cc&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;@mozilla.org/browser/search-service;1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;getService&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Ci&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;nsIBrowserSearchService&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now to me at least the documentation was not extremely obvious so I
 had to check out the
 &lt;a href="https://github.com/mozilla/gecko-dev/blob/master/toolkit/components/search/nsSearchService.js"&gt;implementation&lt;/a&gt;
 which I encourage you to take a look at but it wont be really
 necessary. After snooping around a bit I came up with.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;file:///home/fakedrake/Projects/Javascript/spotify.xml&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;Ci&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;nsISearchEngine&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;DATA_XML&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;file:///home/fakedrake/Projects/Javascript/spotify.xml&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;Ci&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;nsISearchEngine&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;DATA_XML&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Where the contents of &lt;em&gt;spotify.xml&lt;/em&gt; are&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;SearchPlugin&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.mozilla.org/2006/browser/search/&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;xmlns:os=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://a9.com/-/spec/opensearch/1.1/&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;&amp;lt;SearchPlugin&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.mozilla.org/2006/browser/search/&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;xmlns:os=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://a9.com/-/spec/opensearch/1.1/&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;os:ShortName&amp;gt;&lt;/span&gt;Spotify&lt;span class="nt"&gt;&amp;lt;/os:ShortName&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;os:Description&amp;gt;&lt;/span&gt;Search Spotify&lt;span class="nt"&gt;&amp;lt;/os:Description&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;os:InputEncoding&amp;gt;&lt;/span&gt;UTF-8&lt;span class="nt"&gt;&amp;lt;/os:InputEncoding&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;os:Url&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text/html&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;method=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;GET&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;template=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://play.spotify.com/search/{searchTerms}&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;/SearchPlugin&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And to my delight vimperator recognizes my custom spotify search engine!&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Spoify search engine" src="http://i.imgur.com/yukAwWr.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Spoify search engine" src="http://i.imgur.com/yukAwWr.png"&gt;&lt;/p&gt;
 &lt;p&gt;And not only that, but firefox was kind enough to add my xml to the
 right place so it is permanent.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;(py)fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default/searchplugins $ ls&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp gp-VirtualEnv"&gt;(py)&lt;/span&gt;&lt;span class="gp"&gt;fakedrake@monolith ~/.mozilla/firefox/gsz5q06m.default/searchplugins $ &lt;/span&gt;ls
 &lt;span class="go"&gt;duckduckgo.xml  imdb.xml  spotify.xml  youtube.xml&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now if you need more direct control over this. An equivalent to the
 above would be:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEngineWithDetails&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Search spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;GET&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;https://play.spotify.com/search/{searchTerms}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEngineWithDetails&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Search spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;GET&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;https://play.spotify.com/search/{searchTerms}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;Note: this wont work if the aliases of the search engines conflict
  like they do here.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;This does exactly the same thing as having the data in an XML file and
 loading it with &lt;code&gt;addEngine()&lt;/code&gt;. If you want to remove an engine you
 can do it with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;removeEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getEngineByAlias&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;removeEngine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;bss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getEngineByAlias&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;spotify&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;There's more you can do with the browser search service but I think I
 would just be repeating the documentation from now on, I hope this is
-a good example to get you started.&lt;/p&gt;</summary><category term="firefox"></category><category term="javascript"></category></entry><entry><title>Remote testing with git and ssh</title><link href="https://fakedrake.github.io/remote-testing-with-git-and-ssh.html" rel="alternate"></link><updated>2014-05-11T21:37:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-11:remote-testing-with-git-and-ssh.html</id><summary type="html">&lt;p&gt;Running tests is an important part of the development workflow. You
-want to do it often and you want it to be quick. Yet at times tests
-are not quick. Tests can be slow and they can be fat. This means that
-you probably prefer to run them on a powerful server rather than your
-slow, low on memory laptop that you like using by on the beach and
-mostly away from power outlets. "You know what would be awesome?" I
-thought to myself one day while sipping pina collada on the roof
-garden of Think Silicon HQ, "if instead of running my tests locally
-and wait for ages for them to finish, I could push my changes to a
-remote server with git, run these tests with ssh and get the results
-with just one command!". A friend pointed out that what I want is a
-CI, and one might be able to make that work but what I actually want
-is not scheduled testing. Rather I need the shortest, and least
-painful for my laptop, path between a minor change on the codebase and
-a usable format of the test results. Preferably in an emacs
-&lt;a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Compilation-Mode.html"&gt;*compilation* buffer&lt;/a&gt;
-(which is just output of the test command with the paths parsed as
-hyperlinks).&lt;/p&gt;
-&lt;p&gt;So I made a branch I call &lt;code&gt;bench&lt;/code&gt; because I was running some
-benchamrks at the time, commited my failing code and pushed it to
-github. Then I pulled the branch from our awesome server and ran the
-tests. They finished in a fourth of time and my workstation was fully
-functional during that time. "That was easy" I thought to myself. Then
-I got the results parsed in emacs' compilation mode and tried to jump
-to the first error. That failed. Miserably. The stack traces and
-errors contained paths for the source files on the server.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Damn you brain" src="http://i.imgur.com/hTaOc3T.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;One way to circumvent that would be to convert all paths to relative
-but I would prefer absolute paths to work as well so I decided i would
-pipe the output through sed and translate the paths to somthing
-compilation-mode would be able to deal with. I came up with
-&lt;em&gt;remote_test.sh&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
-
-&lt;span class="nv"&gt;REMOTE_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/path/to/remote-test&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;LOCAL_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/path/to/test&amp;quot;&lt;/span&gt;
-
-&lt;span class="nv"&gt;REMOTE_SRV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;localhost &lt;span class="c"&gt;# for testing&lt;/span&gt;
-&lt;span class="nv"&gt;REMOTE_USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;whoami&lt;span class="sb"&gt;`&lt;/span&gt;
-
-&lt;span class="nv"&gt;SED_REMOTE_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$REMOTE_ROOT&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sed &lt;span class="s1"&gt;&amp;#39;s/[\/&amp;amp;]/\\&amp;amp;/g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;SED_LOCAL_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$LOCAL_ROOT&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sed &lt;span class="s1"&gt;&amp;#39;s/[\/&amp;amp;]/\\&amp;amp;/g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-
-&lt;span class="k"&gt;function&lt;/span&gt; local_paths &lt;span class="o"&gt;{&lt;/span&gt;
-    sed &lt;span class="s2"&gt;&amp;quot;s/&lt;/span&gt;&lt;span class="nv"&gt;$SED_REMOTE_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$SED_LOCAL_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/g&amp;quot;&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;function&lt;/span&gt; remote_paths &lt;span class="o"&gt;{&lt;/span&gt;
-    sed &lt;span class="s2"&gt;&amp;quot;s/&lt;/span&gt;&lt;span class="nv"&gt;$SED_LOCAL_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$SED_REMOTE_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/g&amp;quot;&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="nv"&gt;ARGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;REMOTE_CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$ARGS&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; remote_paths &lt;span class="k"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;REMOTE_PWD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; remote_paths &lt;span class="k"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;echo &lt;/span&gt;Running: &lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;
-
-ssh &lt;span class="nv"&gt;$REMOTE_USER&lt;/span&gt;@&lt;span class="nv"&gt;$REMOTE_SRV&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cd &lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_PWD&lt;/span&gt;&lt;span class="s2"&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&amp;amp;&lt;/span&gt; local_paths
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Notice the escaping of the paths so that characters in the paths dong
-get confused for parts of the sed command. So let's test it.&lt;/p&gt;
-&lt;p&gt;Run the tests again like this now:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;(workstation)$&lt;/span&gt; ./remote_test.sh &lt;span class="s1"&gt;&amp;#39;echo Path is: /path/to/test &amp;gt;&amp;amp;2&amp;#39;&lt;/span&gt;
-&lt;span class="go"&gt;Running: echo Path is: /path/to/remote-test&lt;/span&gt;
-&lt;span class="go"&gt;fakedrake@localhost&amp;#39;s password:&lt;/span&gt;
-&lt;span class="go"&gt;Path is: /path/to/test&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Notice how the path on the command run by the remote server makes
-sense to the server and the standard error when returned to us makes
-sense to the local workstation. Thus if you, like me, have some
-interesting way to generate paths in your test commands (ie some emacs
-lisp to create run tests on a project local python virtual env) they
-will be translated to paths that make sense on the server.&lt;/p&gt;
-&lt;p&gt;That is cool but unless you use NFS (or afs or whatever network
-filesystem) for home directories like we do in Think Silicon you also
-need to let the server know what changes you made in the code. Git is
-exactly what we need for that. My approach to solving this is to have
-a temporary branch (ie &lt;code&gt;bench&lt;/code&gt;) that I will commit to whenever I want
-to run a test. Then that branch will be pushed to the server and the
-tests will run with the most recent code.&lt;/p&gt;
-&lt;p&gt;It is, however, not very straightforward to just push changes to a
-remote working tree. Pulling from the server is also not a good option
-as I would hate to get into port forwarding on my local network if I
-am working from home. So here is a hacky workaround for this. Make a
-bare repository local to the server where I can push commits from
-&lt;code&gt;bench&lt;/code&gt;. Once those are pushed, and before running the tests on
-remote, the server will pull those changes, which should be pretty
-fast since the repo is in the same filesystem. This has the added
-benefit of not putting every little failing commit of &lt;code&gt;bench&lt;/code&gt; on
-github (and having Travis check it for errors and who knows what
-else).&lt;/p&gt;
-&lt;p&gt;So to make a bare repository in &lt;em&gt;~/.testing&lt;/em&gt; on the server&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;(remote)$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; ~
-&lt;span class="gp"&gt;(remote)$&lt;/span&gt; mkdir .testing
-&lt;span class="gp"&gt;(remote)$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; .testing
-&lt;span class="gp"&gt;(remote)$&lt;/span&gt; git clone --bare &amp;lt;some mirror of the project&amp;gt;
-&lt;span class="gp"&gt;(remote)$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/remote/project
-&lt;span class="gp"&gt;(remote)$&lt;/span&gt; git remote add testing &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.testing/project.git
-&lt;span class="gp"&gt;(remote)$&lt;/span&gt; git checkout bench
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;On the local workstation add that as remote:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;(workstation)$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/local/project
-&lt;span class="gp"&gt;(workstation)$&lt;/span&gt; git remote add testing /home/remote-user/.testing/project.git
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Then have &lt;em&gt;test_remote.sh&lt;/em&gt; push there before doing anything else by
-throwing in there something like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;BRANCH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;git branch &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;/\*/{print $2}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;GIT_REMOTE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;server&amp;gt;
-
-&lt;span class="k"&gt;function&lt;/span&gt; git_draft_sync &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nv"&gt;COMMIT_MSG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;[&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;date +%s&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;] Draft commit&amp;quot;&lt;/span&gt;
-
-    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Will now commit a dumb commit to current branch.&amp;quot;&lt;/span&gt;
-
-    &lt;span class="nb"&gt;echo &lt;/span&gt;Commiting: &lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;
-    git commit -a -m &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-
-    &lt;span class="nb"&gt;echo &lt;/span&gt;Pushing branch: &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
-    git push &lt;span class="nv"&gt;$GIT_REMOTE&lt;/span&gt; &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;And have the server pill the updates on the branch before testing:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;REMOTE_CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;(git pull testing &lt;/span&gt;&lt;span class="nv"&gt;$BRANCH&lt;/span&gt;&lt;span class="s2"&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$ARGS&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; remote_paths&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;(and dont forget to run &lt;code&gt;git_draft_sync&lt;/code&gt; before ssh)&lt;/p&gt;
-&lt;p&gt;And you are all set! My real world script for running python tests on
-a remote server at CSAIL looks much like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
-
-&lt;span class="c"&gt;# Paths (don&amp;#39;t use / at the end)&lt;/span&gt;
-&lt;span class="nv"&gt;REMOTE_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/path/to/remote/home/Projects&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;LOCAL_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/home/fakedrake/Projects/CSAIL/Python&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;REMOTE_SRV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;remote-server&amp;gt;
-&lt;span class="nv"&gt;REMOTE_USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;username&amp;gt;
-
-
-&lt;span class="nv"&gt;BRANCH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;git branch &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;/\*/{print $2}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;GIT_REMOTE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;
-
-&lt;span class="k"&gt;function&lt;/span&gt; git_draft_sync &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nv"&gt;COMMIT_MSG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;[&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;date +%s&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;] Draft commit&amp;quot;&lt;/span&gt;
-
-    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Will now commit a dumb commit to current branch.&amp;quot;&lt;/span&gt;
-
-    &lt;span class="nb"&gt;echo &lt;/span&gt;Commiting: &lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;
-    git commit -a -m &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$COMMIT_MSG&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-
-    &lt;span class="nb"&gt;echo &lt;/span&gt;Pushing branch: &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
-    git push &lt;span class="nv"&gt;$GIT_REMOTE&lt;/span&gt; &lt;span class="nv"&gt;$BRANCH&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="c"&gt;## -- No need to edit from here on --&lt;/span&gt;
-&lt;span class="nv"&gt;SED_REMOTE_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$REMOTE_ROOT&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sed &lt;span class="s1"&gt;&amp;#39;s/[\/&amp;amp;]/\\&amp;amp;/g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;SED_LOCAL_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$LOCAL_ROOT&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sed &lt;span class="s1"&gt;&amp;#39;s/[\/&amp;amp;]/\\&amp;amp;/g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-
-&lt;span class="k"&gt;function&lt;/span&gt; local_paths &lt;span class="o"&gt;{&lt;/span&gt;
-    sed &lt;span class="s2"&gt;&amp;quot;s/&lt;/span&gt;&lt;span class="nv"&gt;$SED_REMOTE_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$SED_LOCAL_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/g&amp;quot;&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;function&lt;/span&gt; remote_paths &lt;span class="o"&gt;{&lt;/span&gt;
-    sed &lt;span class="s2"&gt;&amp;quot;s/&lt;/span&gt;&lt;span class="nv"&gt;$SED_LOCAL_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$SED_REMOTE_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/g&amp;quot;&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="nv"&gt;ARGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;REMOTE_CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;(git pull testing &lt;/span&gt;&lt;span class="nv"&gt;$BRANCH&lt;/span&gt;&lt;span class="s2"&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$ARGS&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; remote_paths &lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;REMOTE_PWD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; remote_paths &lt;span class="k"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Running perliminaries:&amp;quot;&lt;/span&gt;
-
-&lt;span class="nb"&gt;echo &lt;/span&gt;ARGS: &lt;span class="nv"&gt;$ARGS&lt;/span&gt;
-&lt;span class="nb"&gt;echo &lt;/span&gt;Running: &lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;
-&lt;span class="nb"&gt;echo &lt;/span&gt;Directory: &lt;span class="nv"&gt;$REMOTE_PWD&lt;/span&gt;
-&lt;span class="nb"&gt;echo &lt;/span&gt;At: &lt;span class="nv"&gt;$REMOTE_USER&lt;/span&gt;@&lt;span class="nv"&gt;$REMOTE_SRV&lt;/span&gt;
-
-git_draft_sync
-ssh &lt;span class="nv"&gt;$REMOTE_USER&lt;/span&gt;@&lt;span class="nv"&gt;$REMOTE_SRV&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cd &lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_PWD&lt;/span&gt;&lt;span class="s2"&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_CMD&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&amp;amp;&lt;/span&gt; local_paths
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Put this in the root directory of your project and change the paths at
-the top of the script to something that makes sense for you. Then tell
-your editor to prepend &lt;code&gt;./remote_test.sh&lt;/code&gt; before the test
-command. Thus my emacs setup for example would do:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;-&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;mode&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;compilation&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;default-directory&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;~/Projects/CSAIL/Python/WikipediaBase/&amp;quot;&lt;/span&gt; &lt;span class="nt"&gt;-&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nt"&gt;-&lt;/span&gt;
-&lt;span class="nt"&gt;Comint&lt;/span&gt; &lt;span class="nt"&gt;started&lt;/span&gt; &lt;span class="nt"&gt;at&lt;/span&gt; &lt;span class="nt"&gt;Sun&lt;/span&gt; &lt;span class="nt"&gt;May&lt;/span&gt; &lt;span class="nt"&gt;11&lt;/span&gt; &lt;span class="nt"&gt;23&lt;/span&gt;&lt;span class="nd"&gt;:17:22&lt;/span&gt;
-
-&lt;span class="o"&gt;./&lt;/span&gt;&lt;span class="nt"&gt;remote_test&lt;/span&gt;&lt;span class="nc"&gt;.sh&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;fakedrake&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;Projects&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;CSAIL&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;py&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="nt"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;python&lt;/span&gt;  &lt;span class="nt"&gt;setup&lt;/span&gt;&lt;span class="nc"&gt;.py&lt;/span&gt; &lt;span class="nt"&gt;test&lt;/span&gt;
-&lt;span class="nt"&gt;Running&lt;/span&gt; &lt;span class="nt"&gt;perliminaries&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-&lt;span class="nt"&gt;ARGS&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;fakedrake&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;Projects&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;CSAIL&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;py&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="nt"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;python&lt;/span&gt; &lt;span class="nt"&gt;setup&lt;/span&gt;&lt;span class="nc"&gt;.py&lt;/span&gt; &lt;span class="nt"&gt;test&lt;/span&gt;
-&lt;span class="nt"&gt;Running&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;git&lt;/span&gt; &lt;span class="nt"&gt;pull&lt;/span&gt; &lt;span class="nt"&gt;testing&lt;/span&gt; &lt;span class="nt"&gt;bench&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;remote&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;Projects&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;py&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="nt"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;python&lt;/span&gt; &lt;span class="nt"&gt;setup&lt;/span&gt;&lt;span class="nc"&gt;.py&lt;/span&gt; &lt;span class="nt"&gt;test&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nt"&gt;Directory&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;remote&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;Projects&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;WikipediaBase&lt;/span&gt;
-&lt;span class="nt"&gt;At&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;user&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;@&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;remote-server&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;Will&lt;/span&gt; &lt;span class="nt"&gt;now&lt;/span&gt; &lt;span class="nt"&gt;commit&lt;/span&gt; &lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="nt"&gt;dumb&lt;/span&gt; &lt;span class="nt"&gt;commit&lt;/span&gt; &lt;span class="nt"&gt;to&lt;/span&gt; &lt;span class="nt"&gt;current&lt;/span&gt; &lt;span class="nt"&gt;branch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="nt"&gt;Commiting&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1399839442&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; &lt;span class="nt"&gt;Draft&lt;/span&gt; &lt;span class="nt"&gt;commit&lt;/span&gt;
-&lt;span class="nt"&gt;On&lt;/span&gt; &lt;span class="nt"&gt;branch&lt;/span&gt; &lt;span class="nt"&gt;bench&lt;/span&gt;
-&lt;span class="nt"&gt;Untracked&lt;/span&gt; &lt;span class="nt"&gt;files&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-    &lt;span class="nt"&gt;TAGS&lt;/span&gt;
-    &lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;...&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;
-
-&lt;span class="nt"&gt;nothing&lt;/span&gt; &lt;span class="nt"&gt;added&lt;/span&gt; &lt;span class="nt"&gt;to&lt;/span&gt; &lt;span class="nt"&gt;commit&lt;/span&gt; &lt;span class="nt"&gt;but&lt;/span&gt; &lt;span class="nt"&gt;untracked&lt;/span&gt; &lt;span class="nt"&gt;files&lt;/span&gt; &lt;span class="nt"&gt;present&lt;/span&gt;
-&lt;span class="nt"&gt;Pushing&lt;/span&gt; &lt;span class="nt"&gt;branch&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;bench&lt;/span&gt;
-&lt;span class="nt"&gt;Password&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-&lt;span class="nt"&gt;Everything&lt;/span&gt; &lt;span class="nt"&gt;up-to-date&lt;/span&gt;
-&lt;span class="nt"&gt;Password&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-&lt;span class="nt"&gt;From&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;remote&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nc"&gt;.testing&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;WikipediaBase&lt;/span&gt;
- &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nt"&gt;branch&lt;/span&gt;            &lt;span class="nt"&gt;bench&lt;/span&gt;      &lt;span class="nt"&gt;-&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;FETCH_HEAD&lt;/span&gt;
-&lt;span class="nt"&gt;Already&lt;/span&gt; &lt;span class="nt"&gt;up-to-date&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="nt"&gt;running&lt;/span&gt; &lt;span class="nt"&gt;test&lt;/span&gt;
-&lt;span class="nt"&gt;running&lt;/span&gt; &lt;span class="nt"&gt;egg_info&lt;/span&gt;
-
-&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;...&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;And compilation-mode sees the paths that it expects so I can jump
-around the source based on the errors. If you haven't done already you
-may also want to setup password-less login to your server. Not only is
-it easier but it is much safer.&lt;/p&gt;</summary><category term="testin"></category><category term="git"></category><category term="ssh"></category><category term="remote"></category></entry><entry><title>Moving git branches across repositories</title><link href="https://fakedrake.github.io/moving-git-branches-across-repositories.html" rel="alternate"></link><updated>2014-05-07T15:49:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-07:moving-git-branches-across-repositories.html</id><summary type="html">&lt;p&gt;In a perfect world there is a one-to-one relationship between projects
-and git trees. As you are happily working on your local repo, and
-decide you want to get some commits from a different source you just
-&lt;code&gt;git remote add&lt;/code&gt; that source and you have full access to it's
-commits. Well sometimes things do not go as smoothly and you may find
-yourself wanting to move your branch to a remote repo that may have a
-largely common codebase but few to no common commits. Well turns out
-git can handle that pretty easily. Here is how in one line:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;git log --reverse --cherry master...&amp;lt;your-branch&amp;gt; --pretty=email --patch-with-stat | (cd /path/to/new/repo &amp;amp;&amp;amp; git checkout -b &amp;lt;your-branch&amp;gt; &amp;amp;&amp;amp; git am)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;It is quite simple really: we use &lt;code&gt;git log&lt;/code&gt; to get a comprehensive
-description of each commit in &lt;code&gt;&amp;lt;your-branch&amp;gt;&lt;/code&gt;. Then create a new
-branch at the new repo with the same name and pipe the descriptions of
-the commits to &lt;code&gt;git am&lt;/code&gt; to create them in the new place.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; the commits in the new repo will not have the same SHA as in
- the old one so we are not really &lt;em&gt;moving&lt;/em&gt; the commits from one repo
- to another as much as &lt;em&gt;recreating&lt;/em&gt; them.&lt;/p&gt;</summary><category term="git"></category><category term="branch"></category><category term="shell"></category></entry><entry><title>Gdb signals</title><link href="https://fakedrake.github.io/gdb-signals.html" rel="alternate"></link><updated>2014-05-06T16:36:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-06:gdb-signals.html</id><summary type="html">&lt;p&gt;So unless you are debugging your own program and you know what you are
+a good example to get you started.&lt;/p&gt;</content><category term="firefox"></category><category term="firefox"></category><category term="javascript"></category></entry><entry><title>Gdb signals</title><link href="https://fakedrake.github.io/gdb-signals.html" rel="alternate"></link><published>2014-05-06T16:36:00+01:00</published><updated>2014-05-06T16:36:00+01:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-05-06:/gdb-signals.html</id><summary type="html">&lt;p&gt;Signaling from and to a process through GDB is much easier than one might expect.&lt;/p&gt;</summary><content type="html">&lt;p&gt;So unless you are debugging your own program and you know what you are
 doing this is probably not what you expect to happen while a program
 runs under GDB.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;Program received signal SIGUSR1, User defined signal 1.
-[Switching to Thread 0x7fffcff2c700 (LWP 3296)]
-...
-(gdb)
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Program&lt;/span&gt; &lt;span class="n"&gt;received&lt;/span&gt; &lt;span class="k"&gt;signal&lt;/span&gt; &lt;span class="n"&gt;SIGUSR1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="n"&gt;defined&lt;/span&gt; &lt;span class="k"&gt;signal&lt;/span&gt; &lt;span class="mf"&gt;1.&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Switching&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;Thread&lt;/span&gt; &lt;span class="mh"&gt;0x7fffcff2c700&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LWP&lt;/span&gt; &lt;span class="mi"&gt;3296&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gdb&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;You may hit &lt;code&gt;c&lt;/code&gt; to continue but this will come up again sooner or
 later and I like my breakpoints to be tidy.&lt;/p&gt;
@@ -805,11 +391,10 @@ Use the "handle" command to change these tables.
 be passed to the program. The other thing we notice here is that
 &lt;code&gt;SIGTRAP&lt;/code&gt; is not passed to the program.&lt;/p&gt;
 &lt;p&gt;To have &lt;code&gt;SIGUSR1&lt;/code&gt; be ignored by GDB&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;(gdb) handle SIGUSR1 nostop noprint
-Signal        Stop  Print   Pass to program Description
-SIGUSR1       No    No  Yes     User defined signal 1
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gdb&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;handle&lt;/span&gt; &lt;span class="n"&gt;SIGUSR1&lt;/span&gt; &lt;span class="n"&gt;nostop&lt;/span&gt; &lt;span class="n"&gt;noprint&lt;/span&gt;
+&lt;span class="n"&gt;Signal&lt;/span&gt;        &lt;span class="n"&gt;Stop&lt;/span&gt;  &lt;span class="n"&gt;Print&lt;/span&gt;   &lt;span class="n"&gt;Pass&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt; &lt;span class="n"&gt;Description&lt;/span&gt;
+&lt;span class="n"&gt;SIGUSR1&lt;/span&gt;       &lt;span class="n"&gt;No&lt;/span&gt;    &lt;span class="n"&gt;No&lt;/span&gt;  &lt;span class="n"&gt;Yes&lt;/span&gt;     &lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="n"&gt;defined&lt;/span&gt; &lt;span class="k"&gt;signal&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now here is another recurring interrupt related issue: Sometimes you
 need to to pass control to gdb while the program is running. The
@@ -818,88 +403,33 @@ the process will catch the key and will not stop. Instead of
 despairing you can try sending it a &lt;code&gt;SIGTRAP&lt;/code&gt;. That will stop the
 program as if gdb had encountered a breakpoint. From another terminal
 run.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; pkill -TRAP &amp;lt;process-name&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;pkill -TRAP &amp;lt;process-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;If you are using &lt;em&gt;emacs&lt;/em&gt; and &lt;em&gt;gud&lt;/em&gt; like me you can automate this with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;my:gud-trap-process&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;&amp;amp;optional&lt;/span&gt; &lt;span class="nv"&gt;wrapping-script&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;my:gud-trap-process&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;&amp;amp;optional&lt;/span&gt; &lt;span class="nv"&gt;wrapping-script&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;interactive&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*P&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;child-pid&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;xargs pgrep -P | head -1 |&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;async-shell-command&lt;/span&gt;
      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;format&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;echo %d | %s %s xargs echo kill -TRAP&amp;quot;&lt;/span&gt;
          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;process-id&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;get-buffer-process&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*gud*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
          &lt;span class="nv"&gt;child-pid&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;wrapping-script&lt;/span&gt; &lt;span class="nv"&gt;child-pid&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Putting this in your &lt;em&gt;.emacs&lt;/em&gt; will let you do &lt;code&gt;M-x
 my:gud-trap-process&lt;/code&gt; to give control to gdb. If you are running gdb
 from within a shell script like I usually do provide a prefix
 argument, ie. &lt;code&gt;C-u M-x my:gud-trap-process&lt;/code&gt; to handle child processes
 correctly. I also have it bound to &lt;code&gt;C-x C-a t&lt;/code&gt; for brevity:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;(global-set-key (kbd &amp;quot;C-x C-a t&amp;quot;) `my:gud-trap-process)
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;(global-set-key (kbd &amp;quot;C-x C-a t&amp;quot;) `my:gud-trap-process)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This process will not run exactly the shell command I mentioned
 earlier but rather it will find the pid of gdb and send &lt;code&gt;SIGTRAP&lt;/code&gt; to it's
 first child process. So if you want to automate the process in another
 way here is the main idea:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pgrep -P &amp;lt;gdb pid&amp;gt; &lt;span class="p"&gt;|&lt;/span&gt; head -1 &lt;span class="p"&gt;|&lt;/span&gt; xargs &lt;span class="nb"&gt;kill&lt;/span&gt; -TRAP
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="GDB"></category><category term="C/C++"></category><category term="signals"></category></entry><entry><title>Dumping tab information with vimperator</title><link href="https://fakedrake.github.io/dumping-tab-information-with-vimperator.html" rel="alternate"></link><updated>2014-04-20T20:18:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-04-20:dumping-tab-information-with-vimperator.html</id><summary type="html">&lt;p&gt;To me it is quite usual that I am looking at a list of links to things
-(songs, articls, books etc.) and I want to first select the ones I am
-interested in and then look into them one by one. Most of the time
-this does not go as smoothly as I would want it to. I wildly
-underestimate the length of the list and not only do I get many many
-more interesting results than I expected, but I also spend so much
-time going through the entire list that I need to check them later. I
-could bookmark everything and look at it later but the perfect
-solution would be to dump everything in a text file and
-&lt;a href="http://gist.github.com"&gt;gist&lt;/a&gt; it or then categorize it according to
-artist with Python or something else equally and needlessly nerdy.&lt;/p&gt;
-&lt;p&gt;So anyway, turns out firefox welcomes this kind of thing if you are a
-core developer and have deep knowledge of it's inter-workings or if
-you have vimperator to abstract the interface/service
-inconvenience. And the matter is actually very simple.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;tabdump&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="nx"&gt;tabs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;tabdump&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; ~~~ &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
-&lt;span class="nx"&gt;io&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;File&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~/Documents/tabs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;tabdump&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;If you haven't got any better way of running more than one line of
-code on firefox you can use vimperator's &lt;code&gt;:js&lt;/code&gt; which should go like&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;js&lt;/span&gt; &lt;span class="nx"&gt;tabdump&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;tabs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;tabdump&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; ~~~ &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt; &lt;span class="nx"&gt;io&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;File&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~/Documents/tabs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;tabdump&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;So in brief what does this code do, it uses vimperator's interface to
-tabs to get a list of all tabs (basically tuples) and then you
-concatenate those tuples together and dump them into a string (line
-2). Then vimperator provides a simple way of file io with &lt;code&gt;io.File&lt;/code&gt; to
-throw everything into a file. And there you have it&lt;/p&gt;
-&lt;p&gt;If for example I were looking up bands going through a list and run
-the above I would come up with something like&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[...]&lt;/span&gt;
-
-&lt;span class="na"&gt;23 ~~~ kyuss at DuckDuckGo ~~~ https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;kyuss&lt;/span&gt;
-&lt;span class="na"&gt;24 ~~~ 311 at DuckDuckGo ~~~ https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;311&lt;/span&gt;
-&lt;span class="na"&gt;25 ~~~ high on fire at DuckDuckGo ~~~ https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;high+on+fire&lt;/span&gt;
-&lt;span class="na"&gt;26 ~~~ sleep at DuckDuckGo ~~~ https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sleep&lt;/span&gt;
-&lt;span class="na"&gt;27 ~~~ cottonmouth kings at DuckDuckGo ~~~ https://duckduckgo.com/?q&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;cottonmouth+kings&lt;/span&gt;
-
-&lt;span class="k"&gt;[...]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;em&gt;EDIT&lt;/em&gt;: If you want to reopen some of those you can easily do it with&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;js&lt;/span&gt; &lt;span class="nx"&gt;lines&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;io&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;File&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~/Documents/tabs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;read&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;js&lt;/span&gt; &lt;span class="nx"&gt;lines&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;l&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;l&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; ~~~ &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]}).&lt;/span&gt;&lt;span class="nx"&gt;slice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;liberator&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;where&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;liberator&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;NEW_TAB&lt;/span&gt;&lt;span class="p"&gt;})})&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Which should open again tabs 7 to 22.&lt;/p&gt;</summary><category term="firefox"></category><category term="vimperator"></category><category term="javascript"></category><category term="tabs"></category></entry><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="https://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><updated>2014-03-31T22:30:00+03:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ pgrep -P &amp;lt;gdb pid&amp;gt; &lt;span class="p"&gt;|&lt;/span&gt; head -1 &lt;span class="p"&gt;|&lt;/span&gt; xargs &lt;span class="nb"&gt;kill&lt;/span&gt; -TRAP
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="GDB"></category><category term="GDB"></category><category term="C/C++"></category><category term="signals"></category></entry><entry><title>Dealing with enormous ramdisks and Qemu</title><link href="https://fakedrake.github.io/dealing-with-enormous-ramdisks-and-qemu.html" rel="alternate"></link><published>2014-03-31T22:30:00+01:00</published><updated>2014-03-31T22:30:00+01:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-31:/dealing-with-enormous-ramdisks-and-qemu.html</id><summary type="html">&lt;p&gt;There are times when you want to have everything on RAM. There are times when everything is more than 500M. And then there are times when you want both. That's when everything goes to hell.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;strong&gt;WARNING:&lt;/strong&gt; This is hacky and BAD. Do not use 500M ramdisks for
 anything crucial. Make them small and mount the rest of the filesystem
 using the rootfs related boot commands and the &lt;code&gt;-hda&lt;/code&gt; option on qemu
 or use nfs or whatever.&lt;/p&gt;
@@ -910,7 +440,7 @@ may it be because I just want the kernel to do my bidding and load a
 ramdisk that is as big as half a Gigabyte. The point is, shoving such
 a big ramdisk down the kernel's throat will result in it choking into
 something like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;...
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;...
 
 RAMDISK: ext2 filesystem found at block 0
 RAMDISK: image too big! (500496KiB/16384KiB)
@@ -924,8 +454,7 @@ List of all partitions:
 1f04            4096 mtdblock4  (driver?)
 No filesystem could mount root, tried:  ext3 ext2 ext4 vfat msdos
 Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(1,0)
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Turns out you can do something about it, may it be hacky and
 horrible. This is the tale of a glorious journey through the mysts of
@@ -950,7 +479,7 @@ always tell the kernel in the boot commands &lt;em&gt;ramdisk_size=500000&lt;/em
 which will supposedly set things up so that we can just tell qemu
 &lt;code&gt;-initrd &amp;lt;fucking-huge-ramdisk.img&amp;gt;&lt;/code&gt; and the next thing we know we are
 happily writing commands on busybox. Right?&lt;/p&gt;
-&lt;p&gt;&lt;img alt="WRONG" src="http://www.themistermen.co.uk/images/MrWrong.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="WRONG" src="http://www.themistermen.co.uk/images/MrWrong.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;The kernel tries to create 16 such 500M disks. Which sucks. They are
 virtual memory so it will actually boot but it is not something you
 want on your virtual machine. We need to change the number of disks
@@ -963,18 +492,17 @@ true. &lt;em&gt;Documentation/blockdev/ramdisk.txt&lt;/em&gt; told me and it bet
 once by mentioning that I can &lt;code&gt;ramdisk_blocksize=N&lt;/code&gt; which if you grep
 the source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
 &lt;p&gt;Anyway what I ended up doing is editing &lt;code&gt;ramdisk_size()&lt;/code&gt; from this&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
-&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;__init&lt;/span&gt; &lt;span class="nf"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
+&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;__init&lt;/span&gt; &lt;span class="n"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="n"&gt;rd_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;simple_strtol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;to look more like this&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
-&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;__init&lt;/span&gt; &lt;span class="nf"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/* Legacy boot options - nonmodular */&lt;/span&gt;
+&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;__init&lt;/span&gt; &lt;span class="n"&gt;ramdisk_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
@@ -991,36 +519,33 @@ the source is hard to believe, and trust is lost easier than earned.&lt;/p&gt;
 
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now you can pass &lt;em&gt;ramdisk_size=500000,1&lt;/em&gt; to tell the driver to make
 just one 500M disk, while having &lt;em&gt;ramdisk_size=500000&lt;/em&gt; behave as
 before. Noice!&lt;/p&gt;
 &lt;p&gt;So now we simply run qemu&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;qemu-system-arm -M xilinx-zynq-a9 -m 1024 -serial null -serial
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;qemu-system-arm -M xilinx-zynq-a9 -m 1024 -serial null -serial
     mon:stdio -dtb ./devtree.dtb -kernel path/to/zImage
     -initrd path/to/enormous-ramdisk.img -nographic
     -append &amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp \
         loglevel=7 ramdisk_size=500496,1p&amp;quot;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And everything boots correctly!!&lt;/p&gt;
 &lt;p&gt;I always run qemu from within a script so for completeness here is the
 relevan excerpt&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;...
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;...
 
 &lt;span class="nv"&gt;BOOTCMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;console=ttyPS0,115200 root=/dev/ram rw ip=:::::eth0:dhcp loglevel=7 ramdisk_size=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;du --apparent-size &lt;span class="nv"&gt;$RAMDISK&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;,1&amp;#39;&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$QEMU&lt;/span&gt;&lt;span class="s2"&gt; -M xilinx-zynq-a9  -m 1024  -serial null -serial mon:stdio -dtb &lt;/span&gt;&lt;span class="nv"&gt;$DTB&lt;/span&gt;&lt;span class="s2"&gt; -kernel &lt;/span&gt;&lt;span class="nv"&gt;$KERNEL&lt;/span&gt;&lt;span class="s2"&gt; -initrd &lt;/span&gt;&lt;span class="nv"&gt;$RAMDISK&lt;/span&gt;&lt;span class="s2"&gt; -nographic&amp;quot;&lt;/span&gt;
 
 &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;Running: &lt;/span&gt;&lt;span class="nv"&gt;$CMD&lt;/span&gt;&lt;span class="s2"&gt; -append &lt;/span&gt;&lt;span class="nv"&gt;$BOOTCMD&lt;/span&gt;&lt;span class="s2"&gt;\nC-a x to kill...&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;$CMD&lt;/span&gt; -append &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$BOOTCMD&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;As an extra benefit this will actually measure the ramdisk and make
-the disk size only as big as it needs to be.&lt;/p&gt;</summary><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="https://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><updated>2014-03-28T20:45:00+02:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
+the disk size only as big as it needs to be.&lt;/p&gt;</content><category term="kernel"></category><category term="kernel"></category><category term="qemu"></category></entry><entry><title>When printks are too many</title><link href="https://fakedrake.github.io/when-printks-are-too-many.html" rel="alternate"></link><published>2014-03-28T20:45:00+00:00</published><updated>2014-03-28T20:45:00+00:00</updated><author><name>Chris Perivolaropoulos</name></author><id>tag:fakedrake.github.io,2014-03-28:/when-printks-are-too-many.html</id><summary type="html">&lt;p&gt;Clean kernel source from debugging printks with git&lt;/p&gt;</summary><content type="html">&lt;p&gt;Being too lazy to use proper debugging methods as I am (although what
 proper debugging methods are is sometimes
 &lt;a href="http://www.linuxtoday.com/infrastructure/2000090700221OSCYKN"&gt;debateable&lt;/a&gt;),
 I always (over)use printks to debug the kernel. Now the problem with
@@ -1037,9 +562,8 @@ the project root. For me there are usually some nasty device tree
 changes that I make to fit Qemu and also my .config is setup for
 debugging. I definitely dont want reverting any of that. Actually all
 I want to revert is the .c files I threw printks in.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git status | sed -n &amp;#39;s/.*modified: *\(.*\.c\)/\1/p&amp;#39; | xargs git checkout
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git status | sed -n &amp;#39;s/.*modified: *\(.*\.c\)/\1/p&amp;#39; | xargs git checkout
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Works 99% of the time. To avoid the tragedy of the other 1% make sure
-you take a look at &lt;code&gt;git status&lt;/code&gt; &lt;em&gt;beforehand&lt;/em&gt;.&lt;/p&gt;</summary><category term="git"></category><category term="kernel"></category><category term="debugging"></category></entry></feed>
+you take a look at &lt;code&gt;git status&lt;/code&gt; &lt;em&gt;beforehand&lt;/em&gt;.&lt;/p&gt;</content><category term="kernel"></category><category term="git"></category><category term="kernel"></category><category term="debugging"></category></entry></feed>

@@ -9,7 +9,7 @@ Configuration management with makefiles - Chris Perivolaropoulos
     </title>
 
     <meta name="description" content="" />
-    <meta name="Author" content="Chris Perivolaropoulos" />
+    <meta name="Author" content="Christos Perivolaropoulos" />
 
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://stepofweb.gweb.io/.templates/IsisOne/HTML/assets/plugins/lt-ie9/html5.js"></script>
@@ -70,7 +70,7 @@ Configuration management with makefiles - Chris Perivolaropoulos
       <div class="navbar-header">
         <a class="navbar-brand" href="../">
           <img src="http://imgur.com/KyLzuoW.png" alt="" width="50" height="50" />
-          <span class="hidden-xs">λα.mbdα</span>
+          <span class="hidden-xs">Christos Perivolaropoulos</span>
         </a>
       </div>
 
@@ -111,7 +111,7 @@ Configuration management with makefiles - Chris Perivolaropoulos
   <header>
       <h1>Configuration management with makefiles</h1>
     <small class="fsize13">
-            <a href="../category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="4 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
+            <a href="../category/misc.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="2 articles in this category"><i class="fa fa-dot-circle-o"></i> misc</a>
       <a href="../drafts/configuration-management-with-makefiles.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="drafts/configuration-management-with-makefiles.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       <span class="label label-default light">Fri 15 May 2015</span>
       <a href="author/chris-perivolaropoulos.html" class="label label-default light">Chris Perivolaropoulos</a>
@@ -134,7 +134,7 @@ request for RepoB that is based on it's branch development. This task
 can be tedious and things can go wrong. Let's automate the whole
 process.</p>
 <p>Make the two repositories:</p>
-<div class="highlight"><pre>mkdir /tmp/RepoA
+<div class="highlight"><pre><span></span><code>mkdir /tmp/RepoA
 mkdir /tmp/RepoB
 
 cd /tmp/RepoA
@@ -154,21 +154,19 @@ git checkout -b development
 echo &quot;\totherDep: 1.0&quot; &gt;&gt; manifest
 git commit -a -m &quot;Extra dependencies&quot;
 git checkout master
-</pre></div>
-
+</code></pre></div>
 
 <p>So now we have two repos with only manifest files and RepoB has a
 development branch.</p>
 <p>The cool part of Makefiles is that variables are constructed lazily
 and recursively. Let's abuse that to switch to development if we are
 not there and do nothing if we are not. Let's make some boilerplate</p>
-<div class="highlight"><pre>dep-ok:
+<div class="highlight"><pre><span></span><code>dep-ok:
     touch dep-ok
 
 new-command-dep=$(shell ($1) &gt; /dev/null &amp;&amp; echo dep-ok || echo
 $2)
-</pre></div>
-
+</code></pre></div>
 
 <p>This make function will help us give two kinds of information</p>
 <ul>
@@ -176,17 +174,15 @@ $2)
 <li>A target that when run will actually do the work</li>
 </ul>
 <p>Here we will use it for our example</p>
-<div class="highlight"><pre>bgit=git -C /tmp/RepoB
+<div class="highlight"><pre><span></span><code>bgit=git -C /tmp/RepoB
 b-on-branch=$(call new-command-dep,$(bgit) branch|grep -F &quot;* $1&quot;,b-on-branch-$1)
 b-on-branch-%:
     $(bgit) checkout $*
-</pre></div>
-
+</code></pre></div>
 
 <p>Now we can run</p>
-<div class="highlight"><pre>make b-on-branch-master
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>make b-on-branch-master
+</code></pre></div>
 
 <p>And it will switch to master if we are not on master, or do nothing
 (run target <code>dep-ok</code>) if we already are..</p>
@@ -265,12 +261,9 @@ b-on-branch-%:
                 <li><a href="../category/emacs.html"><i class="fa fa-dot-circle-o"></i> emacs</a></li>
                 <li><a href="../category/firefox.html"><i class="fa fa-dot-circle-o"></i> firefox</a></li>
                 <li><a href="../category/gdb.html"><i class="fa fa-dot-circle-o"></i> GDB</a></li>
-                <li><a href="../category/git.html"><i class="fa fa-dot-circle-o"></i> git</a></li>
-                <li><a href="../category/haskell.html"><i class="fa fa-dot-circle-o"></i> haskell</a></li>
                 <li><a href="../category/kernel.html"><i class="fa fa-dot-circle-o"></i> kernel</a></li>
                 <li><a href="../category/misc.html"><i class="fa fa-dot-circle-o"></i> misc</a></li>
                 <li><a href="../category/python.html"><i class="fa fa-dot-circle-o"></i> python</a></li>
-                <li><a href="../category/unix.html"><i class="fa fa-dot-circle-o"></i> unix</a></li>
               </ul>
 
             </div>
@@ -291,82 +284,44 @@ b-on-branch-%:
                 None
                 None
                 None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
-                None
               </div>
 
               <ul class="tree">
                 <li>
-                  <span><i class="fa fa-minus-square-o"></i>2017</span>
-                  <ul>
-                    <li>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
-                      <ul>
-                        <li><a href=""><small>Mon 20 March 2017</small>Saving links in a file with vimperator</a></li>
-                      </ul>
-                    </li>
-                  </ul>
                   <span><i class="fa fa-minus-square-o"></i>2016</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>09</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-09</span>
                       <ul>
-                        <li><a href=""><small>Thu 29 September 2016</small>Transfer files to your phone over wifi</a></li>
                         <li><a href=""><small>Sun 18 September 2016</small>Subclassing function types in python</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>08</span>
-                      <ul>
-                        <li><a href=""><small>Fri 12 August 2016</small>Intstalling NVM and node-js on unix</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
-                      <ul>
-                        <li><a href=""><small>Tue 14 June 2016</small>Installing haskell on linux</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-05</span>
                       <ul>
                         <li><a href=""><small>Thu 12 May 2016</small>Teaching emacs to copy utf-8 on Mac OS X</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
+                      <span><i class="fa fa-minus-square-o"></i>2016-04</span>
                       <ul>
                         <li><a href=""><small>Sat 30 April 2016</small>Streaming Data through HTTP with Haskell</a></li>
                         <li><a href=""><small>Fri 29 April 2016</small>Limiting simultaneous threads in Haskell</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>01</span>
-                      <ul>
-                        <li><a href=""><small>Wed 20 January 2016</small>Killing mysql queries</a></li>
                       </ul>
                     </li>
                   </ul>
                   <span><i class="fa fa-minus-square-o"></i>2014</span>
                   <ul>
                     <li>
-                      <span><i class="fa fa-minus-square-o"></i>07</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-07</span>
                       <ul>
-                        <li><a href=""><small>Wed 16 July 2014</small>Enabling python virtualenvs dumb and fast</a></li>
                         <li><a href=""><small>Wed 16 July 2014</small>Ethernet deadlocks and forking the kernel</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>06</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-06</span>
                       <ul>
                         <li><a href=""><small>Sat 07 June 2014</small>Programmatically add search engines to firefox</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>05</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-05</span>
                       <ul>
-                        <li><a href=""><small>Sun 11 May 2014</small>Remote testing with git and ssh</a></li>
-                        <li><a href=""><small>Wed 07 May 2014</small>Moving git branches across repositories</a></li>
                         <li><a href=""><small>Tue 06 May 2014</small>Gdb signals</a></li>
                       </ul>
-                      <span><i class="fa fa-minus-square-o"></i>04</span>
-                      <ul>
-                        <li><a href=""><small>Sun 20 April 2014</small>Dumping tab information with vimperator</a></li>
-                      </ul>
-                      <span><i class="fa fa-minus-square-o"></i>03</span>
+                      <span><i class="fa fa-minus-square-o"></i>2014-03</span>
                       <ul>
                         <li><a href=""><small>Mon 31 March 2014</small>Dealing with enormous ramdisks and Qemu</a></li>
                         <li><a href=""><small>Fri 28 March 2014</small>When printks are too many</a></li>
@@ -400,7 +355,7 @@ b-on-branch-%:
         <div class="col-md-6 copyright">
             Chris Perivolaroupoulos
             <br />2015 &copy; All Rights Reserved.
-	    <br/> Photos by <a href="https://marianasioti.exposure.so/">Maria Nasioti</a>
+	    <br/> 
         </div>
 
         <div class="col-md-6 text-right">
@@ -436,6 +391,10 @@ b-on-branch-%:
 
 <!-- js scripts -->
 <script async type="text/javascript" src="../theme/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
+<script src="https://github.com/mrdoob/three.js/blob/master/src/constants.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script async type="text/javascript" src="../theme/js/city.js"></script>
 
 <script type="text/javascript" src="../theme/js/application.js"></script>
 
